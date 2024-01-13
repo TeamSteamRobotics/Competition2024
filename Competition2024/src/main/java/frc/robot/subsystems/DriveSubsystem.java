@@ -5,19 +5,18 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 public class DriveSubsystem extends SubsystemBase {
   /** Creates a new DriveSubsystem. */
-  private TalonFX frontLeft = new TalonFX(1);
-  private TalonFX frontRight = new TalonFX(2);
-  private TalonFX backLeft = new TalonFX(3);
-  private TalonFX backRight = new TalonFX(4);
-  //Update numbers
+  private TalonFX frontLeft = new TalonFX(Constants.CANID.frontLeft);
+  private TalonFX frontRight = new TalonFX(Constants.CANID.frontRight);
+  private TalonFX backLeft = new TalonFX(Constants.CANID.backLeft);
+  private TalonFX backRight = new TalonFX(Constants.CANID.backRight);
 
   private DifferentialDrive diffDrive;
 
