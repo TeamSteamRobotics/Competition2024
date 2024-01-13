@@ -5,26 +5,33 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+import edu.wpi.first.wpilibj.motorcontrol.Victor;
+import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 public class DriveSubsystem extends SubsystemBase {
   /** Creates a new DriveSubsystem. */
-  private TalonFX frontLeft = new TalonFX(Constants.CANID.frontLeft);
-  private TalonFX frontRight = new TalonFX(Constants.CANID.frontRight);
-  private TalonFX backLeft = new TalonFX(Constants.CANID.backLeft);
-  private TalonFX backRight = new TalonFX(Constants.CANID.backRight);
+  
+  private WPI_VictorSPX frontLeft = new WPI_VictorSPX(Constants.CANID.frontLeft);
+  private WPI_VictorSPX frontRight = new WPI_VictorSPX(Constants.CANID.frontRight);
+  private WPI_TalonSRX backLeft = new WPI_TalonSRX(Constants.CANID.backLeft);
+  private WPI_TalonSRX backRight = new WPI_TalonSRX(Constants.CANID.backRight);
 
   private DifferentialDrive diffDrive;
 
   public DriveSubsystem() {
-    backLeft.setControl(new Follower(1, false));
-    backRight.setControl(new Follower(2, false));
-
-    diffDrive = new DifferentialDrive(frontLeft, frontRight);
+   frontLeft.follow(backLeft);
+   frontRight.follow(backRight);
+    diffDrive = new DifferentialDrive(backLeft, backRight);
 
 
   }
