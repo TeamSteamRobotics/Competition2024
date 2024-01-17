@@ -25,6 +25,10 @@ public final class Constants {
     //TODO update numbers
   }
 
+  public static class Odometry {
+    public static final double rotationsToMeters = 0; //NOT FILLED IN YET DONT USE YET
+  }
+
 
 }
 

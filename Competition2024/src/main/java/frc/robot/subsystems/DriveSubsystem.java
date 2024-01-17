@@ -4,6 +4,11 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.Odometry;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.Victor;
@@ -37,6 +42,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   private DifferentialDrive diffDrive;
   
+  private DifferentialDriveOdometry odometry;
 
   public DriveSubsystem() {
     frontLeftMotor = new CANSparkMax(CANID.frontLeft, MotorType.kBrushless);
@@ -52,6 +58,8 @@ public class DriveSubsystem extends SubsystemBase {
     frontRightEncoder = frontRightMotor.getEncoder();
     backLeftEncoder = backLeftMotor.getEncoder();
     backRightEncoder = backRightMotor.getEncoder();
+
+    odometry = new DifferentialDriveOdometry(getRotation2d(), getLeftSideMeters(), getRightSideMeters(), new Pose2d(1 ,1 , new Rotation2d(0)));
   }
 
   public void drive(double speed, double rotation){
@@ -84,6 +92,14 @@ public class DriveSubsystem extends SubsystemBase {
     return (getLeftSideRotations() + getRightSideRotations()) / 2;
   }
 
+  public double getLeftSideMeters() {
+    return (getLeftSideRotations() * Constants.Odometry.rotationsToMeters);
+  }
+
+  public double getRightSideMeters() {
+    return (getRightSideRotations() * Constants.Odometry.rotationsToMeters);
+  }
+
   //NOT FILLED IN YET DONT USE YET
   public void resetGyro() {
 
@@ -93,11 +109,20 @@ public class DriveSubsystem extends SubsystemBase {
   public double getAngle() {
     return 0;
   }
+
+  // NOT FILLEED IN YET DONT USE IT
+  public Rotation2d getRotation2d() {
+    return null;
+  }
   
+  public DifferentialDriveOdometry getOdometry() {
+    return odometry;
+  }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    odometry.update(getRotation2d(), getLeftSideMeters(), getRightSideMeters());
   }
 }
 
