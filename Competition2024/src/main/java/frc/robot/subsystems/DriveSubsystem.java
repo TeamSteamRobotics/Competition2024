@@ -83,6 +83,15 @@ public class DriveSubsystem extends SubsystemBase {
     return (getLeftSideRotations() + getRightSideRotations()) / 2;
   }
 
+  //NOT FILLED IN YET DONT USE YET
+  public void resetGyro() {
+
+  }
+
+  // NOT FILLED IN YET DO NOT USE YET   
+  public double getAngle() {
+    return 0;
+  }
   
 
   @Override
