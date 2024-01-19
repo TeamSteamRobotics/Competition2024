@@ -6,19 +6,20 @@ package frc.robot.commands;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.DriveSubsystem;
 
 public class GoToPoint extends Command {
   /** Creates a new PointToPoint. */
-  DriveSubsystem driveSubsystem;
-  Pose2d startPose;
-  Pose2d endPose;
+  private DriveSubsystem driveSubsystem;
+  private Pose2d startPose;
+  private Pose2d endPose;
   
-  double dx, dy;
-  double distance;
-  double theta;
+  private double dx, dy;
+  private double distance;
+  private double theta;
 
-  boolean done = false;
+  private boolean done = false;
 
   public GoToPoint(DriveSubsystem p_driveSubsystem, Pose2d p_endPose) {
     driveSubsystem = p_driveSubsystem;
@@ -35,10 +36,13 @@ public class GoToPoint extends Command {
     dx = (endPose.getX() - startPose.getX());
     distance = Math.sqrt((dx * dx) + (dy * dy));
 
-    theta = Math.atan2(dy, dx);
+    theta = startPose.getRotation().getDegrees() - Math.atan2(dy, dx);
 
-    new PIDTurn(driveSubsystem, theta);
-    new DriveDistance(driveSubsystem, distance);
+    //Look into making this a sequential command group.
+    new SequentialCommandGroup(
+      new PIDTurn(driveSubsystem, theta), 
+      new DriveDistance(driveSubsystem, distance)
+    );
     
     done = true;
   }
