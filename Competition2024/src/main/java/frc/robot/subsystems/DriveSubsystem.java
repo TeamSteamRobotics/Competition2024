@@ -112,7 +112,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   // NOT FILLEED IN YET DONT USE IT
   public Rotation2d getRotation2d() {
-    return null;
+    return new Rotation2d(0);
   }
   
   public DifferentialDriveOdometry getOdometry() {
