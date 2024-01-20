@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.Victor;
 import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -26,12 +27,15 @@ public class DriveSubsystem extends SubsystemBase {
   private WPI_TalonSRX backLeft = new WPI_TalonSRX(Constants.CANID.backLeft);
   private WPI_TalonSRX backRight = new WPI_TalonSRX(Constants.CANID.backRight);
 
+
   private DifferentialDrive diffDrive;
 
   public DriveSubsystem() {
-   frontLeft.follow(backLeft);
-   frontRight.follow(backRight);
-    diffDrive = new DifferentialDrive(backLeft, backRight);
+   MotorControllerGroup left = new MotorControllerGroup(frontLeft ,backLeft);
+   MotorControllerGroup right = new MotorControllerGroup(frontRight, backRight);
+   //backRight.setInverted(true);
+   right.setInverted(true);
+    diffDrive = new DifferentialDrive(left, right);
 
 
   }

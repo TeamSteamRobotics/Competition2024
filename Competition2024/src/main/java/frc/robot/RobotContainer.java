@@ -30,7 +30,7 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    m_driveSubsystem.setDefaultCommand(new Drive(m_driveSubsystem, m_driverController::getLeftY, m_driverController::getLeftX));
+    m_driveSubsystem.setDefaultCommand(new Drive(m_driveSubsystem, m_driverController::getRightX, m_driverController::getLeftY));
     // Configure the trigger bindings
     configureBindings();
   }

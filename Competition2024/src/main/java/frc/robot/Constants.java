@@ -20,8 +20,8 @@ public final class Constants {
   public static class CANID {
     public static final int frontLeft = 3;
     public static final int frontRight = 4;
-    public static final int backLeft = 1;
-    public static final int backRight = 2;
+    public static final int backLeft = 2;
+    public static final int backRight = 1;
     //TODO update numbers
   }
 
