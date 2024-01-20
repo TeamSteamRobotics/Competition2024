@@ -4,11 +4,6 @@
 
 package frc.robot.subsystems;
 
-import java.util.Scanner;
-
-import javax.security.auth.x500.X500Principal;
-
-import org.opencv.core.Point;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -22,10 +17,6 @@ public class SmartDashboardSubsystem extends SubsystemBase {
   
   /** Creates a new SmartDashboardSubsystem. */
   public SmartDashboardSubsystem() {
-    SmartDashboard.putNumber("X Position in inches", 0);
-    SmartDashboard.putNumber("Y Position in inches",0);
-    SmartDashboard.putNumber("Rotation in degrees",0);
-    SmartDashboard.putStringArray("Coordinate Lists", new String[2]);
     SmartDashboard.putString("Point", "S1");
     SmartDashboard.putData("Field", m_field);
   }
@@ -52,12 +43,7 @@ public class SmartDashboardSubsystem extends SubsystemBase {
   }
 
   
-  private Pose2d S1 = new Pose2d(5, 5, new Rotation2d(39));
-  private Pose2d A1 = new Pose2d(5, 5, new Rotation2d(39));
-  private Pose2d S2 = new Pose2d(5, 5, new Rotation2d(39));
-  private Pose2d S3 = new Pose2d(5, 5, new Rotation2d(39));
-  private Pose2d G2 = new Pose2d(5, 5, new Rotation2d(39));
-  private Pose2d G1 = new Pose2d(5, 5, new Rotation2d(39));
+  
   // All the points, change later
   
 
