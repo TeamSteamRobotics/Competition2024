@@ -28,15 +28,5 @@ public final class Constants {
     //TODO update numbers
   }
 
-  public static class Points {
-    private Pose2d S1 = new Pose2d(5, 5, new Rotation2d(39));
-    private Pose2d A1 = new Pose2d(5, 5, new Rotation2d(39));
-    private Pose2d S2 = new Pose2d(5, 5, new Rotation2d(39));
-    private Pose2d S3 = new Pose2d(5, 5, new Rotation2d(39));
-    private Pose2d G2 = new Pose2d(5, 5, new Rotation2d(39));
-    private Pose2d G1 = new Pose2d(5, 5, new Rotation2d(39));
-  }
-
-
 }
 
