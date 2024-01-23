@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.StringParsing;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 
 public class TopLevelAuto extends Command {
   /** Creates a new MainAutoCommand. */
@@ -21,13 +23,20 @@ public class TopLevelAuto extends Command {
   private ArrayList<Command> commandList;
   private Optional<Alliance> alliance;
   private boolean isBlue;
-  private DriveSubsystem driveSubsystem;
 
-  public TopLevelAuto(String p_inputString, DriveSubsystem p_driveSubsystem) {
+  private DriveSubsystem driveSubsystem;
+  private ShooterSubsystem shooterSubsystem;
+  private IntakeSubsystem intakeSubsystem;
+
+  public TopLevelAuto(String p_inputString, DriveSubsystem p_driveSubsystem, ShooterSubsystem p_shooterSubsystem, IntakeSubsystem p_intakeSubsystem) {
     inputString = p_inputString;
     driveSubsystem = p_driveSubsystem;
+    shooterSubsystem = p_shooterSubsystem;
+    intakeSubsystem = p_intakeSubsystem;
+
     commandList = new ArrayList<Command>();
     alliance = DriverStation.getAlliance();
+
     addRequirements(driveSubsystem);
   }
 
@@ -51,12 +60,10 @@ public class TopLevelAuto extends Command {
         commandList.add(new GoToPoint(driveSubsystem, StringParsing.parseStringPoint(value, isBlue)));
       if(value.length() == 1) {
         if(value.equals("S"))
-          new Shoot();
+          commandList.add(new Shoot(shooterSubsystem));
         else if(value.equals("I"))
-          new Intake();
+          commandList.add(new Intake(intakeSubsystem));
       }
-
-
     }
   }
 

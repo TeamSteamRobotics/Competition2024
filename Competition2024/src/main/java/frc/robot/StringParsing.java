@@ -25,8 +25,4 @@ public class StringParsing {
 				return new Pose2d();
 		}
 	}
-
-	public static Command parseStringCommand(String input) {
-
-	}
 }
