@@ -18,7 +18,7 @@ public class TopLevelAuto extends Command {
   /** Creates a new MainAutoCommand. */
   private String inputString;
   private String[] formattedString;
-  private ArrayList<Pose2d> positionList;
+  private ArrayList<Command> commandList;
   private Optional<Alliance> alliance;
   private boolean isBlue;
   private DriveSubsystem driveSubsystem;
@@ -26,7 +26,7 @@ public class TopLevelAuto extends Command {
   public TopLevelAuto(String p_inputString, DriveSubsystem p_driveSubsystem) {
     inputString = p_inputString;
     driveSubsystem = p_driveSubsystem;
-    positionList = new ArrayList<Pose2d>();
+    commandList = new ArrayList<Command>();
     alliance = DriverStation.getAlliance();
     addRequirements(driveSubsystem);
   }
@@ -45,18 +45,23 @@ public class TopLevelAuto extends Command {
     else {
       isBlue = true; // 50-50 chance that we right if we cant get the correct info so we take the odds better than doing nothing right???
     }
-
     formattedString = StringParsing.parsePointList(inputString);
-    for(String point : formattedString) {
-      positionList.add(StringParsing.parseInput(point, isBlue));
+    for(String value : formattedString) {
+      if(value.length() == 2)
+        commandList.add(new GoToPoint(driveSubsystem, StringParsing.parseStringPoint(value, isBlue)));
+      if(value.length() == 1) {
+        if(value.equals("S"))
+          new Shoot();
+        else if(value.equals("I"))
+          new Intake();
+      }
+
+
     }
   }
 
   @Override
   public void execute() {
-    for(Pose2d position : positionList) {
-      new GoToPoint(driveSubsystem, position);
-    }
 
   }
 
