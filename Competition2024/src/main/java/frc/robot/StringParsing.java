@@ -6,14 +6,15 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class StringParsing {
 
 	public static String[] parsePointList(String input) {
-					String noSpaces = input.replace(" ", "");
-					String allCaps = noSpaces.toUpperCase();
-					return allCaps.split(",");
-		}
+		String noSpaces = input.replace(" ", "");
+		String allCaps = noSpaces.toUpperCase();
+		return allCaps.split(",");
+	}
+
 	public static Pose2d parseStringPoint(String input, boolean isBlue) {
 		char letter = input.charAt(0);
 		int posNum = Integer.parseInt(String.valueOf(input.charAt(1)));
-		int sideNum = isBlue ? 0 : 1; // should be 0 for true
+		int sideNum = isBlue ? 0 : 1; // should be 0 for true aka blue
 		switch (letter) {
 			case 'B':
 				return AutoPoints.bArray[sideNum][(posNum - 1)];
