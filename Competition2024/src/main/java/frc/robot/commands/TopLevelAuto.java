@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.StringParsing;
 import frc.robot.subsystems.DriveSubsystem;
 
-public class MainAutoCommand extends Command {
+public class TopLevelAuto extends Command {
   /** Creates a new MainAutoCommand. */
   private String inputString;
   private String[] formattedString;
@@ -23,13 +23,12 @@ public class MainAutoCommand extends Command {
   private boolean isBlue;
   private DriveSubsystem driveSubsystem;
 
-  public MainAutoCommand(String p_inputString, DriveSubsystem p_driveSubsystem) {
+  public TopLevelAuto(String p_inputString, DriveSubsystem p_driveSubsystem) {
     inputString = p_inputString;
     driveSubsystem = p_driveSubsystem;
     positionList = new ArrayList<Pose2d>();
     alliance = DriverStation.getAlliance();
     addRequirements(driveSubsystem);
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
 
