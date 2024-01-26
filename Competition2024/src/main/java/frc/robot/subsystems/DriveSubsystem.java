@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.Victor;
 import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.CANID;
@@ -123,6 +124,12 @@ public class DriveSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     odometry.update(getRotation2d(), getLeftSideMeters(), getRightSideMeters());
+    
+    SmartDashboard.putNumber("FL Encoder", frontLeftEncoder.getPosition());
+    SmartDashboard.putNumber("BL Encoder", backLeftEncoder.getPosition());
+    SmartDashboard.putNumber("FR Encoder", frontRightEncoder.getPosition());
+    SmartDashboard.putNumber("BR Encoder", backRightEncoder.getPosition());
+
   }
 }
 
