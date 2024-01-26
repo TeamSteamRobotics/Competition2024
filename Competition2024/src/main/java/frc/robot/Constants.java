@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.units.Units;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -29,7 +30,9 @@ public final class Constants {
   }
 
   public static class Odometry {
-    public static final double rotationsToMeters = 0; //NOT FILLED IN YET DONT USE YET
+    public static final double wheelCircumfrenceMeters = Math.PI * 0.1524;
+    public static final double gearRatio = 9.82;
+    public static final double rotationsToMeters = (1/gearRatio) * wheelCircumfrenceMeters; 
   }
 
 
