@@ -2,10 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-enum allianceColor{
-        BLUE,
-        RED
- }
+
 public class AutoPoints {
     // 0 in the first dimension means blue!
 
@@ -16,6 +13,6 @@ public class AutoPoints {
         bArray[0][2] = new Pose2d(0, 0, new Rotation2d());
     }
 
-    allianceColor currentAlliance = allianceColor.BLUE;
+
 }
 

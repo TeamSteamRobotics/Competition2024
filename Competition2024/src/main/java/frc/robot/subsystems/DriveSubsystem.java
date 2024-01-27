@@ -119,7 +119,9 @@ public class DriveSubsystem extends SubsystemBase {
   public DifferentialDriveOdometry getOdometry() {
     return odometry;
   }
-
+  public double getDistance() {
+    return (getLeftSideMeters() + getRightSideMeters()) / 2;
+  }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
@@ -129,7 +131,8 @@ public class DriveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("BL Encoder", backLeftEncoder.getPosition());
     SmartDashboard.putNumber("FR Encoder", frontRightEncoder.getPosition());
     SmartDashboard.putNumber("BR Encoder", backRightEncoder.getPosition());
-
+    SmartDashboard.putNumber("Distance", getDistance());
+    SmartDashboard.putNumber("Gyro reading", getAngle());
   }
 }
 

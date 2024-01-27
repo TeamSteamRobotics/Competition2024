@@ -33,14 +33,13 @@ public final class Autos {
 // This stuff determines the path the robot takes and keeps track of all the translations
       m_field = new Field2d();
       SmartDashboard.putData(m_field);
-
+      
       m_field.getObject("traj").setTrajectory(m_trajectory);
   }
   /** Example static factory for an autonomous command. */
   public static Command exampleAuto(ExampleSubsystem subsystem) {
     return Commands.sequence(subsystem.exampleMethodCommand(), new ExampleCommand(subsystem));
   }
-
   private Autos() {
     throw new UnsupportedOperationException("This is a utility class!");
   }
