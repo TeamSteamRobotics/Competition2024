@@ -1,0 +1,53 @@
+<xml version="1.0">
+<dashboard>
+	<widget field="Reset Encoders" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="430" y="213"/>
+	</widget>
+	<widget field="Reset Gyro" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="578" y="210"/>
+	</widget>
+	<widget field="Gyro reading" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.FormattedField">
+		<location x="227" y="247"/>
+	</widget>
+	<widget field="Test" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="48" y="138"/>
+	</widget>
+	<widget field="Through Bore Encoder Distance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="395" y="149"/>
+	</widget>
+	<widget field="Through Bore Right Encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="475" y="91"/>
+	</widget>
+	<widget field="Through Bore Left Encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="259" y="90"/>
+	</widget>
+	<widget field="Built In Encoder Distance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="548" y="50"/>
+	</widget>
+	<widget field="BR Encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="403" y="68"/>
+	</widget>
+	<widget field="FR Encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="406" y="48"/>
+	</widget>
+	<widget field="BL Encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="260" y="69"/>
+	</widget>
+	<widget field="FL Encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="262" y="48"/>
+		<height>19</height>
+	</widget>
+	<widget field="Point" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="50" y="10"/>
+	</widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Image">
+		<location x="1026" y="2"/>
+		<width>502</width>
+		<height>439</height>
+		<property name="Image File" value="C:\Users\Zachary\Downloads\Asset-1.png"/>
+	</static-widget>
+</dashboard>
+<live-window>
+</live-window>
+	<hidden field="Field"/>
+</xml>

@@ -29,12 +29,19 @@ public final class Constants {
     //TODO update numbers
   }
 
-  public static class Odometry {
+  public static class OdometryConsts {
     public static final double wheelCircumfrenceMeters = Math.PI * 0.1524;
     public static final double gearRatio = 9.82;
     public static final double rotationsToMeters = (1/gearRatio) * wheelCircumfrenceMeters; 
   }
 
+    public static class EncoderID {
+      public static final int leftThroughBoreEncoder1 = 0;
+      public static final int leftThroughBoreEncoder2 = 1;
+      public static final int rightThroughBoreEncoder1 = 2;
+      public static final int rightThroughBoreEncoder2 = 3;
+
+    }
 
 }
 

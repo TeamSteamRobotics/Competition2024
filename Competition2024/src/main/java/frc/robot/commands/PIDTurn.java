@@ -21,7 +21,7 @@ public class PIDTurn extends PIDCommand {
         // The controller that the command will use
         new PIDController(0, 0, 0),
         // This should return the measurement
-        () -> driveSubsystem.getAngle(),
+        () -> driveSubsystem.getAngleDegrees(),
         // This should return the setpoint (can also be a constant)
         () -> rotation,
         // This uses the output
