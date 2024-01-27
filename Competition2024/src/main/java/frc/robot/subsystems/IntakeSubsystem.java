@@ -19,6 +19,22 @@ public class IntakeSubsystem extends SubsystemBase {
   
   public IntakeSubsystem() {}
 
+  public void intake(double speed){};
+  
+
+  public void stop(){
+  intakeRoller.set(0);;
+  intakePivot.set(0); 
+
+  }
+
+  public void speedRoller(){
+    intakeRoller.set(1);
+  }
+  public void speedPivot(){
+    intakePivot.set(1);
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
