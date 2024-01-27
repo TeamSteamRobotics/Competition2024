@@ -9,6 +9,7 @@ import java.util.Optional;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.StringParsing;
@@ -50,6 +51,8 @@ public class TopLevelAuto extends Command {
     intakeSubsystem = p_intakeSubsystem;
     avSubsystem = p_avSubsystem;
 
+    SmartDashboard.putString("input", "");
+    inputString = SmartDashboard.getString("input", "");
     commandList = new ArrayList<Command>();
     alliance = DriverStation.getAlliance();
     
@@ -73,6 +76,9 @@ public class TopLevelAuto extends Command {
       currentAlliance = allianceColor.BLUE; // 50-50 chance that we right if we cant get the correct info so we take the odds better than doing nothing right???
     }
     formattedString = StringParsing.parsePointList(inputString);
+    for(int i = 0; i < 5; i++){
+    SmartDashboard.putString("Compnent" + i, formattedString[i]);
+    }
     for(String value : formattedString) {
       if(value.length() == 2)
         commandList.add(new GoToPoint(driveSubsystem, avSubsystem, StringParsing.parseStringPoint(value, currentAlliance)));
