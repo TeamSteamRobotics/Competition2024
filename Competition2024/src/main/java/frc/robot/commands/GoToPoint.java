@@ -5,13 +5,17 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.subsystems.AprilVisionSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.AprilVisionSubsystem.ReturnTarget;
 
 public class GoToPoint extends Command {
   /** Creates a new PointToPoint. */
   private DriveSubsystem driveSubsystem;
+  private AprilVisionSubsystem avSubsystem;
   private Pose2d startPose;
   private Pose2d endPose;
   
@@ -20,12 +24,16 @@ public class GoToPoint extends Command {
   private double theta;
 
   private boolean done = false;
-
-  public GoToPoint(DriveSubsystem p_driveSubsystem, Pose2d p_endPose) {
+  public Pose2d getAvPose(int tag, ReturnTarget rt){
+    Pose2d currentPose = new Pose2d(avSubsystem.getCoordinates(tag, rt).x, avSubsystem.getCoordinates(tag, rt).x, new Rotation2d(avSubsystem.getCoordinates(tag, rt).rx));
+    return currentPose;
+  }
+  public GoToPoint(DriveSubsystem p_driveSubsystem, AprilVisionSubsystem p_avSubsystem, Pose2d p_endPose) {
     driveSubsystem = p_driveSubsystem;
-    startPose = p_driveSubsystem.getOdometry().getPoseMeters();
+    avSubsystem = p_avSubsystem;
+    startPose = getAvPose(0, ReturnTarget.FIELD);
     endPose = p_endPose;
-    addRequirements(driveSubsystem);
+    addRequirements(driveSubsystem, avSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 

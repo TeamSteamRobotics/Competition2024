@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.StringParsing;
+import frc.robot.subsystems.AprilVisionSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -26,6 +27,7 @@ public class TopLevelAuto extends Command {
   
 
   private DriveSubsystem driveSubsystem;
+  private AprilVisionSubsystem avSubsystem;
   private ShooterSubsystem shooterSubsystem;
   private IntakeSubsystem intakeSubsystem;
 
@@ -41,18 +43,19 @@ public class TopLevelAuto extends Command {
   allianceColor currentAlliance;
   SequentialCommandGroup group;
 
-  public TopLevelAuto(String p_inputString, DriveSubsystem p_driveSubsystem, ShooterSubsystem p_shooterSubsystem, IntakeSubsystem p_intakeSubsystem) {
+  public TopLevelAuto(String p_inputString, DriveSubsystem p_driveSubsystem, AprilVisionSubsystem p_avSubsystem,ShooterSubsystem p_shooterSubsystem, IntakeSubsystem p_intakeSubsystem) {
     inputString = p_inputString;
     driveSubsystem = p_driveSubsystem;
     shooterSubsystem = p_shooterSubsystem;
     intakeSubsystem = p_intakeSubsystem;
+    avSubsystem = p_avSubsystem;
 
     commandList = new ArrayList<Command>();
     alliance = DriverStation.getAlliance();
     
     group = new SequentialCommandGroup();
 
-    addRequirements(driveSubsystem);
+    addRequirements(driveSubsystem, avSubsystem);
   }
 
 
@@ -72,7 +75,7 @@ public class TopLevelAuto extends Command {
     formattedString = StringParsing.parsePointList(inputString);
     for(String value : formattedString) {
       if(value.length() == 2)
-        commandList.add(new GoToPoint(driveSubsystem, StringParsing.parseStringPoint(value, currentAlliance)));
+        commandList.add(new GoToPoint(driveSubsystem, avSubsystem, StringParsing.parseStringPoint(value, currentAlliance)));
       if(value.length() == 1) {
         if(value.equals("S"))
           commandList.add(new Shoot(shooterSubsystem));

@@ -58,7 +58,7 @@ public class AprilVisionSubsystem extends SubsystemBase {
             }else{
                 coordinate.x = thirteenthReason.Results.Fiducial[fidLocation].t6t_rs[0];
                 coordinate.y = thirteenthReason.Results.Fiducial[fidLocation].t6t_rs[1];
-                coordinate.z = thirteenthReason.Results.Fiducial[fidLocation].t6t_rs[2] * 0.754f - 0.045f;
+                coordinate.z = thirteenthReason.Results.Fiducial[fidLocation].t6t_rs[2];
                 coordinate.rx = thirteenthReason.Results.Fiducial[fidLocation].t6t_rs[3];
                 coordinate.ry = thirteenthReason.Results.Fiducial[fidLocation].t6t_rs[4];
                 coordinate.rz = thirteenthReason.Results.Fiducial[fidLocation].t6t_rs[5];
@@ -87,7 +87,7 @@ public class AprilVisionSubsystem extends SubsystemBase {
             }else{
                 coordinate.x = thirteenthReason.Results.Fiducial[fidLocation].t6r_ts[0];
                 coordinate.y = thirteenthReason.Results.Fiducial[fidLocation].t6r_ts[1];
-                coordinate.z = thirteenthReason.Results.Fiducial[fidLocation].t6r_ts[2] * 0.754f - 0.045f;
+                coordinate.z = thirteenthReason.Results.Fiducial[fidLocation].t6r_ts[2];
                 coordinate.rx = thirteenthReason.Results.Fiducial[fidLocation].t6r_ts[3];
                 coordinate.ry = thirteenthReason.Results.Fiducial[fidLocation].t6r_ts[4];
                 coordinate.rz = thirteenthReason.Results.Fiducial[fidLocation].t6r_ts[5];
@@ -104,7 +104,7 @@ public class AprilVisionSubsystem extends SubsystemBase {
         if (thirteenthReason.Results.Fiducial.length != 0) {
                 coordinate.x = thirteenthReason.Results.Fiducial[0].t6r_fs[0];
                 coordinate.y = thirteenthReason.Results.Fiducial[0].t6r_fs[1];
-                coordinate.z = thirteenthReason.Results.Fiducial[0].t6r_fs[2] * 0.754f - 0.045f;
+                coordinate.z = thirteenthReason.Results.Fiducial[0].t6r_fs[2];
                 coordinate.rx = thirteenthReason.Results.Fiducial[0].t6r_fs[3];
                 coordinate.ry = thirteenthReason.Results.Fiducial[0].t6r_fs[4];
                 coordinate.rz = thirteenthReason.Results.Fiducial[0].t6r_fs[5];
