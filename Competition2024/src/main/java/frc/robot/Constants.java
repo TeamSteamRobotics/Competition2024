@@ -22,10 +22,10 @@ public final class Constants {
   }
 
   public static class CANID {
-    public static final int frontLeft = 3;
-    public static final int frontRight = 4;
+    public static final int frontLeft = 2;
+    public static final int frontRight = 3;
     public static final int backLeft = 1;
-    public static final int backRight = 2;
+    public static final int backRight = 4;
     //TODO update numbers
   }
 
@@ -36,10 +36,10 @@ public final class Constants {
   }
 
     public static class EncoderID {
-      public static final int leftThroughBoreEncoder1 = 0;
-      public static final int leftThroughBoreEncoder2 = 1;
-      public static final int rightThroughBoreEncoder1 = 2;
-      public static final int rightThroughBoreEncoder2 = 3;
+      public static final int leftThroughBoreEncoder1 = 2;
+      public static final int leftThroughBoreEncoder2 = 3;
+      public static final int rightThroughBoreEncoder1 = 0;
+      public static final int rightThroughBoreEncoder2 = 1;
 
     }
 

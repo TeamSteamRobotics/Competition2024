@@ -42,19 +42,17 @@ public class TopLevelAuto extends Command {
   allianceColor currentAlliance;
   SequentialCommandGroup group;
 
-  public TopLevelAuto(String p_inputString, DriveSubsystem p_driveSubsystem, ShooterSubsystem p_shooterSubsystem, IntakeSubsystem p_intakeSubsystem) {
-    inputString = p_inputString;
+  public TopLevelAuto(DriveSubsystem p_driveSubsystem, ShooterSubsystem p_shooterSubsystem, IntakeSubsystem p_intakeSubsystem) {
+    inputString = SmartDashboard.getString("AutoCSVInput", "");
     driveSubsystem = p_driveSubsystem;
     shooterSubsystem = p_shooterSubsystem;
     intakeSubsystem = p_intakeSubsystem;
-    SmartDashboard.putString("input", "");
-    inputString = SmartDashboard.getString("input", "");
     commandList = new ArrayList<Command>();
     alliance = DriverStation.getAlliance();
     
     group = new SequentialCommandGroup();
 
-    addRequirements(driveSubsystem);
+    addRequirements(driveSubsystem, shooterSubsystem, intakeSubsystem);
   }
 
 
@@ -72,8 +70,8 @@ public class TopLevelAuto extends Command {
       currentAlliance = allianceColor.BLUE; // 50-50 chance that we right if we cant get the correct info so we take the odds better than doing nothing right???
     }
     formattedString = StringParsing.parsePointList(inputString);
-    for(int i = 0; i < 5; i++){
-    SmartDashboard.putString("Compnent" + i, formattedString[i]);
+    for(String comp : formattedString){
+    SmartDashboard.putString("Compnent" + comp, comp);
     }
     for(String value : formattedString) {
       if(value.length() == 2)
@@ -93,7 +91,7 @@ public class TopLevelAuto extends Command {
 
   @Override
   public void execute() {
-    
+    SmartDashboard.getString("input", "");
   }
 
   @Override
