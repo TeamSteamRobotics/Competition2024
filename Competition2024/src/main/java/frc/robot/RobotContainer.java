@@ -9,6 +9,7 @@ import frc.robot.commands.CoordinatePrint;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.AprilVisionSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.AprilVisionSubsystem.ReturnTarget;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -27,7 +28,7 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
   
-    m_aprilVisionSubsystem.setDefaultCommand(new CoordinatePrint(m_aprilVisionSubsystem, 5, 0));
+    m_aprilVisionSubsystem.setDefaultCommand(new CoordinatePrint(m_aprilVisionSubsystem, 5, ReturnTarget.TARGET));
     // Configure the trigger bindings
     configureBindings();
   }

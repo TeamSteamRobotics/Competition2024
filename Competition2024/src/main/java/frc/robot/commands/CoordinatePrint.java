@@ -2,11 +2,12 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.AprilVisionSubsystem;
+import frc.robot.subsystems.AprilVisionSubsystem.ReturnTarget;
 public class CoordinatePrint extends Command{
     private AprilVisionSubsystem av;
     private int id;
-    private int tt;
-    public CoordinatePrint(AprilVisionSubsystem p_av, int targetId, int targetType){
+    private ReturnTarget tt;
+    public CoordinatePrint(AprilVisionSubsystem p_av, int targetId, ReturnTarget targetType){
         av = p_av;
         id = targetId;
         tt = targetType;

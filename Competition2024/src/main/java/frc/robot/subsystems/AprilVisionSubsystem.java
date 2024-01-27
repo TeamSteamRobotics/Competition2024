@@ -16,21 +16,24 @@ public class AprilVisionSubsystem extends SubsystemBase {
 
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     NetworkTableEntry tableEntry = table.getEntry("json");
-    double distanceMultiplier = 0.754;
     int fidLocation;
     boolean fidLocFound;
     public AprilVisionSubsystem() {}
     Gson gson = new Gson();
-
-    public Coordinate getCoordinates(int targetId, int returnTarget) {
-       switch(returnTarget){
-        case 0:
+    public enum ReturnTarget{
+        TARGET,
+        ROBOT,
+        FIELD
+    }
+    public Coordinate getCoordinates(int targetId, ReturnTarget rt) {
+       switch(rt){
+        case TARGET:
         updateTargetCoordinates(targetId);
         break;
-        case 1:
+        case ROBOT:
         updateRobotCoordinates(targetId);
         break;
-        case 2:
+        case FIELD:
         updateFieldCoordinates(targetId);
         break;
        }
