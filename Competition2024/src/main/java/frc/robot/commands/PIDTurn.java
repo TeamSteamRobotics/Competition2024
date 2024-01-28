@@ -31,30 +31,12 @@ public class PIDTurn extends PIDCommand {
         });
         
     addRequirements(driveSubsystem);
-    //SmartDashboard.putData("PID Turn", getController());
-    /*SmartDashboard.putNumber("turn P", 0);
-    SmartDashboard.putNumber("turn I", 0);  
-    SmartDashboard.putNumber("turn D", 0);  
-    SmartDashboard.putNumber("turn Tolerance", 0);   
-
-    SmartDashboard.putNumber("turn Tolerance", 0);    */
-    // Use addRequirements() here to declare subsystem dependencies.
-    // Configure additional PID options by calling `getController` here.
+    SmartDashboard.putData("PIDTurn", getController()); 
   }
 
   @Override
   public void execute() {
-    /*p = SmartDashboard.getNumber("turn P", 0);
-    i = SmartDashboard.getNumber("turn I", 0);
-    d = SmartDashboard.getNumber("turn D", 0);
-    tolerance = SmartDashboard.getNumber("turn Tolerance", 0);*/
-    getController().setP(p);
-    getController().setI(i); 
-    getController().setD(d);
-    getController().setTolerance(tolerance);
-
-    SmartDashboard.putData("PIDTurn", getController()); 
-
+    
   }
 
   // Returns true when the command should end.
