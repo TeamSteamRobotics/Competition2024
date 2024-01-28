@@ -1,5 +1,31 @@
 <xml version="1.0">
 <dashboard>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.RobotPreferences">
+		<location x="818" y="57"/>
+	</static-widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
+		<location x="448" y="319"/>
+		<property name="Text" value="Right Drive Encoder"/>
+	</static-widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
+		<location x="197" y="318"/>
+		<property name="Text" value="Left Drive Encoder"/>
+	</static-widget>
+	<widget field="AutoCSVInput" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="184" y="573"/>
+		<width>715</width>
+		<height>119</height>
+		<property name="Background" value="204.255.204.255"/>
+	</widget>
+	<widget field="Encoder[1]" type="Quadrature Encoder" class="edu.wpi.first.smartdashboard.livewindow.elements.EncoderDisplay">
+		<location x="388" y="347"/>
+	</widget>
+	<widget field="Encoder[0]" type="Quadrature Encoder" class="edu.wpi.first.smartdashboard.livewindow.elements.EncoderDisplay">
+		<location x="180" y="349"/>
+	</widget>
+	<widget field="navX-Sensor[4]" type="Gyro" class="edu.wpi.first.smartdashboard.gui.elements.Compass">
+		<location x="5" y="21"/>
+	</widget>
 	<widget field="Reset Encoders" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
 		<location x="430" y="213"/>
 	</widget>
@@ -7,10 +33,7 @@
 		<location x="578" y="210"/>
 	</widget>
 	<widget field="Gyro reading" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.FormattedField">
-		<location x="227" y="247"/>
-	</widget>
-	<widget field="Test" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="48" y="138"/>
+		<location x="63" y="187"/>
 	</widget>
 	<widget field="Through Bore Encoder Distance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="395" y="149"/>
@@ -37,17 +60,25 @@
 		<location x="262" y="48"/>
 		<height>19</height>
 	</widget>
-	<widget field="Point" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="50" y="10"/>
-	</widget>
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Image">
-		<location x="1026" y="2"/>
+		<location x="1173" y="4"/>
 		<width>502</width>
 		<height>439</height>
-		<property name="Image File" value="C:\Users\Zachary\Downloads\Asset-1.png"/>
+		<property name="Image File" value="C:\Users\Zachary Hansen Terry\Development\Competition2024\Competition2024\Asset-1.png"/>
+	</static-widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.ConnectionIndicator">
+		<location x="1276" y="465"/>
+		<width>325</width>
+		<height>248</height>
 	</static-widget>
 </dashboard>
 <live-window>
 </live-window>
 	<hidden field="Field"/>
+	<hidden field="DifferentialDrive[1]"/>
+	<hidden field="Compnent3"/>
+	<hidden field="Compnent2"/>
+	<hidden field="Compnent1"/>
+	<hidden field="Compnent0"/>
+	<hidden field="Point"/>
 </xml>

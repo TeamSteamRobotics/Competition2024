@@ -2,9 +2,12 @@
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
+      "/SmartDashboard/DifferentialDrive[1]": "DifferentialDrive",
       "/SmartDashboard/Field": "Field2d",
+      "/SmartDashboard/PIDTurn": "PIDController",
       "/SmartDashboard/Reset Encoders": "Command",
-      "/SmartDashboard/Reset Gyro": "Command"
+      "/SmartDashboard/Reset Gyro": "Command",
+      "/SmartDashboard/navX-Sensor[4]": "Gyro"
     },
     "windows": {
       "/SmartDashboard/Field": {
@@ -26,6 +29,12 @@
     }
   },
   "NetworkTables Info": {
+    "Server": {
+      "Publishers": {
+        "open": true
+      },
+      "open": true
+    },
     "visible": true
   },
   "NetworkTables View": {

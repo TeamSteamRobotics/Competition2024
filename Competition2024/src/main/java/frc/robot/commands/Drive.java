@@ -32,7 +32,6 @@ public class Drive extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println(speed.getAsDouble());
     driveSubsystem.drive(speed.getAsDouble(), rotation.getAsDouble());
   }
 

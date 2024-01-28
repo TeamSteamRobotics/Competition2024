@@ -82,6 +82,9 @@ public class DriveSubsystem extends SubsystemBase {
     leftThroughBoreEncoder.setReverseDirection(true); //Either the left or right idk yet
 
     odometry = new DifferentialDriveOdometry(navX.getRotation2d(), getLeftSideMeters(), getRightSideMeters(), new Pose2d(1 ,1 , new Rotation2d(0)));
+
+    SmartDashboard.putData("Reset Encoders", new InstantCommand(() -> resetEncoders(), this));
+    SmartDashboard.putData("Reset Gyro", new InstantCommand(() -> resetGyro(), this));
   }
 
   public void drive(double speed, double rotation){
@@ -184,8 +187,11 @@ public class DriveSubsystem extends SubsystemBase {
 
     SmartDashboard.putNumber("Gyro reading", getAngleDegrees());
 
-    SmartDashboard.putData("Reset Encoders", new InstantCommand(() -> resetEncoders(), this));
-    SmartDashboard.putData("Reset Gyro", new InstantCommand(() -> resetGyro(), this));
+    SmartDashboard.putData(navX);
+    SmartDashboard.putData(leftThroughBoreEncoder);
+    SmartDashboard.putData(rightThroughBoreEncoder);
+
+
   }
 }
 
