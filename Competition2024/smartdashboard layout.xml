@@ -1,5 +1,48 @@
 <xml version="1.0">
 <dashboard>
+	<widget field="Compnent3" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="209"/>
+	</widget>
+	<widget field="AUTO INPUT ERRORS: D4" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="188"/>
+	</widget>
+	<widget field="Encoder[1]" type="Quadrature Encoder" class="edu.wpi.first.smartdashboard.livewindow.elements.EncoderDisplay">
+		<location x="352" y="709"/>
+	</widget>
+	<widget field="Encoder[0]" type="Quadrature Encoder" class="edu.wpi.first.smartdashboard.livewindow.elements.EncoderDisplay">
+		<location x="149" y="703"/>
+	</widget>
+	<widget field="PIDTurn" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
+		<location x="33" y="389"/>
+	</widget>
+	<widget field="Auto Ready" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
+		<location x="883" y="584"/>
+		<width>198</width>
+		<height>92</height>
+	</widget>
+	<widget field="Validate Auto Input" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.CheckBox">
+		<location x="420" y="586"/>
+	</widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.RobotPreferences">
+		<location x="817" y="60"/>
+	</static-widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
+		<location x="378" y="679"/>
+		<property name="Text" value="Right Drive Encoder"/>
+	</static-widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
+		<location x="192" y="680"/>
+		<property name="Text" value="Left Drive Encoder"/>
+	</static-widget>
+	<widget field="AutoCSVInput" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="348" y="520"/>
+		<width>732</width>
+		<height>65</height>
+		<property name="Background" value="204.255.204.255"/>
+	</widget>
+	<widget field="navX-Sensor[4]" type="Gyro" class="edu.wpi.first.smartdashboard.gui.elements.Compass">
+		<location x="-2" y="2"/>
+	</widget>
 	<widget field="Reset Encoders" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
 		<location x="430" y="213"/>
 	</widget>
@@ -7,10 +50,7 @@
 		<location x="578" y="210"/>
 	</widget>
 	<widget field="Gyro reading" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.FormattedField">
-		<location x="227" y="247"/>
-	</widget>
-	<widget field="Test" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="48" y="138"/>
+		<location x="32" y="166"/>
 	</widget>
 	<widget field="Through Bore Encoder Distance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="395" y="149"/>
@@ -37,17 +77,26 @@
 		<location x="262" y="48"/>
 		<height>19</height>
 	</widget>
-	<widget field="Point" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="50" y="10"/>
-	</widget>
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Image">
-		<location x="1026" y="2"/>
+		<location x="1173" y="4"/>
 		<width>502</width>
 		<height>439</height>
-		<property name="Image File" value="C:\Users\Zachary\Downloads\Asset-1.png"/>
+		<property name="Image File" value="C:\Users\Zachary Hansen Terry\Development\Competition2024\Competition2024\Asset-1.png"/>
+	</static-widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.ConnectionIndicator">
+		<location x="1277" y="466"/>
+		<width>325</width>
+		<height>248</height>
 	</static-widget>
 </dashboard>
 <live-window>
 </live-window>
 	<hidden field="Field"/>
+	<hidden field="AUTO INPUT ERRORS: N5"/>
+	<hidden field="AUTO INPUT ERRORS: B2"/>
+	<hidden field="Compnent4"/>
+	<hidden field="Compnent2"/>
+	<hidden field="Compnent1"/>
+	<hidden field="AUTO INPUT ERRORS: S2"/>
+	<hidden field="Compnent0"/>
 </xml>
