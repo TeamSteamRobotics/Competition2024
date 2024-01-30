@@ -64,6 +64,8 @@ public class DriveSubsystem extends SubsystemBase {
 
     frontLeftMotor.follow(backLeftMotor);
     frontRightMotor.follow(backRightMotor);
+    backRightMotor.setInverted(true);
+    
     diffDrive = new DifferentialDrive(backLeftMotor, backRightMotor);
 
     frontLeftEncoder = frontLeftMotor.getEncoder();
