@@ -9,6 +9,7 @@ import frc.robot.StringParsing;
 import frc.robot.commands.Autos;
 import frc.robot.commands.Drive;
 import frc.robot.commands.DriveDistance;
+import frc.robot.commands.Intake;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.PIDTurn;
 import frc.robot.commands.TopLevelAuto;
@@ -19,11 +20,13 @@ import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SmartDashboardSubsystem;
 import edu.wpi.first.networktables.BooleanTopic;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.NetworkButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.subsystems.IntakeSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -49,7 +52,22 @@ public class RobotContainer {
     m_driveSubsystem.setDefaultCommand(new Drive(m_driveSubsystem, m_driverController::getLeftY, m_driverController::getRightX));
     // Configure the trigger bindings
     configureBindings();
+
   }
+
+private final CommandXboxController m_operatorController =
+    new CommandXboxController(OperatorConstants.kOperatorControllerPort);
+
+   private final Trigger DeployIntake = m_operatorController.leftBumper();
+   private final Trigger StartIntake = m_driverController.rightBumper();
+   //need to make DeployIntake thing go down to -- degree + finish StartIntake
+
+      
+    
+
+
+
+
 
   /**
    * Use this method to define your trigger->command mappings. Triggers can be created via the
