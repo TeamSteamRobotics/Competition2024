@@ -30,24 +30,14 @@ public class DriveDistance extends PIDCommand {
         });
         
     addRequirements(driveSubsystem);
-    SmartDashboard.putNumber("P", 0);
-    SmartDashboard.putNumber("I", 0);  
-    SmartDashboard.putNumber("D", 0);  
-    SmartDashboard.putNumber("Tolerance", 0);    
+    SmartDashboard.putData(getController());
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
   }
 
   @Override
   public void execute() {
-    p = SmartDashboard.getNumber("P", 0);
-    i = SmartDashboard.getNumber("I", 0);
-    d = SmartDashboard.getNumber("D", 0);
-    tolerance = SmartDashboard.getNumber("Tolerance", 0);
-    getController().setP(p);
-    getController().setI(i); 
-    getController().setD(d);
-    getController().setTolerance(tolerance);
+   
   }
 
   // Returns true when the command should end.

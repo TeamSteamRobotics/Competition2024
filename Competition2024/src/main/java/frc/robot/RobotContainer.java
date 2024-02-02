@@ -8,6 +8,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.StringParsing;
 import frc.robot.commands.Autos;
 import frc.robot.commands.Drive;
+import frc.robot.commands.DriveDistance;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.PIDTurn;
 import frc.robot.commands.TopLevelAuto;
@@ -40,6 +41,8 @@ public class RobotContainer {
   private final SmartDashboardSubsystem m_SmartDashboardSubsystem = new SmartDashboardSubsystem();
 
   private final CommandXboxController m_driverController = new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  private final Trigger m_driveOneMeter = m_driverController.leftBumper();
+  private final Trigger m_turn180Degrees = m_driverController.rightBumper();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -59,6 +62,8 @@ public class RobotContainer {
    */
   private void configureBindings() {
     SmartDashboard.putData(new PIDTurn(m_driveSubsystem, 90));
+    m_driveOneMeter.onTrue(new DriveDistance(m_driveSubsystem, 1));
+    m_turn180Degrees.onTrue(new PIDTurn(m_driveSubsystem, 180));
   }
 
   /**
