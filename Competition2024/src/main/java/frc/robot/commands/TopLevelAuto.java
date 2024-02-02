@@ -80,7 +80,7 @@ public class TopLevelAuto extends Command {
         if(value.equals("S"))
           commandList.add(new Shoot(shooterSubsystem));
         else if(value.equals("I"))
-          commandList.add(new Intake(intakeSubsystem));
+          commandList.add(new Intake(intakeSubsystem, () -> 0.25));
       }
     }
     for(Command command : commandList) {
