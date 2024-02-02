@@ -25,5 +25,7 @@
       }
     },
   ],
-  "java.test.defaultConfig": "WPIlibUnitTests"
+  "java.test.defaultConfig": "WPIlibUnitTests",
+  "editor.fontFamily": "Consolas, 'Courier New', monospace, Times New Bastard ",
+  "editor.fontWeight": "normal"
 }

@@ -7,7 +7,7 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.Drive;
-import frc.robot.commands.Intake;
+import frc.robot.commands.StartIntake;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -27,6 +27,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
+  private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
@@ -34,6 +35,7 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     m_driveSubsystem.setDefaultCommand(new Drive(m_driveSubsystem, m_driverController::getLeftY, m_driverController::getLeftX));
+
     // Configure the trigger bindings
     configureBindings();
 
@@ -42,8 +44,7 @@ public class RobotContainer {
 private final CommandXboxController m_operatorController =
     new CommandXboxController(OperatorConstants.kOperatorControllerPort);
 
-   private final Trigger DeployIntake = m_operatorController.leftBumper();
-   private final Trigger StartIntake = m_driverController.rightBumper();
+  
    //need to make DeployIntake thing go down to -- degree + finish StartIntake
 
       
@@ -69,9 +70,11 @@ private final CommandXboxController m_operatorController =
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    m_operatorController.rightBumper().onTrue(new StartIntake(m_intakeSubsystem, ()->1 ));
   }
 
+   private final Trigger DeployIntake = m_operatorController.leftBumper();
+   private final Trigger StartIntake = m_driverController.rightBumper();
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
