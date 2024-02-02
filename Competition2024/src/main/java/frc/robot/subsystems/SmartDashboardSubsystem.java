@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim.KitbotWheelSiz
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.commands.PIDTurn;
 
 public class SmartDashboardSubsystem extends SubsystemBase {
   private static final int kWheelRadius = 2;
@@ -68,26 +69,12 @@ public void simulationPeriodic(){
 
   /** Creates a new SmartDashboardSubsystem. */
   public SmartDashboardSubsystem() {
-    SmartDashboard.putString("Point", "S1");
     SmartDashboard.putData("Field", m_field);
   }
 
   @Override
   public void periodic(){
-  // String input = SmartDashboard.getString("Point", "S1");
-  
-  //   if (input == "S1"){}
-  //   else if (input == "A1"){}
-  //   else if (input == "S2"){}
-  //   else if (input == "S3"){}
-  //   else if (input == "G1"){}
-  //   else if (input == "G2"){}
 
-  //Else if standard system
-    double X = SmartDashboard.getNumber("X Position in inches", 0);
-    SmartDashboard.getNumber("Y Position",0);
-    SmartDashboard.putNumber("Test", X);
-    // This method will be called once per scheduler run
 
     m_field.setRobotPose(new Pose2d(1, 1, new Rotation2d(0) )); 
     // fix the values later to stay current (got errors we didnt know how to fix)
