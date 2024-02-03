@@ -48,7 +48,7 @@ public class TopLevelAuto extends Command {
   public void initialize() {
     formattedString = StringParsing.parsePointList(inputString);
     for(String comp : formattedString){
-      SmartDashboard.putString("Compnent" + comp, comp);
+      SmartDashboard.putString("Component" + comp, comp);
     }
     for(String value : formattedString) {
       if(value.length() == 2)
