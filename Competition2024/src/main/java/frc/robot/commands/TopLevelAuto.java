@@ -55,7 +55,7 @@ public class TopLevelAuto extends Command {
         autoCmdGroup.addCommands(new GoToPoint(driveSubsystem, StringParsing.parseStringPoint(value, alliance)));
       if(value.length() == 1) {
         if(value.equals("S"))
-          autoCmdGroup.addCommands(new Shoot(shooterSubsystem));
+          autoCmdGroup.addCommands(new Shoot(shooterSubsystem, 0));
         else if(value.equals("I"))
           autoCmdGroup.addCommands(new Intake(intakeSubsystem, () -> 0.25));
       }

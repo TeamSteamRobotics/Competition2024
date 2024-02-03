@@ -27,8 +27,12 @@ public final class Constants {
     public static final int frontRight = 3;
     public static final int backLeft = 1;
     public static final int backRight = 2;
+
     public static final int intakeRoller = 6;
     public static final int intakePivot = 9;
+
+    public static final int leftShooter = 100;
+    public static final int rightShooter = 101;
 
     //TODO update numbers
   }
