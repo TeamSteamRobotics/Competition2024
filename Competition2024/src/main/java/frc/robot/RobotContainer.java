@@ -44,29 +44,24 @@ public class RobotContainer {
   private final SmartDashboardSubsystem m_SmartDashboardSubsystem = new SmartDashboardSubsystem();
 
   private final CommandXboxController m_driverController = new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  private final CommandXboxController m_operatorController = new CommandXboxController(OperatorConstants.kOperatorControllerPort);
+
+  // Driver Controller Bindings:
   private final Trigger m_driveOneMeter = m_driverController.leftBumper();
   private final Trigger m_turn180Degrees = m_driverController.rightBumper();
+
+  // Operator Controller Bindings
+  private final Trigger DeployIntake = m_operatorController.leftBumper();
+  private final Trigger StartIntake = m_operatorController.rightBumper();
+
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     m_driveSubsystem.setDefaultCommand(new Drive(m_driveSubsystem, m_driverController::getLeftY, m_driverController::getRightX));
-    // Configure the trigger bindings
     configureBindings();
-
   }
 
-private final CommandXboxController m_operatorController =
-    new CommandXboxController(OperatorConstants.kOperatorControllerPort);
-
-   private final Trigger DeployIntake = m_operatorController.leftBumper();
-   private final Trigger StartIntake = m_driverController.rightBumper();
    //need to make DeployIntake thing go down to -- degree + finish StartIntake
-
-      
-    
-
-
-
 
 
   /**
@@ -79,7 +74,6 @@ private final CommandXboxController m_operatorController =
    * joysticks}.
    */
   private void configureBindings() {
-    SmartDashboard.putData(new PIDTurn(m_driveSubsystem, 90));
     m_driveOneMeter.onTrue(new DriveDistance(m_driveSubsystem, 1));
     m_turn180Degrees.onTrue(new PIDTurn(m_driveSubsystem, 180));
   }
@@ -90,7 +84,6 @@ private final CommandXboxController m_operatorController =
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
     return new TopLevelAuto(m_driveSubsystem, m_shooterSUbsystem, m_intakeSubsystem);
   }
 }

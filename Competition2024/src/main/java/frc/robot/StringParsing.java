@@ -1,11 +1,12 @@
 package frc.robot;
 
+import java.util.Optional;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.TopLevelAuto;
-import frc.robot.commands.TopLevelAuto.allianceColor;
 
 public class StringParsing {
 
@@ -34,16 +35,27 @@ public class StringParsing {
 		return pass;
 	}
 
-	public static Pose2d parseStringPoint(String input, allianceColor currentAlliance) {
+	public static Pose2d parseStringPoint(String input, Optional<Alliance> alliance) {
 		char letter = input.charAt(0);
 		int posNum = Integer.parseInt(String.valueOf(input.charAt(1)));
+		int allyNum = 0;
+
+		if(alliance.isPresent()) {
+			if(alliance.get() == Alliance.Blue)
+			  allyNum = 0;
+			else if(alliance.get() == Alliance.Red)
+			  allyNum = 1;
+		  }
+		  else
+			allyNum = 0; // 50-50 chance that we right if we cant get the correct info so we take the odds better than doing nothing right???
+
 		switch (letter) {
 			case 'B':
-				return AutoPoints.bArray[currentAlliance.getValue()][(posNum - 1)];
+				return AutoPoints.bArray[allyNum][(posNum - 1)];
 			case 'N':
-				return AutoPoints.nArray[currentAlliance.getValue()][(posNum - 1)];
+				return AutoPoints.nArray[allyNum][(posNum - 1)];
 			case 'S':
-				return AutoPoints.sArray[currentAlliance.getValue()][(posNum - 1)];
+				return AutoPoints.sArray[allyNum][(posNum - 1)];
 			default:
 				return new Pose2d();
 		}

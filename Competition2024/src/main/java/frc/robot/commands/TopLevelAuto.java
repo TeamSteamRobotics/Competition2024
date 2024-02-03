@@ -22,35 +22,23 @@ public class TopLevelAuto extends Command {
   /** Creates a new MainAutoCommand. */
   private String inputString;
   private String[] formattedString;
-  private ArrayList<Command> commandList;
   private Optional<Alliance> alliance;
   
-
   private DriveSubsystem driveSubsystem;
   private ShooterSubsystem shooterSubsystem;
   private IntakeSubsystem intakeSubsystem;
 
-  public enum allianceColor{
-        BLUE(0),
-        RED(1);
-
-        private int id;
-        private allianceColor(int id){this.id = id;}
-        public int getValue() {return id;}
- }
-
-  allianceColor currentAlliance;
-  SequentialCommandGroup group;
+  SequentialCommandGroup autoCmdGroup;
 
   public TopLevelAuto(DriveSubsystem p_driveSubsystem, ShooterSubsystem p_shooterSubsystem, IntakeSubsystem p_intakeSubsystem) {
     inputString = SmartDashboard.getString("AutoCSVInput", "");
     driveSubsystem = p_driveSubsystem;
     shooterSubsystem = p_shooterSubsystem;
     intakeSubsystem = p_intakeSubsystem;
-    commandList = new ArrayList<Command>();
+
     alliance = DriverStation.getAlliance();
     
-    group = new SequentialCommandGroup();
+    autoCmdGroup = new SequentialCommandGroup();
 
     addRequirements(driveSubsystem, shooterSubsystem, intakeSubsystem);
   }
@@ -58,41 +46,25 @@ public class TopLevelAuto extends Command {
 
   @Override
   public void initialize() {
-    if(alliance.isPresent()) {
-      if(alliance.get() == Alliance.Blue) {
-        currentAlliance = allianceColor.BLUE;
-      }
-      else if(alliance.get() == Alliance.Red) {
-        currentAlliance = allianceColor.RED;
-      }
-    }
-    else {
-      currentAlliance = allianceColor.BLUE; // 50-50 chance that we right if we cant get the correct info so we take the odds better than doing nothing right???
-    }
     formattedString = StringParsing.parsePointList(inputString);
     for(String comp : formattedString){
-    SmartDashboard.putString("Compnent" + comp, comp);
+      SmartDashboard.putString("Compnent" + comp, comp);
     }
     for(String value : formattedString) {
       if(value.length() == 2)
-        commandList.add(new GoToPoint(driveSubsystem, StringParsing.parseStringPoint(value, currentAlliance)));
+        autoCmdGroup.addCommands(new GoToPoint(driveSubsystem, StringParsing.parseStringPoint(value, alliance)));
       if(value.length() == 1) {
         if(value.equals("S"))
-          commandList.add(new Shoot(shooterSubsystem));
+          autoCmdGroup.addCommands(new Shoot(shooterSubsystem));
         else if(value.equals("I"))
-          commandList.add(new Intake(intakeSubsystem, () -> 0.25));
+          autoCmdGroup.addCommands(new Intake(intakeSubsystem, () -> 0.25));
       }
     }
-    for(Command command : commandList) {
-      group.addCommands(command);
-    }
-    group.schedule();
+    autoCmdGroup.schedule();
   }
 
   @Override
-  public void execute() {
-    SmartDashboard.getString("input", "");
-  }
+  public void execute() {}
 
   @Override
   public void end(boolean interrupted) {}
