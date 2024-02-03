@@ -12,28 +12,30 @@ import frc.robot.subsystems.DriveSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class DriveDistance extends PIDCommand {
-  /** Creates a new DriveDistance. */
-  double p, i, d, tolerance;
-  public DriveDistance(DriveSubsystem driveSubsystem, double distance) {
+public class TestTurn extends PIDCommand {
+  /** Creates a new TestTurn. */
+  public TestTurn(DriveSubsystem drive, double turn) {
     super(
         // The controller that the command will use
-        new PIDController(0, 0, 0),
+        new PIDController(0.05, 0, 0),
         // This should return the measurement
-        () -> driveSubsystem.getAverageRotations(),
+        () -> drive.getAngleDegrees(),
         // This should return the setpoint (can also be a constant)
-        () -> distance,
+        () -> turn,
         // This uses the output
         output -> {
-          driveSubsystem.drive(-output, 0);
+          drive.drive(0, output);
           // Use the output here
         });
-        
-    addRequirements(driveSubsystem);
-    SmartDashboard.putData("Drive Distance", getController());
-    driveSubsystem.resetEncoders();
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
+    addRequirements(drive);
+    drive.resetGyro();
+    /*SmartDashboard.putNumber("p", 0);
+    SmartDashboard.putNumber("i", 0);
+    SmartDashboard.putNumber("d", 0);*/
+    SmartDashboard.putData(getController());
+
   }
 
 

@@ -12,6 +12,7 @@ import frc.robot.commands.DriveDistance;
 import frc.robot.commands.Intake;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.PIDTurn;
+import frc.robot.commands.TestTurn;
 import frc.robot.commands.TopLevelAuto;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -75,9 +76,12 @@ public class RobotContainer {
    */
   private void configureBindings() {
     m_driveOneMeter.onTrue(new DriveDistance(m_driveSubsystem, 1));
-    m_turn180Degrees.onTrue(new PIDTurn(m_driveSubsystem, 180));
+    m_turn180Degrees.whileTrue(new TestTurn(m_driveSubsystem, 50));
   }
 
+  private double testGetPoint() {
+    return 50;
+  }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *

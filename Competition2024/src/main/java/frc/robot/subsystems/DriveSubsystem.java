@@ -81,7 +81,7 @@ public class DriveSubsystem extends SubsystemBase {
 
     navX = new AHRS(SPI.Port.kMXP);
 
-    leftThroughBoreEncoder.setReverseDirection(true); //Either the left or right idk yet
+    rightThroughBoreEncoder.setReverseDirection(true); //Either the left or right idk yet
 
     odometry = new DifferentialDriveOdometry(navX.getRotation2d(), getLeftSideMeters(), getRightSideMeters(), new Pose2d(1 ,1 , new Rotation2d(0)));
 
@@ -116,7 +116,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   //Average of right and left side averages
   public double getAverageRotations() {
-    return (getLeftSideBuiltInRotations() + getRightSideBuiltInRotations()) / 2;
+    return (getRightSideMeters() + getLeftSideMeters()) / 2;
   }
 
   public double getLeftSideDistanceBuiltInMeters() {
@@ -157,7 +157,6 @@ public class DriveSubsystem extends SubsystemBase {
     navX.reset();
   }
 
-  // NOT FILLED IN YET DO NOT USE YET   
   public double getAngleDegrees() {
     return navX.getAngle();
   }
