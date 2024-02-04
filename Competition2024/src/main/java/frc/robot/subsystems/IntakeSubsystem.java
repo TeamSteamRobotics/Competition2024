@@ -20,8 +20,6 @@ import frc.robot.Constants.CANID;
 import frc.robot.Constants.DigitalIOID;
 
 public class IntakeSubsystem extends SubsystemBase {
-  /** Creates a new IntakeSubsystem. */
-
   private CANSparkMax intakeRoller;
   private CANSparkFlex intakePivot;
 

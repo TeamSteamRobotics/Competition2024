@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.SPI;
 import frc.robot.Constants;
 import frc.robot.Constants.CANID;
-import frc.robot.Constants.EncoderID;
+import frc.robot.Constants.DigitalIOID;
 import frc.robot.Constants.OdometryConsts;
 
 import com.kauailabs.navx.frc.AHRS;
@@ -24,8 +24,6 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 public class DriveSubsystem extends SubsystemBase {
-  /** Creates a new DriveSubsystem. */
-  
   private CANSparkMax frontLeftMotor;
   private CANSparkMax frontRightMotor;
   private CANSparkMax backLeftMotor;
@@ -62,18 +60,16 @@ public class DriveSubsystem extends SubsystemBase {
     backLeftEncoder = backLeftMotor.getEncoder();
     backRightEncoder = backRightMotor.getEncoder();
 
-    leftThroughBoreEncoder = new Encoder(EncoderID.leftThroughBoreEncoder1, EncoderID.leftThroughBoreEncoder2);
-    rightThroughBoreEncoder = new Encoder(EncoderID.rightThroughBoreEncoder1, EncoderID.rightThroughBoreEncoder2); 
+    leftThroughBoreEncoder = new Encoder(DigitalIOID.leftDriveEncoder1, DigitalIOID.leftDriveEncoder2);
+    rightThroughBoreEncoder = new Encoder(DigitalIOID.rightDriveEncoder1, DigitalIOID.rightDriveEncoder2); 
 
     leftThroughBoreEncoder.setDistancePerPulse(OdometryConsts.wheelCircumfrenceMeters / 2048);
     rightThroughBoreEncoder.setDistancePerPulse(OdometryConsts.wheelCircumfrenceMeters / 2048);
 
     leftThroughBoreEncoder.setReverseDirection(true);
-    rightThroughBoreEncoder.setReverseDirection(false); //Either the left or right idk yet
+    rightThroughBoreEncoder.setReverseDirection(false); 
 
     navX = new AHRS(SPI.Port.kMXP);
-
-    rightThroughBoreEncoder.setReverseDirection(true); //Either the left or right idk yet
 
     odometry = new DifferentialDriveOdometry(navX.getRotation2d(), getLeftSideMeters(), getRightSideMeters(), new Pose2d(1 ,1 , new Rotation2d(0)));
 

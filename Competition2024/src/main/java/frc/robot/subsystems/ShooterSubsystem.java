@@ -18,9 +18,11 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.CANID;
 
 public class ShooterSubsystem extends SubsystemBase {
-  /** Creates a new ShooterSubsystem. */
   private CANSparkMax leftShooter;
   private CANSparkMax rightShooter;
+
+  private CANSparkMax leftAdvanceMotor;
+  private CANSparkMax rightAdvanceMotor;
 
   private SparkPIDController pidController;
 
@@ -34,16 +36,29 @@ public class ShooterSubsystem extends SubsystemBase {
     leftShooter = new CANSparkMax(CANID.leftShooter, MotorType.kBrushless);
     rightShooter = new CANSparkMax(CANID.rightShooter, MotorType.kBrushless);
 
+    leftAdvanceMotor = new CANSparkMax(CANID.leftShooterAdvance, MotorType.kBrushless);
+    rightAdvanceMotor = new CANSparkMax(CANID.rightShooterAdvance, MotorType.kBrushless);
+
     distanceSpeedTable = new TreeMap<Double, Double>();
 
     leftShooter.restoreFactoryDefaults();
     rightShooter.restoreFactoryDefaults();
+    leftAdvanceMotor.restoreFactoryDefaults();
+    rightAdvanceMotor.restoreFactoryDefaults();
 
     leftShooter.setInverted(true);
+
+    leftAdvanceMotor.setInverted(true);
+
     leftShooter.setIdleMode(IdleMode.kCoast);
     rightShooter.setIdleMode(IdleMode.kCoast);
 
+    leftAdvanceMotor.setIdleMode(IdleMode.kBrake);
+    rightAdvanceMotor.setIdleMode(IdleMode.kBrake);
+
     leftShooter.follow(rightShooter);
+
+    leftAdvanceMotor.follow(rightAdvanceMotor);
 
     pidController = rightShooter.getPIDController();
 
@@ -65,6 +80,10 @@ public class ShooterSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Shooter D Gain", kD);
     SmartDashboard.putNumber("Shooter Feed Forward", kFeedForward);
 
+  }
+
+  public void advanceNote() {
+    rightAdvanceMotor.set(0.25);
   }
 
   //Speed in RPM to achieve

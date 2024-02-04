@@ -30,10 +30,17 @@ public final class Constants {
 
     public static final int leftShooter = 100;
     public static final int rightShooter = 101;
+    public static final int leftShooterAdvance = 120;
+    public static final int rightShooterAdvance = 121;
   }
 
   public static class DigitalIOID {
-    public static final int intakeLimitSwitch = 0;
+    public static final int leftDriveEncoder1 = 0;
+    public static final int leftDriveEncoder2 = 1;
+    public static final int rightDriveEncoder1 = 2;
+    public static final int rightDriveEncoder2 = 3;
+
+    public static final int intakeLimitSwitch = 4;
   }
 
   public static class OdometryConsts {
@@ -41,13 +48,5 @@ public final class Constants {
     public static final double gearRatio = 9.82;
     public static final double rotationsToMeters = (1/gearRatio) * wheelCircumfrenceMeters; 
   }
-
-  public static class EncoderID {
-    public static final int leftThroughBoreEncoder1 = 0;
-    public static final int leftThroughBoreEncoder2 = 1;
-    public static final int rightThroughBoreEncoder1 = 2;
-    public static final int rightThroughBoreEncoder2 = 3;
-  }
-
 }
 
