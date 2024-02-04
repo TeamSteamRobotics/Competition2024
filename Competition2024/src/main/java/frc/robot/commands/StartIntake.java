@@ -8,18 +8,23 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IntakeSubsystem;
 
-public class Intake extends Command {
+
+public class StartIntake extends Command {
 
   private IntakeSubsystem intakeSubsystem;
   private DoubleSupplier speed;
-
+  
   /** Creates a new Intake. */
-  public Intake(IntakeSubsystem m_intakeSubsystem, DoubleSupplier p_speed) {
+  public StartIntake(IntakeSubsystem m_intakeSubsystem, DoubleSupplier p_speed) {
     intakeSubsystem = m_intakeSubsystem;
     speed = p_speed;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(intakeSubsystem);
   }
+
+
+
+
 
   // Called when the command is initially scheduled.
   @Override
