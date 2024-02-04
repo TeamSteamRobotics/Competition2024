@@ -79,6 +79,9 @@ public class DriveSubsystem extends SubsystemBase {
     leftThroughBoreEncoder.setDistancePerPulse(OdometryConsts.wheelCircumfrenceMeters / 2048);
     rightThroughBoreEncoder.setDistancePerPulse(OdometryConsts.wheelCircumfrenceMeters / 2048);
 
+    leftThroughBoreEncoder.setReverseDirection(true);
+    rightThroughBoreEncoder.setReverseDirection(false); //Either the left or right idk yet
+
     navX = new AHRS(SPI.Port.kMXP);
 
     rightThroughBoreEncoder.setReverseDirection(true); //Either the left or right idk yet

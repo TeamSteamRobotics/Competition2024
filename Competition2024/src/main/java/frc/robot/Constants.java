@@ -34,6 +34,15 @@ public final class Constants {
 
   public static class DigitalIOID {
     public static final int intakeLimitSwitch = 0;
+    public static final int backRight = 4;
+
+    public static final int intakeRoller = 6;
+    public static final int intakePivot = 9;
+
+    public static final int leftShooter = 100;
+    public static final int rightShooter = 101;
+
+    //TODO update numbers
   }
 
   public static class OdometryConsts {
@@ -43,10 +52,10 @@ public final class Constants {
   }
 
     public static class EncoderID {
-      public static final int leftThroughBoreEncoder1 = 2;
-      public static final int leftThroughBoreEncoder2 = 3;
-      public static final int rightThroughBoreEncoder1 = 0;
-      public static final int rightThroughBoreEncoder2 = 1;
+      public static final int leftThroughBoreEncoder1 = 0;
+      public static final int leftThroughBoreEncoder2 = 1;
+      public static final int rightThroughBoreEncoder1 = 2;
+      public static final int rightThroughBoreEncoder2 = 3;
 
     }
 
