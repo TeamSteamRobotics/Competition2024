@@ -40,7 +40,7 @@ public class GoToPoint extends Command {
 
     //Look into making this a sequential command group.
     new SequentialCommandGroup(
-      //new PIDTurn(driveSubsystem, theta), 
+      new PIDTurn(driveSubsystem, theta), 
       new DriveDistance(driveSubsystem, distance)
     );
     

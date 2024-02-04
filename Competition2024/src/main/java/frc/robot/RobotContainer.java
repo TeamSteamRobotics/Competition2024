@@ -7,7 +7,7 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Drive;
 import frc.robot.commands.DriveDistance;
-import frc.robot.commands.TestTurn;
+import frc.robot.commands.PIDTurn;
 import frc.robot.commands.TopLevelAuto;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -52,7 +52,7 @@ public class RobotContainer {
    */
   private void configureBindings() {
     m_driveOneMeter.onTrue(new DriveDistance(m_driveSubsystem, 1));
-    m_turn180Degrees.whileTrue(new TestTurn(m_driveSubsystem, 50));
+    m_turn180Degrees.whileTrue(new PIDTurn(m_driveSubsystem, 50));
   }
 
   /**

@@ -12,9 +12,9 @@ import frc.robot.subsystems.DriveSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class TestTurn extends PIDCommand {
+public class PIDTurn extends PIDCommand {
   /** Creates a new TestTurn. */
-  public TestTurn(DriveSubsystem drive, double turn) {
+  public PIDTurn(DriveSubsystem drive, double turn) {
     super(
         // The controller that the command will use
         new PIDController(0.05, 0, 0),
