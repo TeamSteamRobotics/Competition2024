@@ -4,10 +4,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.units.Units;
-
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -17,6 +13,7 @@ import edu.wpi.first.units.Units;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
     public static final int kOperatorControllerPort = 1;
@@ -26,23 +23,17 @@ public final class Constants {
     public static final int frontLeft = 2;
     public static final int frontRight = 3;
     public static final int backLeft = 1;
-    public static final int backRight = 2;
+    public static final int backRight = 4;
+
     public static final int intakeRoller = 80;
     public static final int intakePivot = 81;
 
+    public static final int leftShooter = 100;
+    public static final int rightShooter = 101;
   }
 
   public static class DigitalIOID {
     public static final int intakeLimitSwitch = 0;
-    public static final int backRight = 4;
-
-    public static final int intakeRoller = 6;
-    public static final int intakePivot = 9;
-
-    public static final int leftShooter = 100;
-    public static final int rightShooter = 101;
-
-    //TODO update numbers
   }
 
   public static class OdometryConsts {
@@ -51,13 +42,12 @@ public final class Constants {
     public static final double rotationsToMeters = (1/gearRatio) * wheelCircumfrenceMeters; 
   }
 
-    public static class EncoderID {
-      public static final int leftThroughBoreEncoder1 = 0;
-      public static final int leftThroughBoreEncoder2 = 1;
-      public static final int rightThroughBoreEncoder1 = 2;
-      public static final int rightThroughBoreEncoder2 = 3;
-
-    }
+  public static class EncoderID {
+    public static final int leftThroughBoreEncoder1 = 0;
+    public static final int leftThroughBoreEncoder2 = 1;
+    public static final int rightThroughBoreEncoder1 = 2;
+    public static final int rightThroughBoreEncoder2 = 3;
+  }
 
 }
 

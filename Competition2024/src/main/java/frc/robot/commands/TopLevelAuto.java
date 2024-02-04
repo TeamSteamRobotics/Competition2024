@@ -4,7 +4,6 @@
 
 package frc.robot.commands;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -56,8 +55,8 @@ public class TopLevelAuto extends Command {
       if(value.length() == 1) {
         if(value.equals("S"))
           autoCmdGroup.addCommands(new Shoot(shooterSubsystem, 0));
-        else if(value.equals("I"))
-          autoCmdGroup.addCommands(new Intake(intakeSubsystem, () -> 0.25));
+        //else if(value.equals("I"))
+          //autoCmdGroup.addCommands(new Intake(intakeSubsystem, () -> 0.25));
       }
     }
     autoCmdGroup.schedule();
