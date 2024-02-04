@@ -4,17 +4,20 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import frc.robot.Constants.CANID;
+import frc.robot.Constants.DigitalIOID;
 
 public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new IntakeSubsystem. */
@@ -22,7 +25,11 @@ public class IntakeSubsystem extends SubsystemBase {
   private CANSparkMax intakeRoller;
   private CANSparkFlex intakePivot;
 
+  private RelativeEncoder intakePivotRelativeEncoder;
+
   private SparkPIDController pidController;
+
+  private DigitalInput limitSwitch;
 
   private double kP, kI, kD;
   private double kFeedForward;
@@ -31,6 +38,12 @@ public class IntakeSubsystem extends SubsystemBase {
   public IntakeSubsystem() {
     intakeRoller = new CANSparkMax(CANID.intakeRoller, MotorType.kBrushless);
     intakePivot = new CANSparkFlex(CANID.intakePivot, MotorType.kBrushless);
+
+    intakePivotRelativeEncoder = intakePivot.getEncoder();
+
+    pidController = intakePivot.getPIDController();
+
+    limitSwitch = new DigitalInput(DigitalIOID.intakeLimitSwitch);
   
 
     intakeRoller.restoreFactoryDefaults();
@@ -58,7 +71,13 @@ public class IntakeSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Intake Position Feed Forward", kFeedForward);
   }
 
-  
+  public void findHome() {
+    while(!limitSwitch.get()) {
+      intakePivot.set(-0.2);
+    }
+    intakePivot.set(0);
+    intakePivotRelativeEncoder.setPosition(0);
+  }
 
   public void setIntakePosition(double positionDegrees) {
     pidController.setReference(positionDegrees, ControlType.kPosition);

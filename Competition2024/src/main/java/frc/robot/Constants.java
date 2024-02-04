@@ -26,7 +26,10 @@ public final class Constants {
     public static final int intakeRoller = 80;
     public static final int intakePivot = 81;
 
-    //TODO update numbers
+  }
+
+  public static class DigitalIOID {
+    public static final int intakeLimitSwitch = 0;
   }
 
 
