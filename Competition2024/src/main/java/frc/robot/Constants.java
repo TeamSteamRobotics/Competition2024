@@ -23,8 +23,8 @@ public final class Constants {
     public static final int frontRight = 4;
     public static final int backLeft = 1;
     public static final int backRight = 2;
-    public static final int intakeRoller = 6;
-    public static final int intakePivot = 9;
+    public static final int intakeRoller = 80;
+    public static final int intakePivot = 81;
 
     //TODO update numbers
   }
