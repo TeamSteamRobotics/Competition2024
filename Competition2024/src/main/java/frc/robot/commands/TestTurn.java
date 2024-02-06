@@ -30,11 +30,12 @@ public class TestTurn extends PIDCommand {
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
     addRequirements(drive);
-    drive.resetGyro();
+    //drive.resetGyro();
     /*SmartDashboard.putNumber("p", 0);
     SmartDashboard.putNumber("i", 0);
     SmartDashboard.putNumber("d", 0);*/
     SmartDashboard.putData(getController());
+    getController().setTolerance(1);
 
   }
 

@@ -75,8 +75,8 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    m_driveOneMeter.onTrue(new DriveDistance(m_driveSubsystem, 1));
-    m_turn180Degrees.whileTrue(new TestTurn(m_driveSubsystem, 50));
+    m_driveOneMeter.onTrue(new InstantCommand(() -> m_driveSubsystem.resetEncoders()).andThen(new DriveDistance(m_driveSubsystem, 1)));
+    m_turn180Degrees.onTrue(new InstantCommand(() -> m_driveSubsystem.resetGyro()).andThen(new TestTurn(m_driveSubsystem, 180)));
   }
 
   private double testGetPoint() {
