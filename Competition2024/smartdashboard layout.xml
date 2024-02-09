@@ -1,16 +1,16 @@
 <xml version="1.0">
 <dashboard>
-	<widget field="turn setpoint" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="153"/>
-	</widget>
-	<widget field="Gyro reading" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="1103" y="34"/>
-	</widget>
 	<widget field="Encoder[1]" type="Quadrature Encoder" class="edu.wpi.first.smartdashboard.livewindow.elements.EncoderDisplay">
 		<location x="0" y="342"/>
 	</widget>
 	<widget field="Encoder[0]" type="Quadrature Encoder" class="edu.wpi.first.smartdashboard.livewindow.elements.EncoderDisplay">
 		<location x="0" y="249"/>
+	</widget>
+	<widget field="turn setpoint" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="153"/>
+	</widget>
+	<widget field="Gyro reading" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1103" y="34"/>
 	</widget>
 	<widget field="Through Bore Encoder Distance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="273" y="125"/>

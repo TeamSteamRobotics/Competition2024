@@ -25,6 +25,7 @@ public class TestTurn extends PIDCommand {
         // This uses the output
         output -> {
           drive.drive(0, output);
+        
           // Use the output here
         });
     // Use addRequirements() here to declare subsystem dependencies.
@@ -35,7 +36,7 @@ public class TestTurn extends PIDCommand {
     SmartDashboard.putNumber("i", 0);
     SmartDashboard.putNumber("d", 0);*/
     SmartDashboard.putData(getController());
-    getController().setTolerance(.1,1);
+    getController().setTolerance(.5,1);
     getController().setIZone(5);;
   }
 
@@ -43,6 +44,7 @@ public class TestTurn extends PIDCommand {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+   
+    return this.getController().atSetpoint();
   }
 }
