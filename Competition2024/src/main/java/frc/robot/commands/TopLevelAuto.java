@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.StringParsing;
+import frc.robot.subsystems.AprilVisionSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -24,6 +25,7 @@ public class TopLevelAuto extends Command {
   private Optional<Alliance> alliance;
   
   private DriveSubsystem driveSubsystem;
+  private AprilVisionSubsystem avSubsystem;
   private ShooterSubsystem shooterSubsystem;
   private IntakeSubsystem intakeSubsystem;
 
@@ -39,7 +41,7 @@ public class TopLevelAuto extends Command {
     
     autoCmdGroup = new SequentialCommandGroup();
 
-    addRequirements(driveSubsystem, shooterSubsystem, intakeSubsystem);
+    addRequirements(driveSubsystem, shooterSubsystem, intakeSubsystem, avSubsystem);
   }
 
 
@@ -51,7 +53,8 @@ public class TopLevelAuto extends Command {
     }
     for(String value : formattedString) {
       if(value.length() == 2)
-        autoCmdGroup.addCommands(new GoToPoint(driveSubsystem, StringParsing.parseStringPoint(value, alliance)));
+        autoCmdGroup.addCommands(new GoToPoint(driveSubsystem, avSubsystem, StringParsing.parseStringPoint(value, alliance)));
+       
       if(value.length() == 1) {
         if(value.equals("S"))
           autoCmdGroup.addCommands(new Shoot(shooterSubsystem, 0));
