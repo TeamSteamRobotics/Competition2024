@@ -37,7 +37,9 @@ public class GoToPoint extends Command {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
-  // Called when the command is initially scheduled.
+
+
+// Called when the command is initially scheduled.
   @Override
   public void initialize() {
     dy = (endPose.getY() - startPose.getY());
