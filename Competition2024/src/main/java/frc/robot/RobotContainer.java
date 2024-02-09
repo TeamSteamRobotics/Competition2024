@@ -76,7 +76,7 @@ public class RobotContainer {
    */
   private void configureBindings() {
     m_driveOneMeter.onTrue(new InstantCommand(() -> m_driveSubsystem.resetEncoders()).andThen(new DriveDistance(m_driveSubsystem, 1)));
-    m_turn180Degrees.onTrue(new InstantCommand(() -> m_driveSubsystem.resetGyro()).andThen(new TestTurn(m_driveSubsystem, 180)));
+    m_turn180Degrees.onTrue(new InstantCommand(() -> m_driveSubsystem.resetGyro()).andThen(new TestTurn(m_driveSubsystem, 45)));
   }
 
   private double testGetPoint() {

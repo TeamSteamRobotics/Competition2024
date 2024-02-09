@@ -21,7 +21,7 @@ public class TestTurn extends PIDCommand {
         // This should return the measurement
         () -> drive.getAngleDegrees(),
         // This should return the setpoint (can also be a constant)
-        () -> turn,
+        () -> SmartDashboard.getNumber("turn setpoint", 0),
         // This uses the output
         output -> {
           drive.drive(0, output);
@@ -35,14 +35,14 @@ public class TestTurn extends PIDCommand {
     SmartDashboard.putNumber("i", 0);
     SmartDashboard.putNumber("d", 0);*/
     SmartDashboard.putData(getController());
-    getController().setTolerance(1);
-
+    getController().setTolerance(.1,1);
+    getController().setIZone(5);;
   }
 
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return getController().atSetpoint();
+    return false;
   }
 }

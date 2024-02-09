@@ -1,16 +1,25 @@
 <xml version="1.0">
 <dashboard>
+	<widget field="turn setpoint" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="153"/>
+	</widget>
+	<widget field="Gyro reading" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1103" y="34"/>
+	</widget>
+	<widget field="Encoder[1]" type="Quadrature Encoder" class="edu.wpi.first.smartdashboard.livewindow.elements.EncoderDisplay">
+		<location x="0" y="342"/>
+	</widget>
+	<widget field="Encoder[0]" type="Quadrature Encoder" class="edu.wpi.first.smartdashboard.livewindow.elements.EncoderDisplay">
+		<location x="0" y="249"/>
+	</widget>
+	<widget field="Through Bore Encoder Distance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="273" y="125"/>
+	</widget>
 	<widget field="PIDController[2]" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
 		<location x="377" y="340"/>
 	</widget>
 	<widget field="DriveSubsystem" type="Subsystem" class="edu.wpi.first.smartdashboard.gui.elements.Subsystem">
 		<location x="0" y="229"/>
-	</widget>
-	<widget field="Encoder[1]" type="Quadrature Encoder" class="edu.wpi.first.smartdashboard.livewindow.elements.EncoderDisplay">
-		<location x="0" y="618"/>
-	</widget>
-	<widget field="Encoder[0]" type="Quadrature Encoder" class="edu.wpi.first.smartdashboard.livewindow.elements.EncoderDisplay">
-		<location x="0" y="320"/>
 	</widget>
 	<widget field="Drive Distance" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
 		<location x="574" y="337"/>
@@ -42,7 +51,7 @@
 		<location x="420" y="586"/>
 	</widget>
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.RobotPreferences">
-		<location x="817" y="60"/>
+		<location x="729" y="114"/>
 	</static-widget>
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
 		<location x="378" y="679"/>
@@ -66,12 +75,6 @@
 	</widget>
 	<widget field="Reset Gyro" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
 		<location x="578" y="210"/>
-	</widget>
-	<widget field="Gyro reading" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.FormattedField">
-		<location x="32" y="166"/>
-	</widget>
-	<widget field="Through Bore Encoder Distance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="395" y="149"/>
 	</widget>
 	<widget field="Through Bore Right Encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="475" y="91"/>
@@ -103,8 +106,4 @@
 </dashboard>
 <live-window>
 </live-window>
-	<hidden field="p"/>
-	<hidden field="PIDTurn"/>
-	<hidden field="d"/>
-	<hidden field="i"/>
 </xml>
