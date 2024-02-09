@@ -32,6 +32,9 @@ public final class Constants {
     public static final int rightShooter = 101;
     public static final int leftShooterAdvance = 120;
     public static final int rightShooterAdvance = 121;
+
+    public static final int leftClimb = 1000;
+    public static final int rightClimb = 1001;
   }
 
   public static class DigitalIOID {
