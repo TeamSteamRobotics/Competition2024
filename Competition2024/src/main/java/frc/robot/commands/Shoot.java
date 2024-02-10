@@ -14,9 +14,13 @@ public class Shoot extends Command {
   double speed;
 
   public Shoot(ShooterSubsystem p_shooterSubsystem, double p_distance) {
+      
+  
     shooterSubsystem = p_shooterSubsystem;
     distance = p_distance;
     addRequirements(shooterSubsystem);
+
+    if (shoot.)
   }
 
   // Called when the command is initially scheduled.
