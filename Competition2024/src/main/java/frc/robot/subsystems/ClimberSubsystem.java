@@ -68,6 +68,8 @@ public class ClimberSubsystem extends SubsystemBase {
    * @return if we are climbed to the desired height and we are within the bounds of our climb
    */
   public boolean isRaised() {
+    //TODO: RETURN SOMETHING
+    return false;
     //return (getClimbPosition() < ClimbConstants.maximumClimbHeight && getClimbPosition() > ClimbConstants.minimumClimbHeight); 
     
   }
