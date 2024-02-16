@@ -21,20 +21,27 @@ public class ShooterSubsystem extends SubsystemBase {
   private CANSparkMax leftShooter;
   private CANSparkMax rightShooter;
 
+  private CANSparkMax leftAngleMotor;
+  private CANSparkMax rightAngleMotor;
+
   private CANSparkMax leftAdvanceMotor;
   private CANSparkMax rightAdvanceMotor;
 
-  private SparkPIDController pidController;
+  private SparkPIDController shootPIDController;
+  private SparkPIDController anglePIDController;
 
-  private double kP, kI, kD;
-  private double kFeedForward;
-  private double minOutput, maxOutput;
+  private double shootkP, shootkI, shootkD;
+  private double shootkFeedForward;
+  private double shootminOutput, shootmaxOutput;
 
   private TreeMap<Double, Double> distanceSpeedTable;
 
   public ShooterSubsystem() {
     leftShooter = new CANSparkMax(CANID.leftShooter, MotorType.kBrushless);
     rightShooter = new CANSparkMax(CANID.rightShooter, MotorType.kBrushless);
+
+    leftAngleMotor = new CANSparkMax(0, MotorType.kBrushless);
+    rightAngleMotor = new CANSparkMax(0, MotorType.kBrushless);
 
     leftAdvanceMotor = new CANSparkMax(CANID.leftShooterAdvance, MotorType.kBrushless);
     rightAdvanceMotor = new CANSparkMax(CANID.rightShooterAdvance, MotorType.kBrushless);
@@ -46,39 +53,50 @@ public class ShooterSubsystem extends SubsystemBase {
     leftAdvanceMotor.restoreFactoryDefaults();
     rightAdvanceMotor.restoreFactoryDefaults();
 
+
     leftShooter.setInverted(true);
 
     leftAdvanceMotor.setInverted(true);
 
+    leftAngleMotor.setInverted(true);
+
     leftShooter.setIdleMode(IdleMode.kCoast);
     rightShooter.setIdleMode(IdleMode.kCoast);
 
+    leftAngleMotor.setIdleMode(IdleMode.kBrake);
+    rightAngleMotor.setIdleMode(IdleMode.kBrake);
+
     leftAdvanceMotor.setIdleMode(IdleMode.kBrake);
     rightAdvanceMotor.setIdleMode(IdleMode.kBrake);
+
 
     leftShooter.follow(rightShooter);
 
     leftAdvanceMotor.follow(rightAdvanceMotor);
 
-    pidController = rightShooter.getPIDController();
+    leftAngleMotor.follow(rightAngleMotor);
 
-    kP = 0;
-    kI = 0;
-    kD = 0;
-    kFeedForward = 0;
-    minOutput = -1;
-    maxOutput = 1;
 
-    pidController.setP(kP);
-    pidController.setI(kI);
-    pidController.setD(kD);
-    pidController.setFF(kFeedForward);
-    pidController.setOutputRange(minOutput, maxOutput);
+    shootPIDController = rightShooter.getPIDController();
+    anglePIDController = rightAngleMotor.getPIDController();
 
-    SmartDashboard.putNumber("Shooter P Gain", kP);
-    SmartDashboard.putNumber("Shooter I Gain", kI);
-    SmartDashboard.putNumber("Shooter D Gain", kD);
-    SmartDashboard.putNumber("Shooter Feed Forward", kFeedForward);
+    shootkP = 0;
+    shootkI = 0;
+    shootkD = 0;
+    shootkFeedForward = 0;
+    shootminOutput = -1;
+    shootmaxOutput = 1;
+
+    shootPIDController.setP(shootkP);
+    shootPIDController.setI(shootkI);
+    shootPIDController.setD(shootkD);
+    shootPIDController.setFF(shootkFeedForward);
+    shootPIDController.setOutputRange(shootminOutput, shootmaxOutput);
+
+    SmartDashboard.putNumber("Shooter P Gain", shootkP);
+    SmartDashboard.putNumber("Shooter I Gain", shootkI);
+    SmartDashboard.putNumber("Shooter D Gain", shootkD);
+    SmartDashboard.putNumber("Shooter Feed Forward", shootkFeedForward);
 
   }
 
@@ -88,7 +106,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   //Speed in RPM to achieve
   public void setShooterSpeedPID(double speed) {
-    pidController.setReference(speed, ControlType.kVelocity);
+    shootPIDController.setReference(speed, ControlType.kVelocity);
   }
 
   public void populateDistanceSpeedTable() {
@@ -121,9 +139,9 @@ public class ShooterSubsystem extends SubsystemBase {
     double d = SmartDashboard.getNumber("Shooter D Gain", 0);
     double ff = SmartDashboard.getNumber("Shooter Feed Forward", 0);
 
-    if((p != kP)) { pidController.setP(p); kP = p; }
-    if((i != kI)) { pidController.setI(i); kI = i; }
-    if((d != kD)) { pidController.setD(d); kD = d; }
-    if((ff != kFeedForward)) { pidController.setFF(ff); kFeedForward = ff; }
+    if((p != shootkP)) { shootPIDController.setP(p); shootkP = p; }
+    if((i != shootkI)) { shootPIDController.setI(i); shootkI = i; }
+    if((d != shootkD)) { shootPIDController.setD(d); shootkD = d; }
+    if((ff != shootkFeedForward)) { shootPIDController.setFF(ff); shootkFeedForward = ff; }
   }
 }
