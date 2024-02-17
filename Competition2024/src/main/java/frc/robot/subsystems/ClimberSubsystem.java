@@ -22,38 +22,33 @@ public class ClimberSubsystem extends SubsystemBase {
   CANSparkMax leftClimb = new CANSparkMax(Constants.CANID.leftClimb, MotorType.kBrushless);
   CANSparkMax rightClimb = new CANSparkMax(Constants.CANID.rightClimb, MotorType.kBrushless);
 
-    SparkPIDController pidController = rightClimb.getPIDController(); //instantiate the PID of the rightClimbMotor
   RelativeEncoder rightEncoder = rightClimb.getEncoder(); //instaitiate the encoder of the rightClimbMotor
   
   public ClimberSubsystem() {
-    //CANSparkMax leftClimb = new CANSparkMax(Constants.MotorIDConstants.leftClimbMotorID, MotorType.kBrushless);
-    //CANSparkMax rightClimb = new CANSparkMax(Constants.MotorIDConstants.rightClimbMotorID, MotorType.kBrushless);
- //Add MotorIDConstants to Constants 
-
- 
-
-    leftClimb.follow(rightClimb, true);
     setBrakeMode();
   }
 
   /** raises the climb */
   public void raiseClimb() {
-    rightClimb.set(-.5);
+    rightClimb.set(-.3);
+    leftClimb.set(-.3);
   }
   /** lowers the climb */
   public void retractClimb() {
-    rightClimb.set(.5);
+    rightClimb.set(.3);
+    leftClimb.set(.3);
   }
   /** sets the motor speeds to zero */
   public void stopClimb() {
     rightClimb.set(0);
+    leftClimb.set(0);
   }
   /**
    * gets the encoder reading of the climb motor's position encoder
    * @return the position of the climb motor in rotations
    */
   public double getClimbPosition() { 
-    return Math.abs(rightEncoder.getPosition());
+    return rightEncoder.getPosition();
   }
 
   /**
@@ -69,7 +64,7 @@ public class ClimberSubsystem extends SubsystemBase {
    */
   public boolean isRaised() {
     //TODO: RETURN SOMETHING
-    return false;
+    return getClimbPosition() > 0;
     //return (getClimbPosition() < ClimbConstants.maximumClimbHeight && getClimbPosition() > ClimbConstants.minimumClimbHeight); 
     
   }

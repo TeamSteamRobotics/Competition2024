@@ -14,14 +14,14 @@ import frc.robot.subsystems.ShooterSubsystem;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class AngleShooter extends PIDCommand {
   /** Creates a new AngleShooter. */
-  public AngleShooter(ShooterSubsystem shoot, double speed) {
+  public AngleShooter(ShooterSubsystem shoot) {
     super(
         // The controller that the command will use
-        new PIDController(0, 0, 0),
+        new PIDController(0.01, 0, 0),
         // This should return the measurement
         () -> shoot.getAngle(),
         // This should return the setpoint (can also be a constant)
-        () -> speed,
+        () -> SmartDashboard.getNumber("ShootAngle", 30),
         // This uses the output
         output -> {
           shoot.angleShooter(output);

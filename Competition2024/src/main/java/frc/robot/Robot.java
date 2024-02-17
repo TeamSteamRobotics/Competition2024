@@ -33,6 +33,7 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
     SmartDashboard.putString("AutoCSVInput", "");
     SmartDashboard.putBoolean("Validate Auto Input", false);
+    SmartDashboard.putNumber("ShootAngle", 30);
     
   }
 

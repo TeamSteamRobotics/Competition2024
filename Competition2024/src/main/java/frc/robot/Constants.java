@@ -43,10 +43,10 @@ public final class Constants {
     public static final int leftDriveEncoder2 = 1;
     public static final int rightDriveEncoder1 = 2;
     public static final int rightDriveEncoder2 = 3;
+    public static final int shooterLimitSwitch = 5;
+    public static final int intakeLimitSwitch = 6;
 
-    public static final int intakeLimitSwitch = 4;
-
-    public static final int angleDutyCycleEncoder = 5;
+    public static final int angleDutyCycleEncoder = 4;
   }
 
   public static class OdometryConsts {

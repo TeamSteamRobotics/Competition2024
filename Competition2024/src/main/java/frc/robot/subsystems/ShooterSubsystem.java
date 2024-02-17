@@ -4,16 +4,17 @@
 
 package frc.robot.subsystems;
 
-import java.util.TreeMap;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.MotorFeedbackSensor;
-import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkPIDController;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -29,10 +30,14 @@ public class ShooterSubsystem extends SubsystemBase {
   private CANSparkMax leftAdvanceMotor;
   private CANSparkMax rightAdvanceMotor;
 
-  private DutyCycleEncoder absoluteAngleEncoder;
-  private double dutyCycleOffset = 0;
+  private RelativeEncoder rightShooterEncoder;
 
-  private SparkPIDController shootPIDController;
+  private DutyCycleEncoder absoluteAngleEncoder;
+  private DigitalInput shooterLimitSwitch;
+  private double dutyCycleOffset = 0.0702778;
+
+  private SparkPIDController shootRightPIDController;
+  private SparkPIDController shootLeftPIDController;
 
   private double shootkP, shootkI, shootkD;
   private double shootkFeedForward;
@@ -50,8 +55,11 @@ public class ShooterSubsystem extends SubsystemBase {
     rightAdvanceMotor = new CANSparkMax(CANID.rightShooterAdvance, MotorType.kBrushless);
 
     absoluteAngleEncoder = new DutyCycleEncoder(DigitalIOID.angleDutyCycleEncoder);
+    shooterLimitSwitch = new DigitalInput(DigitalIOID.shooterLimitSwitch);
 
     distanceSpeedTable = new TreeMap<Double, Double>();
+
+    rightShooterEncoder = rightShooter.getEncoder();
 
     leftShooter.restoreFactoryDefaults();
     rightShooter.restoreFactoryDefaults();
@@ -60,8 +68,10 @@ public class ShooterSubsystem extends SubsystemBase {
     rightAdvanceMotor.restoreFactoryDefaults();
 
 
-    leftShooter.setInverted(true);
-    leftAdvanceMotor.setInverted(true);
+    //leftShooter.setInverted(false);
+    rightShooter.setInverted(false);
+    //rightAdvanceMotor.setInverted(true);
+    //leftAdvanceMotor.setInverted(true);
     angleMotor.setInverted(true);
 
 
@@ -73,26 +83,36 @@ public class ShooterSubsystem extends SubsystemBase {
     rightAdvanceMotor.setIdleMode(IdleMode.kBrake);
 
 
-    leftShooter.follow(rightShooter);
-    leftAdvanceMotor.follow(rightAdvanceMotor);
+    //leftShooter.follow(rightShooter);
+    //leftAdvanceMotor.follow(rightAdvanceMoto
+    leftShooter.setInverted(true);
 
     absoluteAngleEncoder.setDistancePerRotation(360);
     absoluteAngleEncoder.setPositionOffset(dutyCycleOffset);
 
-    shootPIDController = rightShooter.getPIDController();
+    shootRightPIDController = rightShooter.getPIDController();
+    shootLeftPIDController = leftShooter.getPIDController();
 
-    shootkP = 0;
-    shootkI = 0;
-    shootkD = 0;
+    shootkP = 0.002000;
+    shootkI = 0.000002;
+    shootkD = 0.01;
     shootkFeedForward = 0;
-    shootMinOutput = -1;
-    shootMaxOutput = 1;
+    shootMinOutput = -0.6;
+    shootMaxOutput = 0.6;
 
-    shootPIDController.setP(shootkP);
-    shootPIDController.setI(shootkI);
-    shootPIDController.setD(shootkD);
-    shootPIDController.setFF(shootkFeedForward);
-    shootPIDController.setOutputRange(shootMinOutput, shootMaxOutput);
+    shootRightPIDController.setP(shootkP);
+    shootRightPIDController.setI(shootkI);
+    shootRightPIDController.setD(shootkD);
+    shootRightPIDController.setFF(shootkFeedForward);
+    shootRightPIDController.setOutputRange(shootMinOutput, shootMaxOutput);
+    shootRightPIDController.setIZone(400);
+
+    shootLeftPIDController.setP(shootkP);
+    shootLeftPIDController.setI(shootkI);
+    shootLeftPIDController.setD(shootkD);
+    shootLeftPIDController.setFF(shootkFeedForward);
+    shootLeftPIDController.setOutputRange(shootMinOutput, shootMaxOutput);
+    shootLeftPIDController.setIZone(400);
 
     SmartDashboard.putNumber("Shooter P Gain", shootkP);
     SmartDashboard.putNumber("Shooter I Gain", shootkI);
@@ -102,10 +122,29 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public void runShooterManual(double value) {
     rightShooter.set(value);
+    leftShooter.set(-value);
+  }
+
+  public void stopShooter() {
+    rightShooter.set(0);
+    leftShooter.set(0);
+  }
+
+  public void stopAdvanceMotors() {
+    rightAdvanceMotor.set(0);
+    leftAdvanceMotor.set(0);
   }
 
   public void angleShooter(double value) {
-    angleMotor.set(value);
+    if(value > 0.4)
+      value = 0.4;
+    if(!shooterLimitSwitch.get() && value > 0) {
+      angleMotor.set(0);
+    }
+    else {
+      angleMotor.set(value);
+    }
+    
   }
 
   public double getAngle() {
@@ -113,12 +152,14 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void advanceNote() {
-    rightAdvanceMotor.set(0.25);
+    rightAdvanceMotor.set(-0.25);
+    leftAdvanceMotor.set(0.25);
   }
 
   //Speed in RPM to achieve
   public void setShooterSpeedPID(double speed) {
-    shootPIDController.setReference(speed, ControlType.kVelocity);
+    shootLeftPIDController.setReference(speed, ControlType.kVelocity);
+    shootRightPIDController.setReference(speed, ControlType.kVelocity);
   }
 
   public void populateDistanceSpeedTable() {
@@ -151,9 +192,13 @@ public class ShooterSubsystem extends SubsystemBase {
     double shootD = SmartDashboard.getNumber("Shooter D Gain", 0);
     double shootFF = SmartDashboard.getNumber("Shooter Feed Forward", 0);
 
-    if((shootP != shootkP)) { shootPIDController.setP(shootP); shootkP = shootP; }
-    if((shootI != shootkI)) { shootPIDController.setI(shootI); shootkI = shootI; }
-    if((shootD != shootkD)) { shootPIDController.setD(shootD); shootkD = shootD; }
-    if((shootFF != shootkFeedForward)) { shootPIDController.setFF(shootFF); shootkFeedForward = shootFF; }
+    SmartDashboard.putNumber("Shooter RPM", rightShooterEncoder.getVelocity());
+    SmartDashboard.putNumber("Angle", absoluteAngleEncoder.getDistance());
+    SmartDashboard.putBoolean("Limit Shooter", shooterLimitSwitch.get());
+
+    if((shootP != shootkP)) { shootRightPIDController.setP(shootP); shootLeftPIDController.setP(shootP); shootkP = shootP; }
+    if((shootI != shootkI)) { shootRightPIDController.setI(shootI); shootLeftPIDController.setI(shootI); shootkI = shootI; }
+    if((shootD != shootkD)) { shootRightPIDController.setD(shootD); shootLeftPIDController.setD(shootD); shootkD = shootD; }
+    if((shootFF != shootkFeedForward)) { shootRightPIDController.setFF(shootFF); shootLeftPIDController.setFF(shootFF); shootkFeedForward = shootFF; }
   }
 }

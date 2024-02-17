@@ -13,14 +13,17 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.commands.SpinUpShooter;
+import frc.robot.commands.AdvanceNote;
 import frc.robot.commands.AngleShooter;
 import frc.robot.commands.CoordinatePrint;
 
 import frc.robot.subsystems.AprilVisionSubsystem;
+import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 
 import frc.robot.subsystems.SmartDashboardSubsystem;
 import frc.robot.subsystems.AprilVisionSubsystem.ReturnTarget;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -37,6 +40,7 @@ public class RobotContainer {
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
+  private final ClimberSubsystem m_climberSubsystem = new ClimberSubsystem();
 
 
   private final CommandXboxController m_driverController = new CommandXboxController(OperatorConstants.kDriverControllerPort);
@@ -48,9 +52,12 @@ public class RobotContainer {
   private final Trigger spinUpWheel = m_driverController.x();
   private final Trigger shooterAngleUp = m_driverController.povUp();
   private final Trigger shooterAngleDown = m_driverController.povDown();
+  private final Trigger advanceToShooter = m_driverController.b();
   private final Trigger intakeRoller = m_driverController.a();
   private final Trigger intakeAngleUp = m_driverController.povRight();
   private final Trigger intakeAngleDown = m_driverController.povLeft();
+  private final Trigger pidShoot = m_driverController.leftTrigger();
+  private final Trigger shootStop = m_driverController.rightTrigger();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -68,12 +75,16 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    m_driveOneMeter.onTrue(new InstantCommand(() -> m_driveSubsystem.resetEncoders()).andThen(new DriveDistance(m_driveSubsystem, 2.5)));
-    m_turn180Degrees.onTrue(new InstantCommand(() -> m_driveSubsystem.resetGyro()).andThen(new PIDTurn(m_driveSubsystem, 45)));
-    autoThing.onTrue(new InstantCommand(() -> m_driveSubsystem.resetEncoders()).andThen(new InstantCommand(() -> m_driveSubsystem.resetEncoders())).andThen(new DriveDistance(m_driveSubsystem, 5)).andThen(new PIDTurn(m_driveSubsystem, 45)).andThen(new DriveDistance(m_driveSubsystem, 2)));
-    spinUpWheel.whileTrue(new InstantCommand(() -> m_shooterSubsystem.runShooterManual(1.0)));
-    shooterAngleUp.onTrue(new InstantCommand(() -> m_shooterSubsystem.angleShooter(1)));
-    shooterAngleDown.onTrue(new InstantCommand(() -> m_shooterSubsystem.angleShooter(-1)));
+    m_driveOneMeter.onTrue(new InstantCommand(()-> m_climberSubsystem.raiseClimb()));
+    m_turn180Degrees.onTrue(new InstantCommand(()-> m_climberSubsystem.retractClimb()));
+    autoThing.onTrue(new AngleShooter(m_shooterSubsystem));
+    spinUpWheel.whileTrue(new InstantCommand(() -> m_shooterSubsystem.runShooterManual(0.3)));
+    advanceToShooter.whileTrue(new AdvanceNote(m_shooterSubsystem));
+    shooterAngleUp.onTrue(new InstantCommand(() -> m_shooterSubsystem.angleShooter(0.1)));
+    shooterAngleDown.onTrue(new InstantCommand(() -> m_shooterSubsystem.angleShooter(-0.1)));
+    pidShoot.whileTrue(new InstantCommand(() -> m_shooterSubsystem.setShooterSpeedPID(1200)));
+    shootStop.onTrue(new InstantCommand(() -> m_shooterSubsystem.stopShooter()));
+
    // intakeRoller.onTrue(new InstantCommand(() -> m_intakeSubsystem.setIntake(1)));//
    //intakeAngleUp.onTrue(new InstantCommand(() -> m_intakeSubsystem.setIntakePosition(1)));//
   // intakeAngleDown.onTrue(new InstantCommand(() -> m_intakeSubsystem.setIntakePosition(-1)));//

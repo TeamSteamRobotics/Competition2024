@@ -1,52 +1,59 @@
 <xml version="1.0">
 <dashboard>
-	<widget field="Intake Position Feed Forward" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="249" y="0"/>
-	</widget>
-	<widget field="Intake Position D Gain" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="749"/>
-	</widget>
-	<widget field="Intake Position I Gain" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="729"/>
-	</widget>
-	<widget field="Intake Position P Gain" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="709"/>
-	</widget>
-	<widget field="Encoder[1]" type="Quadrature Encoder" class="edu.wpi.first.smartdashboard.livewindow.elements.EncoderDisplay">
-		<location x="514" y="111"/>
-	</widget>
-	<widget field="Encoder[0]" type="Quadrature Encoder" class="edu.wpi.first.smartdashboard.livewindow.elements.EncoderDisplay">
-		<location x="249" y="245"/>
-	</widget>
-	<widget field="PIDController[4]" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
-		<location x="0" y="618"/>
-	</widget>
-	<widget field="PIDController[5]" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
+	<widget field="Angle Shooter" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
 		<location x="0" y="527"/>
 	</widget>
-	<widget field="PIDController[3]" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
-		<location x="0" y="340"/>
+	<widget field="ShootAngle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="0"/>
 	</widget>
-	<widget field="PIDController[1]" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
+	<widget field="Drive Distance" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
+		<location x="249" y="145"/>
+	</widget>
+	<widget field="Limit Shooter" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="850" y="6"/>
+		<height>44</height>
+	</widget>
+	<widget field="Angle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="564" y="6"/>
+	</widget>
+	<widget field="Shooter RPM" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="749"/>
+	</widget>
+	<widget field="Intake Position Feed Forward" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="729"/>
+	</widget>
+	<widget field="Intake Position D Gain" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="709"/>
+	</widget>
+	<widget field="Intake Position I Gain" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="420"/>
+	</widget>
+	<widget field="Intake Position P Gain" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="400"/>
+	</widget>
+	<widget field="PIDController[5]" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
+		<location x="629" y="610"/>
+	</widget>
+	<widget field="limelight_Stream" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="289"/>
+	</widget>
+	<widget field="limelight_Interface" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="269"/>
+	</widget>
+	<widget field="limelight_PipelineName" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="249"/>
 	</widget>
 	<widget field="turn setpoint" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="153"/>
 	</widget>
 	<widget field="Gyro reading" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="1103" y="34"/>
+		<location x="1114" y="46"/>
 	</widget>
 	<widget field="Through Bore Encoder Distance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="273" y="125"/>
 	</widget>
-	<widget field="PIDController[2]" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
-		<location x="377" y="340"/>
-	</widget>
 	<widget field="DriveSubsystem" type="Subsystem" class="edu.wpi.first.smartdashboard.gui.elements.Subsystem">
 		<location x="0" y="229"/>
-	</widget>
-	<widget field="Drive Distance" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
-		<location x="574" y="337"/>
 	</widget>
 	<widget field="Shooter Feed Forward" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="507"/>
@@ -75,7 +82,7 @@
 		<location x="420" y="586"/>
 	</widget>
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.RobotPreferences">
-		<location x="729" y="114"/>
+		<location x="1235" y="58"/>
 	</static-widget>
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
 		<location x="378" y="679"/>
@@ -92,7 +99,7 @@
 		<property name="Background" value="204.255.204.255"/>
 	</widget>
 	<widget field="navX-Sensor[4]" type="Gyro" class="edu.wpi.first.smartdashboard.gui.elements.Compass">
-		<location x="-2" y="2"/>
+		<location x="726" y="158"/>
 	</widget>
 	<widget field="Reset Encoders" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
 		<location x="430" y="213"/>
@@ -127,6 +134,24 @@
 		<width>325</width>
 		<height>248</height>
 	</static-widget>
+	<widget field="Encoder[1]" type="Quadrature Encoder" class="edu.wpi.first.smartdashboard.livewindow.elements.EncoderDisplay">
+		<location x="305" y="338"/>
+	</widget>
+	<widget field="PIDController[2]" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
+		<location x="564" y="297"/>
+	</widget>
+	<widget field="PIDController[3]" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
+		<location x="1060" y="205"/>
+	</widget>
+	<widget field="PIDController[1]" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
+		<location x="755" y="343"/>
+	</widget>
+	<widget field="PIDController[4]" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
+		<location x="1055" y="370"/>
+	</widget>
+	<widget field="Encoder[0]" type="Quadrature Encoder" class="edu.wpi.first.smartdashboard.livewindow.elements.EncoderDisplay">
+		<location x="30" y="23"/>
+	</widget>
 </dashboard>
 <live-window>
 </live-window>

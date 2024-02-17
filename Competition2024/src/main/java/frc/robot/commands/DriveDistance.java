@@ -32,7 +32,7 @@ public class DriveDistance extends PIDCommand {
         });
         
     addRequirements(driveSubsystem);
-    SmartDashboard.putData("Drive Distance", getController());
+    //SmartDashboard.putData("Drive Distance", getController());
     driveSubsystem.resetEncoders();
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.

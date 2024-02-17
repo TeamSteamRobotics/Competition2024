@@ -21,4 +21,9 @@ public class AdvanceNote extends Command {
   public void execute() {
     shooter.advanceNote();
   }
+
+  @Override
+  public void end(boolean interrupted) {
+    shooter.stopAdvanceMotors();
+  }
 }
