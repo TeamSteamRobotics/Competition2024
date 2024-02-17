@@ -69,7 +69,6 @@ public class ClimbSubsystem extends SubsystemBase {
   }
 
   public boolean isRaised() {
-    //TODO: RETURN SOMETHING
     return getClimbPosition() > 0;
     //return (getClimbPosition() < ClimbConstants.maximumClimbHeight && getClimbPosition() > ClimbConstants.minimumClimbHeight); 
     
@@ -77,7 +76,5 @@ public class ClimbSubsystem extends SubsystemBase {
 
 
   @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
+  public void periodic() {}
 }

@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.UtilHelpers;
 import frc.robot.Constants.CANID;
 import frc.robot.Constants.DigitalIOID;
 
@@ -140,15 +141,14 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void angleShooter(double value) {
-    if(value > 0.4)
-      value = 0.4;
-    if(!shooterLimitSwitch.get() && value > 0) {
+    if(!shooterLimitSwitch.get() && value > 0) 
       angleMotor.set(0);
-    }
-    else {
-      angleMotor.set(value);
-    }
-    
+    else if(getAngle() > 61 && value > 0)
+      angleMotor.set(0);
+    else if(getAngle() < 28 && value < 0)
+      angleMotor.set(0);
+    else
+      angleMotor.set(UtilHelpers.clamp(value, -0.4, 0.4));
   }
 
   public double getAngle() {
@@ -189,22 +189,7 @@ public class ShooterSubsystem extends SubsystemBase {
     return (slope * (distance - lower.getKey()) + lower.getValue());
   }
 
-  @Override
-  public void periodic() {
-    double shootP = SmartDashboard.getNumber("Shooter P Gain", 0);
-    double shootI = SmartDashboard.getNumber("Shooter I Gain", 0);
-    double shootD = SmartDashboard.getNumber("Shooter D Gain", 0);
-    double shootFF = SmartDashboard.getNumber("Shooter Feed Forward", 0);
 
-    SmartDashboard.putNumber("Shooter RPM", rightShooterEncoder.getVelocity());
-    SmartDashboard.putNumber("Angle", absoluteAngleEncoder.getDistance());
-    SmartDashboard.putBoolean("Limit Shooter", shooterLimitSwitch.get());
-
-    if((shootP != shootkP)) { shootRightPIDController.setP(shootP); shootLeftPIDController.setP(shootP); shootkP = shootP; }
-    if((shootI != shootkI)) { shootRightPIDController.setI(shootI); shootLeftPIDController.setI(shootI); shootkI = shootI; }
-    if((shootD != shootkD)) { shootRightPIDController.setD(shootD); shootLeftPIDController.setD(shootD); shootkD = shootD; }
-    if((shootFF != shootkFeedForward)) { shootRightPIDController.setFF(shootFF); shootLeftPIDController.setFF(shootFF); shootkFeedForward = shootFF; }
-  }
 
   public double getShooterAngle(double distanceFromSpeaker){
         double yVelocity = 17.54;
@@ -227,5 +212,22 @@ public class ShooterSubsystem extends SubsystemBase {
         double motorSpeed = (360 * Math.sqrt(Math.pow(yVelocity, 2) + Math.pow(xVelocity, 2))) / Math.PI*4;
 
         return motorSpeed;
+  }
+
+  @Override
+  public void periodic() {
+    double shootP = SmartDashboard.getNumber("Shooter P Gain", 0);
+    double shootI = SmartDashboard.getNumber("Shooter I Gain", 0);
+    double shootD = SmartDashboard.getNumber("Shooter D Gain", 0);
+    double shootFF = SmartDashboard.getNumber("Shooter Feed Forward", 0);
+
+    SmartDashboard.putNumber("Shooter RPM", rightShooterEncoder.getVelocity());
+    SmartDashboard.putNumber("Angle", absoluteAngleEncoder.getDistance());
+    SmartDashboard.putBoolean("Limit Shooter", shooterLimitSwitch.get());
+
+    if((shootP != shootkP)) { shootRightPIDController.setP(shootP); shootLeftPIDController.setP(shootP); shootkP = shootP; }
+    if((shootI != shootkI)) { shootRightPIDController.setI(shootI); shootLeftPIDController.setI(shootI); shootkI = shootI; }
+    if((shootD != shootkD)) { shootRightPIDController.setD(shootD); shootLeftPIDController.setD(shootD); shootkD = shootD; }
+    if((shootFF != shootkFeedForward)) { shootRightPIDController.setFF(shootFF); shootLeftPIDController.setFF(shootFF); shootkFeedForward = shootFF; }
   }
 }

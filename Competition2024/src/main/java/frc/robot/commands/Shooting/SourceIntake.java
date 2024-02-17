@@ -18,6 +18,11 @@ public class SourceIntake extends Command {
 
   @Override
   public void execute() {
-    shooter.runShooterManual(-0.3);
+    shooter.runShooterManual(-0.1);
+  }
+
+  @Override
+  public void end(boolean interrupted) {
+    shooter.stopShooter();
   }
 }
