@@ -20,6 +20,7 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.SmartDashboardSubsystem;
 import frc.robot.subsystems.AprilVisionSubsystem.ReturnTarget;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -60,8 +61,8 @@ public class RobotContainer {
    */
   private void configureBindings() {
     m_driveOneMeter.onTrue(new InstantCommand(() -> m_driveSubsystem.resetEncoders()).andThen(new DriveDistance(m_driveSubsystem, 2.5)));
-    m_turn180Degrees.onTrue(new InstantCommand(() -> m_driveSubsystem.resetGyro()).andThen(new TestTurn(m_driveSubsystem, 45)));
-    autoThing.onTrue(new InstantCommand(() -> m_driveSubsystem.resetEncoders()).andThen(new InstantCommand(() -> m_driveSubsystem.resetEncoders())).andThen(new DriveDistance(m_driveSubsystem, 5)).andThen(new TestTurn(m_driveSubsystem, 45)).andThen(new DriveDistance(m_driveSubsystem, 2)));
+    m_turn180Degrees.onTrue(new InstantCommand(() -> m_driveSubsystem.resetGyro()).andThen(new PIDTurn(m_driveSubsystem, 45)));
+    autoThing.onTrue(new InstantCommand(() -> m_driveSubsystem.resetEncoders()).andThen(new InstantCommand(() -> m_driveSubsystem.resetEncoders())).andThen(new DriveDistance(m_driveSubsystem, 5)).andThen(new PIDTurn(m_driveSubsystem, 45)).andThen(new DriveDistance(m_driveSubsystem, 2)));
   }
 
   /**

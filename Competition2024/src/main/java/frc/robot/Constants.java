@@ -30,6 +30,8 @@ public final class Constants {
 
     public static final int leftShooter = 100;
     public static final int rightShooter = 101;
+    public static final int leftShooterAngle = 104;
+    public static final int rightShooterAngle = 105;
     public static final int leftShooterAdvance = 120;
     public static final int rightShooterAdvance = 121;
 
@@ -44,6 +46,8 @@ public final class Constants {
     public static final int rightDriveEncoder2 = 3;
 
     public static final int intakeLimitSwitch = 4;
+
+    public static final int angleDutyCycleEncoder = 5;
   }
 
   public static class OdometryConsts {

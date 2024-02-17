@@ -7,20 +7,16 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class Shoot extends Command {
+public class SpinUpShooter extends Command {
   /** Creates a new Shoot. */
   ShooterSubsystem shooterSubsystem;
   double distance;
   double speed;
 
-  public Shoot(ShooterSubsystem p_shooterSubsystem, double p_distance) {
-      
-  
+  public SpinUpShooter(ShooterSubsystem p_shooterSubsystem, double p_distance) {
     shooterSubsystem = p_shooterSubsystem;
     distance = p_distance;
     addRequirements(shooterSubsystem);
-
-    if (shoot.)
   }
 
   // Called when the command is initially scheduled.
