@@ -201,4 +201,27 @@ public class ShooterSubsystem extends SubsystemBase {
     if((shootD != shootkD)) { shootRightPIDController.setD(shootD); shootLeftPIDController.setD(shootD); shootkD = shootD; }
     if((shootFF != shootkFeedForward)) { shootRightPIDController.setFF(shootFF); shootLeftPIDController.setFF(shootFF); shootkFeedForward = shootFF; }
   }
+
+  public double getShooterAngle(double distanceFromSpeaker){
+        double yVelocity = 17.54;
+        double t = 0.55;
+        double xVelocity;
+
+        xVelocity = distanceFromSpeaker/t;
+
+        shooterAngle = (Math.atan2(yVelocity/xVelocity))*(180/Math.PI);
+
+        return shooterAngle;
+  }
+  public double getMotorSpeed(double distanceFromSpeaker){
+        double yVelocity = 17.54;
+        double t = 0.55;
+        double xVelocity;
+
+        xVelocity = distanceFromSpeaker/t;
+
+        motorSpeed = (360 * Math.sqrt(Math.pow(yVelocity, 2) + Math.pow(xVelocity, 2))) / Math.PI*4;
+
+        return motorSpeed;
+  }
 }
