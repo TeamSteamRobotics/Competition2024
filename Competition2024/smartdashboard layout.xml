@@ -1,9 +1,33 @@
 <xml version="1.0">
 <dashboard>
+	<widget field="Intake Position Feed Forward" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="249" y="0"/>
+	</widget>
+	<widget field="Intake Position D Gain" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="749"/>
+	</widget>
+	<widget field="Intake Position I Gain" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="729"/>
+	</widget>
+	<widget field="Intake Position P Gain" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="709"/>
+	</widget>
 	<widget field="Encoder[1]" type="Quadrature Encoder" class="edu.wpi.first.smartdashboard.livewindow.elements.EncoderDisplay">
-		<location x="0" y="342"/>
+		<location x="514" y="111"/>
 	</widget>
 	<widget field="Encoder[0]" type="Quadrature Encoder" class="edu.wpi.first.smartdashboard.livewindow.elements.EncoderDisplay">
+		<location x="249" y="245"/>
+	</widget>
+	<widget field="PIDController[4]" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
+		<location x="0" y="618"/>
+	</widget>
+	<widget field="PIDController[5]" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
+		<location x="0" y="527"/>
+	</widget>
+	<widget field="PIDController[3]" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
+		<location x="0" y="340"/>
+	</widget>
+	<widget field="PIDController[1]" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
 		<location x="0" y="249"/>
 	</widget>
 	<widget field="turn setpoint" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">

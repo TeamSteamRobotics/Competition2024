@@ -20,23 +20,22 @@ public final class Constants {
   }
 
   public static class CANID {
-    public static final int frontLeft = 2;
-    public static final int frontRight = 3;
-    public static final int backLeft = 1;
-    public static final int backRight = 4;
+    public static final int frontLeft = 1;
+    public static final int frontRight = 13;
+    public static final int backLeft = 2;
+    public static final int backRight = 12;
 
-    public static final int intakeRoller = 80;
-    public static final int intakePivot = 81;
+    public static final int intakeRoller = 4;
+    public static final int intakePivot = 3;
 
-    public static final int leftShooter = 100;
-    public static final int rightShooter = 101;
-    public static final int leftShooterAngle = 104;
-    public static final int rightShooterAngle = 105;
-    public static final int leftShooterAdvance = 120;
-    public static final int rightShooterAdvance = 121;
+    public static final int leftShooter = 7;
+    public static final int rightShooter = 8;
+    public static final int shootAngle = 10;
+    public static final int leftShooterAdvance = 6;
+    public static final int rightShooterAdvance = 9;
 
-    public static final int leftClimb = 1000;
-    public static final int rightClimb = 1001;
+    public static final int leftClimb = 5;
+    public static final int rightClimb = 11;
   }
 
   public static class DigitalIOID {

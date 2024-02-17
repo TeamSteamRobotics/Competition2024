@@ -24,8 +24,7 @@ public class ShooterSubsystem extends SubsystemBase {
   private CANSparkMax leftShooter;
   private CANSparkMax rightShooter;
 
-  private CANSparkMax leftAngleMotor;
-  private CANSparkMax rightAngleMotor;
+  private CANSparkMax angleMotor;
 
   private CANSparkMax leftAdvanceMotor;
   private CANSparkMax rightAdvanceMotor;
@@ -45,8 +44,7 @@ public class ShooterSubsystem extends SubsystemBase {
     leftShooter = new CANSparkMax(CANID.leftShooter, MotorType.kBrushless);
     rightShooter = new CANSparkMax(CANID.rightShooter, MotorType.kBrushless);
 
-    leftAngleMotor = new CANSparkMax(CANID.leftShooterAngle, MotorType.kBrushless);
-    rightAngleMotor = new CANSparkMax(CANID.rightShooterAngle, MotorType.kBrushless);
+    angleMotor = new CANSparkMax(CANID.shootAngle, MotorType.kBrushless);
 
     leftAdvanceMotor = new CANSparkMax(CANID.leftShooterAdvance, MotorType.kBrushless);
     rightAdvanceMotor = new CANSparkMax(CANID.rightShooterAdvance, MotorType.kBrushless);
@@ -57,29 +55,25 @@ public class ShooterSubsystem extends SubsystemBase {
 
     leftShooter.restoreFactoryDefaults();
     rightShooter.restoreFactoryDefaults();
-    leftAngleMotor.restoreFactoryDefaults();
-    rightAngleMotor.restoreFactoryDefaults();
+    angleMotor.restoreFactoryDefaults();
     leftAdvanceMotor.restoreFactoryDefaults();
     rightAdvanceMotor.restoreFactoryDefaults();
 
 
     leftShooter.setInverted(true);
     leftAdvanceMotor.setInverted(true);
-    leftAngleMotor.setInverted(true);
+    angleMotor.setInverted(true);
 
 
     leftShooter.setIdleMode(IdleMode.kCoast);
     rightShooter.setIdleMode(IdleMode.kCoast);
 
-    leftAngleMotor.setIdleMode(IdleMode.kBrake);
-    rightAngleMotor.setIdleMode(IdleMode.kBrake);
-
+    angleMotor.setIdleMode(IdleMode.kBrake);
     leftAdvanceMotor.setIdleMode(IdleMode.kBrake);
     rightAdvanceMotor.setIdleMode(IdleMode.kBrake);
 
 
     leftShooter.follow(rightShooter);
-    leftAngleMotor.follow(rightAngleMotor);
     leftAdvanceMotor.follow(rightAdvanceMotor);
 
     absoluteAngleEncoder.setDistancePerRotation(360);
@@ -111,7 +105,7 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void angleShooter(double value) {
-    rightAngleMotor.set(value);
+    angleMotor.set(value);
   }
 
   public double getAngle() {

@@ -33,8 +33,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
-  private final ShooterSubsystem m_shooterSUbsystem = new ShooterSubsystem();
-  private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
+ // private final ShooterSubsystem m_shooterSUbsystem = new ShooterSubsystem();
+  //private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
 
 
   private final CommandXboxController m_driverController = new CommandXboxController(OperatorConstants.kDriverControllerPort);
@@ -43,7 +43,7 @@ public class RobotContainer {
   private final Trigger m_driveOneMeter = m_driverController.leftBumper();
   private final Trigger m_turn180Degrees = m_driverController.rightBumper();
   private final Trigger autoThing = m_driverController.y();
-
+  private final Trigger shoot = m_driverController.a();
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     m_driveSubsystem.setDefaultCommand(new Drive(m_driveSubsystem, m_driverController::getLeftY, m_driverController::getRightX));
@@ -63,6 +63,7 @@ public class RobotContainer {
     m_driveOneMeter.onTrue(new InstantCommand(() -> m_driveSubsystem.resetEncoders()).andThen(new DriveDistance(m_driveSubsystem, 2.5)));
     m_turn180Degrees.onTrue(new InstantCommand(() -> m_driveSubsystem.resetGyro()).andThen(new PIDTurn(m_driveSubsystem, 45)));
     autoThing.onTrue(new InstantCommand(() -> m_driveSubsystem.resetEncoders()).andThen(new InstantCommand(() -> m_driveSubsystem.resetEncoders())).andThen(new DriveDistance(m_driveSubsystem, 5)).andThen(new PIDTurn(m_driveSubsystem, 45)).andThen(new DriveDistance(m_driveSubsystem, 2)));
+    //shoot.whileTrue()
   }
 
   /**
@@ -71,6 +72,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new TopLevelAuto(m_driveSubsystem, m_shooterSUbsystem, m_intakeSubsystem);
+    return null;
+   // return new TopLevelAuto(m_driveSubsystem, m_shooterSUbsystem, m_intakeSubsystem);
   }
 }
