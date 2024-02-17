@@ -209,7 +209,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
         xVelocity = distanceFromSpeaker/t;
 
-        shooterAngle = (Math.atan2(yVelocity/xVelocity))*(180/Math.PI);
+        double shooterAngle = 0;//(Math.atan2(yVelocity/xVelocity))*(180/Math.PI);
 
         return shooterAngle;
   }
@@ -220,7 +220,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
         xVelocity = distanceFromSpeaker/t;
 
-        motorSpeed = (360 * Math.sqrt(Math.pow(yVelocity, 2) + Math.pow(xVelocity, 2))) / Math.PI*4;
+        double motorSpeed = (360 * Math.sqrt(Math.pow(yVelocity, 2) + Math.pow(xVelocity, 2))) / Math.PI*4;
 
         return motorSpeed;
   }
