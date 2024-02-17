@@ -15,6 +15,8 @@ import frc.robot.subsystems.DriveSubsystem;
 public class DriveDistance extends PIDCommand {
   /** Creates a new DriveDistance. */
   double p, i, d, tolerance;
+  
+  
   public DriveDistance(DriveSubsystem driveSubsystem, double distance) {
     super(
         // The controller that the command will use
@@ -25,7 +27,7 @@ public class DriveDistance extends PIDCommand {
         () -> distance,
         // This uses the output
         output -> {
-          driveSubsystem.drive(-output, 0);
+          driveSubsystem.drive(-output *.25, 0);
           // Use the output here
         });
         
@@ -34,6 +36,9 @@ public class DriveDistance extends PIDCommand {
     driveSubsystem.resetEncoders();
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
+    SmartDashboard.putData(getController());
+    getController().setTolerance(.01,0);
+   
   }
 
 

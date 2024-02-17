@@ -41,6 +41,7 @@ public class RobotContainer {
   // Driver Controller Bindings:
   private final Trigger m_driveOneMeter = m_driverController.leftBumper();
   private final Trigger m_turn180Degrees = m_driverController.rightBumper();
+  private final Trigger autoThing = m_driverController.y();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -58,8 +59,9 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    m_driveOneMeter.onTrue(new DriveDistance(m_driveSubsystem, 1));
-    m_turn180Degrees.whileTrue(new PIDTurn(m_driveSubsystem, 50));
+    m_driveOneMeter.onTrue(new InstantCommand(() -> m_driveSubsystem.resetEncoders()).andThen(new DriveDistance(m_driveSubsystem, 2.5)));
+    m_turn180Degrees.onTrue(new InstantCommand(() -> m_driveSubsystem.resetGyro()).andThen(new TestTurn(m_driveSubsystem, 45)));
+    autoThing.onTrue(new InstantCommand(() -> m_driveSubsystem.resetEncoders()).andThen(new InstantCommand(() -> m_driveSubsystem.resetEncoders())).andThen(new DriveDistance(m_driveSubsystem, 5)).andThen(new TestTurn(m_driveSubsystem, 45)).andThen(new DriveDistance(m_driveSubsystem, 2)));
   }
 
   /**
