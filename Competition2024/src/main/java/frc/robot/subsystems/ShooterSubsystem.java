@@ -125,6 +125,10 @@ public class ShooterSubsystem extends SubsystemBase {
     leftShooter.set(-value);
   }
 
+  public void stopAngleMotor() {
+    angleMotor.set(0);
+  }
+
   public void stopShooter() {
     rightShooter.set(0);
     leftShooter.set(0);

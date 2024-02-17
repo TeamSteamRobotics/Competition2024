@@ -5,20 +5,24 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Drive;
-import frc.robot.commands.DriveDistance;
-import frc.robot.commands.PIDTurn;
 import frc.robot.commands.TopLevelAuto;
+import frc.robot.commands.Climbing.RaiseClimb;
+import frc.robot.commands.Climbing.RetractClimb;
+import frc.robot.commands.Driving.Drive;
+import frc.robot.commands.Driving.DriveDistance;
+import frc.robot.commands.Driving.PIDTurn;
+import frc.robot.commands.Shooting.AdvanceNote;
+import frc.robot.commands.Shooting.AngleShooterDown;
+import frc.robot.commands.Shooting.AngleShooterPID;
+import frc.robot.commands.Shooting.AngleShooterUp;
+import frc.robot.commands.Shooting.SpinUpShooter;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
-import frc.robot.commands.SpinUpShooter;
-import frc.robot.commands.AdvanceNote;
-import frc.robot.commands.AngleShooter;
 import frc.robot.commands.CoordinatePrint;
 
 import frc.robot.subsystems.AprilVisionSubsystem;
-import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 
 import frc.robot.subsystems.SmartDashboardSubsystem;
@@ -40,15 +44,15 @@ public class RobotContainer {
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
-  private final ClimberSubsystem m_climberSubsystem = new ClimberSubsystem();
+  private final ClimbSubsystem m_climbSubsystem = new ClimbSubsystem();
 
 
   private final CommandXboxController m_driverController = new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
   // Driver Controller Bindings:
-  private final Trigger m_driveOneMeter = m_driverController.leftBumper();
-  private final Trigger m_turn180Degrees = m_driverController.rightBumper();
-  private final Trigger autoThing = m_driverController.y();
+  private final Trigger retractClimb = m_driverController.leftBumper();
+  private final Trigger raiseClimb = m_driverController.rightBumper();
+  private final Trigger runShootAnglePID = m_driverController.y();
   private final Trigger spinUpWheel = m_driverController.x();
   private final Trigger shooterAngleUp = m_driverController.povUp();
   private final Trigger shooterAngleDown = m_driverController.povDown();
@@ -75,19 +79,17 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    m_driveOneMeter.onTrue(new InstantCommand(()-> m_climberSubsystem.raiseClimb()));
-    m_turn180Degrees.onTrue(new InstantCommand(()-> m_climberSubsystem.retractClimb()));
-    autoThing.onTrue(new AngleShooter(m_shooterSubsystem));
-    spinUpWheel.whileTrue(new InstantCommand(() -> m_shooterSubsystem.runShooterManual(0.3)));
+    retractClimb.onTrue(new RetractClimb(m_climbSubsystem));
+    raiseClimb.onTrue(new RaiseClimb(m_climbSubsystem));
+
+    runShootAnglePID.onTrue(new AngleShooterPID(m_shooterSubsystem));
     advanceToShooter.whileTrue(new AdvanceNote(m_shooterSubsystem));
-    shooterAngleUp.onTrue(new InstantCommand(() -> m_shooterSubsystem.angleShooter(0.1)));
-    shooterAngleDown.onTrue(new InstantCommand(() -> m_shooterSubsystem.angleShooter(-0.1)));
+
+    shooterAngleUp.whileTrue(new AngleShooterUp(m_shooterSubsystem));
+    shooterAngleDown.whileTrue(new AngleShooterDown(m_shooterSubsystem));
+
     pidShoot.whileTrue(new InstantCommand(() -> m_shooterSubsystem.setShooterSpeedPID(1200)));
     shootStop.onTrue(new InstantCommand(() -> m_shooterSubsystem.stopShooter()));
-
-   // intakeRoller.onTrue(new InstantCommand(() -> m_intakeSubsystem.setIntake(1)));//
-   //intakeAngleUp.onTrue(new InstantCommand(() -> m_intakeSubsystem.setIntakePosition(1)));//
-  // intakeAngleDown.onTrue(new InstantCommand(() -> m_intakeSubsystem.setIntakePosition(-1)));//
   }
 
   /**
