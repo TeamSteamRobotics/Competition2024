@@ -88,6 +88,10 @@ public class IntakeSubsystem extends SubsystemBase {
   public void runIntake(double speed) {
     intakeRoller.set(speed);
   }
+
+  public void stopAngleMotor() {
+    intakePivot.set(0);
+  }
   
   public void stopIntake() {
     intakeRoller.set(0);
