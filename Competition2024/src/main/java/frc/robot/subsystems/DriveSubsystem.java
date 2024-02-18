@@ -173,12 +173,6 @@ public class DriveSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     odometry.update(getRotation2d(), getLeftSideMeters(), getRightSideMeters());
-    
-    SmartDashboard.putNumber("FL Encoder", frontLeftEncoder.getPosition());
-    SmartDashboard.putNumber("BL Encoder", backLeftEncoder.getPosition());
-    SmartDashboard.putNumber("FR Encoder", frontRightEncoder.getPosition());
-    SmartDashboard.putNumber("BR Encoder", backRightEncoder.getPosition());
-    SmartDashboard.putNumber("Built In Encoder Distance", getBuiltInEncoderDistanceMeters());
 
     SmartDashboard.putNumber("Through Bore Left Encoder", getLeftSideMeters()); // One rotation should be 0.4787
     SmartDashboard.putNumber("Through Bore Right Encoder", getRightSideMeters()); // same as above
@@ -188,8 +182,8 @@ public class DriveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Gyro reading", getAngleDegrees());
 
     SmartDashboard.putData(navX);
-    SmartDashboard.putData(leftThroughBoreEncoder);
-    SmartDashboard.putData(rightThroughBoreEncoder);
+    SmartDashboard.putData("Left Encoder", leftThroughBoreEncoder);
+    SmartDashboard.putData("Right Encoder", rightThroughBoreEncoder);
 
   
   }

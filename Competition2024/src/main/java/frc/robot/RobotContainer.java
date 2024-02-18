@@ -19,6 +19,7 @@ import frc.robot.commands.Shooting.ShootPID;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.ZachVisionSubsystem;
 import frc.robot.commands.CoordinatePrint;
 
 import frc.robot.subsystems.AprilVisionSubsystem;
@@ -44,6 +45,7 @@ public class RobotContainer {
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ClimbSubsystem m_climbSubsystem = new ClimbSubsystem();
+  private final ZachVisionSubsystem m_ZachVisionSubsystem = new ZachVisionSubsystem();
 
 
   private final CommandXboxController m_driverController = new CommandXboxController(OperatorConstants.kDriverControllerPort);

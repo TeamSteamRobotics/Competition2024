@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.net.PortForwarder;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -27,13 +28,18 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    SmartDashboard.putNumber("turn setpoint", 0);
+    
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard
     m_robotContainer = new RobotContainer();
+    SmartDashboard.putNumber("turn setpoint", 0);
     SmartDashboard.putString("AutoCSVInput", "");
     SmartDashboard.putBoolean("Validate Auto Input", false);
     SmartDashboard.putNumber("ShootAngle", 30);
+    for (int port = 5800; port <= 5807; port++) {
+            PortForwarder.add(port, "limelight.local", port);
+        }
+
     
   }
 
