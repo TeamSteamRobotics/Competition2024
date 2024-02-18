@@ -10,6 +10,7 @@ import java.util.TreeMap;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
@@ -26,7 +27,7 @@ public class ShooterSubsystem extends SubsystemBase {
   private CANSparkMax leftShooter;
   private CANSparkMax rightShooter;
 
-  private CANSparkMax angleMotor;
+  private CANSparkFlex angleMotor;
 
   private CANSparkMax leftAdvanceMotor;
   private CANSparkMax rightAdvanceMotor;
@@ -50,7 +51,7 @@ public class ShooterSubsystem extends SubsystemBase {
     leftShooter = new CANSparkMax(CANID.leftShooter, MotorType.kBrushless);
     rightShooter = new CANSparkMax(CANID.rightShooter, MotorType.kBrushless);
 
-    angleMotor = new CANSparkMax(CANID.shootAngle, MotorType.kBrushless);
+    angleMotor = new CANSparkFlex(CANID.shootAngle, MotorType.kBrushless);
 
     leftAdvanceMotor = new CANSparkMax(CANID.leftShooterAdvance, MotorType.kBrushless);
     rightAdvanceMotor = new CANSparkMax(CANID.rightShooterAdvance, MotorType.kBrushless);

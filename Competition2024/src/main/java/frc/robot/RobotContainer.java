@@ -25,7 +25,6 @@ import frc.robot.subsystems.AprilVisionSubsystem;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 
-import frc.robot.subsystems.SmartDashboardSubsystem;
 import frc.robot.subsystems.AprilVisionSubsystem.ReturnTarget;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;

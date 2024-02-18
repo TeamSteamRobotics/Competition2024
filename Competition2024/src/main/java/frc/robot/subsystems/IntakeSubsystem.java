@@ -63,15 +63,15 @@ public class IntakeSubsystem extends SubsystemBase {
     pidController.setFF(kFeedForward);
     pidController.setOutputRange(minOutput, maxOutput);
 
-    SmartDashboard.putNumber("Intake Position P Gain", kP);
-    SmartDashboard.putNumber("Intake Position I Gain", kI);
-    SmartDashboard.putNumber("Intake Position D Gain", kD);
-    SmartDashboard.putNumber("Intake Position Feed Forward", kFeedForward);
+    SmartDashboard.putNumber("Intake P", kP);
+    SmartDashboard.putNumber("Intake I ", kI);
+    SmartDashboard.putNumber("Intake D ", kD);
+    SmartDashboard.putNumber("Intake FF", kFeedForward);
   }
 
   public void findHome() {
     while(!limitSwitch.get()) {
-      intakePivot.set(-0.2);
+      intakePivot.set(-0.1);
     }
     intakePivot.set(0);
     intakePivotRelativeEncoder.setPosition(0);
@@ -81,7 +81,11 @@ public class IntakeSubsystem extends SubsystemBase {
     pidController.setReference(positionDegrees, ControlType.kPosition);
   }
 
-  public void setIntake(double speed) {
+  public void setIntakePositionManual(double value) {
+    intakePivot.set(value);
+  }
+
+  public void runIntake(double speed) {
     intakeRoller.set(speed);
   }
   
@@ -91,10 +95,10 @@ public class IntakeSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    double p = SmartDashboard.getNumber("Intake Position P Gain", 0);
-    double i = SmartDashboard.getNumber("Intake Position I Gain", 0);
-    double d = SmartDashboard.getNumber("Intake Position D Gain", 0);
-    double ff = SmartDashboard.getNumber("Intake Position Feed Forward", 0);
+    double p = SmartDashboard.getNumber("Intake P", 0);
+    double i = SmartDashboard.getNumber("Intake I", 0);
+    double d = SmartDashboard.getNumber("Intake D", 0);
+    double ff = SmartDashboard.getNumber("Intake FF", 0);
 
     if((p != kP)) { pidController.setP(p); kP = p; }
     if((i != kI)) { pidController.setI(i); kI = i; }
