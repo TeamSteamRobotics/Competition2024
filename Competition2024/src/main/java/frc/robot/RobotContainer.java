@@ -9,25 +9,17 @@ import frc.robot.commands.TopLevelAuto;
 import frc.robot.commands.Climbing.RaiseClimb;
 import frc.robot.commands.Climbing.RetractClimb;
 import frc.robot.commands.Driving.Drive;
-import frc.robot.commands.Driving.DriveDistance;
-import frc.robot.commands.Driving.PIDTurn;
 import frc.robot.commands.Shooting.AdvanceNote;
 import frc.robot.commands.Shooting.AngleShooterDown;
 import frc.robot.commands.Shooting.AngleShooterPID;
 import frc.robot.commands.Shooting.AngleShooterUp;
-import frc.robot.commands.Shooting.ShootPID;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.ZachVisionSubsystem;
-import frc.robot.commands.CoordinatePrint;
 
-import frc.robot.subsystems.AprilVisionSubsystem;
 import frc.robot.subsystems.ClimbSubsystem;
-import frc.robot.subsystems.DriveSubsystem;
 
-import frc.robot.subsystems.AprilVisionSubsystem.ReturnTarget;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -54,13 +46,9 @@ public class RobotContainer {
   private final Trigger retractClimb = m_driverController.leftBumper();
   private final Trigger raiseClimb = m_driverController.rightBumper();
   private final Trigger runShootAnglePID = m_driverController.y();
-  private final Trigger spinUpWheel = m_driverController.x();
   private final Trigger shooterAngleUp = m_driverController.povUp();
   private final Trigger shooterAngleDown = m_driverController.povDown();
   private final Trigger advanceToShooter = m_driverController.b();
-  private final Trigger intakeRoller = m_driverController.a();
-  private final Trigger intakeAngleUp = m_driverController.povRight();
-  private final Trigger intakeAngleDown = m_driverController.povLeft();
   private final Trigger pidShoot = m_driverController.leftTrigger();
   private final Trigger shootStop = m_driverController.rightTrigger();
 

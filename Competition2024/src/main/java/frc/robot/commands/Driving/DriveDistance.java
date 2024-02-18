@@ -22,13 +22,12 @@ public class DriveDistance extends PIDCommand {
         // The controller that the command will use
         new PIDController(0, 0, 0),
         // This should return the measurement
-        () -> driveSubsystem.getAverageRotations(),
+        () -> driveSubsystem.getDistanceMeters(),
         // This should return the setpoint (can also be a constant)
-        () -> distance,
+        () -> driveSubsystem.getDistanceMeters() + distance,
         // This uses the output
         output -> {
-          driveSubsystem.drive(-output *.25, 0);
-          // Use the output here
+          driveSubsystem.drive(-output, 0);
         });
         
     addRequirements(driveSubsystem);

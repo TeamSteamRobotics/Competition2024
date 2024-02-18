@@ -43,6 +43,8 @@ public class DriveSubsystem extends SubsystemBase {
   
   private DifferentialDriveOdometry odometry;
 
+  private Pose2d currentRobotPose;
+
   public DriveSubsystem() {
     frontLeftMotor = new CANSparkMax(CANID.frontLeft, MotorType.kBrushless);
     frontRightMotor = new CANSparkMax(CANID.frontRight, MotorType.kBrushless);
@@ -113,11 +115,6 @@ public class DriveSubsystem extends SubsystemBase {
     return (frontRightEncoder.getPosition() + backRightEncoder.getPosition()) / 2;
   }
 
-  //Average of right and left side averages
-  public double getAverageRotations() {
-    return (getRightSideMeters() + getLeftSideMeters()) / 2;
-  }
-
   public double getLeftSideDistanceBuiltInMeters() {
     return (getLeftSideBuiltInRotations() * Constants.OdometryConsts.rotationsToMeters);
   }
@@ -151,7 +148,6 @@ public class DriveSubsystem extends SubsystemBase {
     return (rightThroughBoreEncoder.getRate() + leftThroughBoreEncoder.getRate()) / 2;
   }
 
-  //NOT FILLED IN YET DONT USE YET
   public void resetGyro() {
     navX.reset();
   }
@@ -160,7 +156,6 @@ public class DriveSubsystem extends SubsystemBase {
     return navX.getAngle();
   }
 
-  // NOT FILLEED IN YET DONT USE IT
   public Rotation2d getRotation2d() {
     return navX.getRotation2d();
   }
@@ -168,11 +163,15 @@ public class DriveSubsystem extends SubsystemBase {
   public DifferentialDriveOdometry getOdometry() {
     return odometry;
   }
+
+  public Pose2d getRobotPose() {
+    return currentRobotPose;
+  }
  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    odometry.update(getRotation2d(), getLeftSideMeters(), getRightSideMeters());
+    currentRobotPose = odometry.update(getRotation2d(), getLeftSideMeters(), getRightSideMeters());
 
     SmartDashboard.putNumber("Through Bore Left Encoder", getLeftSideMeters()); // One rotation should be 0.4787
     SmartDashboard.putNumber("Through Bore Right Encoder", getRightSideMeters()); // same as above
@@ -184,8 +183,6 @@ public class DriveSubsystem extends SubsystemBase {
     SmartDashboard.putData(navX);
     SmartDashboard.putData("Left Encoder", leftThroughBoreEncoder);
     SmartDashboard.putData("Right Encoder", rightThroughBoreEncoder);
-
-  
   }
 }
 

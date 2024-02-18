@@ -56,7 +56,7 @@ public class ShooterSubsystem extends SubsystemBase {
     leftAdvanceMotor = new CANSparkMax(CANID.leftShooterAdvance, MotorType.kBrushless);
     rightAdvanceMotor = new CANSparkMax(CANID.rightShooterAdvance, MotorType.kBrushless);
 
-    absoluteAngleEncoder = new DutyCycleEncoder(DigitalIOID.angleDutyCycleEncoder);
+    absoluteAngleEncoder = new DutyCycleEncoder(DigitalIOID.shooterEncoder);
     shooterLimitSwitch = new DigitalInput(DigitalIOID.shooterLimitSwitch);
 
     distanceSpeedTable = new TreeMap<Double, Double>();
