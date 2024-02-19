@@ -9,9 +9,9 @@ import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShootPID extends Command {
   /** Creates a new Shoot. */
-  ShooterSubsystem shooterSubsystem;
-  double distance;
-  double speed;
+  private ShooterSubsystem shooterSubsystem;
+  private double distance;
+  private double speed;
 
   public ShootPID(ShooterSubsystem p_shooterSubsystem, double p_distance) {
     shooterSubsystem = p_shooterSubsystem;

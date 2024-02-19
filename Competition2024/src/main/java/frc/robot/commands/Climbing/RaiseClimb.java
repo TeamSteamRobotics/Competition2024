@@ -9,7 +9,7 @@ import frc.robot.subsystems.ClimbSubsystem;
 
 public class RaiseClimb extends Command {
   /** Creates a new RaiseClimb. */
-  ClimbSubsystem climb;
+  private ClimbSubsystem climb;
   public RaiseClimb(ClimbSubsystem p_climb) {
     climb = p_climb;
     addRequirements(climb);

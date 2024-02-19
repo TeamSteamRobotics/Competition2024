@@ -9,7 +9,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 
 public class SourceIntake extends Command {
   /** Creates a new SourceIntake. */
-  ShooterSubsystem shooter;
+  private ShooterSubsystem shooter;
   public SourceIntake(ShooterSubsystem p_shooter) {
     shooter = p_shooter;
     addRequirements(shooter);

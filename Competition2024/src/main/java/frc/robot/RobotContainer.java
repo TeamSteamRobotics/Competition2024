@@ -9,6 +9,8 @@ import frc.robot.commands.TopLevelAuto;
 import frc.robot.commands.Climbing.RaiseClimb;
 import frc.robot.commands.Climbing.RetractClimb;
 import frc.robot.commands.Driving.Drive;
+import frc.robot.commands.Intaking.AngleIntakeDown;
+import frc.robot.commands.Intaking.AngleIntakeUp;
 import frc.robot.commands.Shooting.AdvanceNote;
 import frc.robot.commands.Shooting.AngleShooterDown;
 import frc.robot.commands.Shooting.AngleShooterPID;
@@ -48,6 +50,8 @@ public class RobotContainer {
   private final Trigger runShootAnglePID = m_driverController.y();
   private final Trigger shooterAngleUp = m_driverController.povUp();
   private final Trigger shooterAngleDown = m_driverController.povDown();
+  private final Trigger intakeAngleDown = m_driverController.povLeft();
+  private final Trigger intakeAngleUp = m_driverController.povRight();
   private final Trigger advanceToShooter = m_driverController.b();
   private final Trigger pidShoot = m_driverController.leftTrigger();
   private final Trigger shootStop = m_driverController.rightTrigger();
@@ -76,6 +80,9 @@ public class RobotContainer {
 
     shooterAngleUp.whileTrue(new AngleShooterUp(m_shooterSubsystem));
     shooterAngleDown.whileTrue(new AngleShooterDown(m_shooterSubsystem));
+
+    intakeAngleUp.whileTrue(new AngleIntakeUp(m_intakeSubsystem));
+    intakeAngleDown.whileTrue(new AngleIntakeDown(m_intakeSubsystem));
 
     pidShoot.whileTrue(new InstantCommand(() -> m_shooterSubsystem.setShooterSpeedPID(1200)));
     shootStop.onTrue(new InstantCommand(() -> m_shooterSubsystem.stopShooter()));

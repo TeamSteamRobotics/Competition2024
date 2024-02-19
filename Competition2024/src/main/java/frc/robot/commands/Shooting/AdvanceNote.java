@@ -9,7 +9,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 
 public class AdvanceNote extends Command {
   /** Creates a new AdvanceNote. */
-  ShooterSubsystem shooter;
+  private ShooterSubsystem shooter;
   public AdvanceNote(ShooterSubsystem p_shooter) {
     shooter = p_shooter;
     addRequirements(shooter);

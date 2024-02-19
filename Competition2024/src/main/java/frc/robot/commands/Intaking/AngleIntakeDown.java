@@ -9,7 +9,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 
 public class AngleIntakeDown extends Command {
   /** Creates a new AngleIntakeUp. */
-  IntakeSubsystem intake;
+  private IntakeSubsystem intake;
   public AngleIntakeDown(IntakeSubsystem p_intake) {
     intake = p_intake;
     addRequirements(intake);

@@ -10,6 +10,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class AngleShooterUp extends Command {
   /** Creates a new AngleShooterUp. */
   private ShooterSubsystem shooter;
+  
   public AngleShooterUp(ShooterSubsystem p_shooter) {
     shooter = p_shooter;
     addRequirements(shooter);

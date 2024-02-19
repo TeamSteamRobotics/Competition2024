@@ -34,6 +34,10 @@ public class ZachVisionSubsystem extends SubsystemBase {
     
   }
 
+  public boolean hasTarget() {
+    return tv.getDouble(0) == 1 ? true : false;
+  }
+
   public double angleToAprilTagDegrees() {
     return tx.getDouble(0);
   }

@@ -13,10 +13,7 @@ import frc.robot.subsystems.DriveSubsystem;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class DriveDistance extends PIDCommand {
-  /** Creates a new DriveDistance. */
-  double p, i, d, tolerance;
-  
-  
+  /** Creates a new DriveDistance. */  
   public DriveDistance(DriveSubsystem driveSubsystem, double distance) {
     super(
         // The controller that the command will use
