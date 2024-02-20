@@ -2,20 +2,18 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Shooting;
+package frc.robot.commands.Intaking;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 
-public class ShootPID extends Command {
-  /** Creates a new Shoot. */
-  private ShooterSubsystem shooterSubsystem;
-  private double speed;
-
-  public ShootPID(ShooterSubsystem p_shooterSubsystem, double p_speed) {
-    shooterSubsystem = p_shooterSubsystem;
-    speed = p_speed;
-    addRequirements(shooterSubsystem);
+public class RetractIntake extends Command {
+  /** Creates a new RetractIntake. */
+  private IntakeSubsystem intake;
+  public RetractIntake(IntakeSubsystem p_intake) {
+    intake = p_intake;
+    addRequirements(intake);
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
@@ -25,14 +23,12 @@ public class ShootPID extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooterSubsystem.setShooterSpeedPID(speed);
+    intake.setIntakePosition(0);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    shooterSubsystem.stopShooter();
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override

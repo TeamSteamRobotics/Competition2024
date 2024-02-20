@@ -141,12 +141,16 @@ public class ShooterSubsystem extends SubsystemBase {
     leftAdvanceMotor.set(0);
   }
 
+  public boolean shooterAtUp() {
+    return !shooterLimitSwitch.get();
+  }
+
   public void angleShooter(double value) {
-    if(!shooterLimitSwitch.get() && value > 0) 
+    if(shooterAtUp() && value > 0) 
       angleMotor.set(0);
     else if(getAngle() > 61 && value > 0)
       angleMotor.set(0);
-    else if(getAngle() < 28 && value < 0)
+    else if(getAngle() < 30 && value < 0)
       angleMotor.set(0);
     else
       angleMotor.set(UtilHelpers.clamp(value, -0.4, 0.4));

@@ -11,6 +11,8 @@ import frc.robot.commands.Climbing.RetractClimb;
 import frc.robot.commands.Driving.Drive;
 import frc.robot.commands.Intaking.AngleIntakeDown;
 import frc.robot.commands.Intaking.AngleIntakeUp;
+import frc.robot.commands.Intaking.Intake;
+import frc.robot.commands.Intaking.Vomit;
 import frc.robot.commands.Shooting.AdvanceNote;
 import frc.robot.commands.Shooting.AngleShooterDown;
 import frc.robot.commands.Shooting.AngleShooterPID;
@@ -39,7 +41,7 @@ public class RobotContainer {
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ClimbSubsystem m_climbSubsystem = new ClimbSubsystem();
-  private final ZachVisionSubsystem m_ZachVisionSubsystem = new ZachVisionSubsystem();
+  //private final ZachVisionSubsystem m_ZachVisionSubsystem = new ZachVisionSubsystem();
 
 
   private final CommandXboxController m_driverController = new CommandXboxController(OperatorConstants.kDriverControllerPort);
@@ -47,12 +49,19 @@ public class RobotContainer {
   // Driver Controller Bindings:
   private final Trigger retractClimb = m_driverController.leftBumper();
   private final Trigger raiseClimb = m_driverController.rightBumper();
-  private final Trigger runShootAnglePID = m_driverController.y();
+
   private final Trigger shooterAngleUp = m_driverController.povUp();
   private final Trigger shooterAngleDown = m_driverController.povDown();
+
   private final Trigger intakeAngleDown = m_driverController.povLeft();
   private final Trigger intakeAngleUp = m_driverController.povRight();
+
   private final Trigger advanceToShooter = m_driverController.b();
+  private final Trigger runShootAnglePID = m_driverController.y();
+
+  private final Trigger intake = m_driverController.a();
+  private final Trigger vomit = m_driverController.x();
+
   private final Trigger pidShoot = m_driverController.leftTrigger();
   private final Trigger shootStop = m_driverController.rightTrigger();
 
@@ -83,6 +92,10 @@ public class RobotContainer {
 
     intakeAngleUp.whileTrue(new AngleIntakeUp(m_intakeSubsystem));
     intakeAngleDown.whileTrue(new AngleIntakeDown(m_intakeSubsystem));
+
+    intake.whileTrue(new Intake(m_intakeSubsystem));
+    vomit.whileTrue(new Vomit(m_intakeSubsystem));
+
 
     pidShoot.whileTrue(new InstantCommand(() -> m_shooterSubsystem.setShooterSpeedPID(1200)));
     shootStop.onTrue(new InstantCommand(() -> m_shooterSubsystem.stopShooter()));

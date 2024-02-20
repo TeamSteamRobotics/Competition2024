@@ -5,12 +5,12 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
@@ -23,11 +23,14 @@ public class IntakeSubsystem extends SubsystemBase {
   private CANSparkMax intakeRoller;
   private CANSparkFlex intakePivot;
 
-  private RelativeEncoder intakePivotRelativeEncoder;
+  private DutyCycleEncoder absoluteIntakeEncoder;
 
   private SparkPIDController pidController;
 
-  private DigitalInput limitSwitch;
+  private DigitalInput limitSwitchUp;
+  private DigitalInput limitSwitchDown;
+
+  private double dutyCycleOffset = 0;
 
   private double kP, kI, kD;
   private double kFeedForward;
@@ -37,18 +40,24 @@ public class IntakeSubsystem extends SubsystemBase {
     intakeRoller = new CANSparkMax(CANID.intakeRoller, MotorType.kBrushless);
     intakePivot = new CANSparkFlex(CANID.intakePivot, MotorType.kBrushless);
 
-    intakePivotRelativeEncoder = intakePivot.getEncoder();
+    absoluteIntakeEncoder = new DutyCycleEncoder(DigitalIOID.intakeEncoder);
 
     pidController = intakePivot.getPIDController();
 
-    limitSwitch = new DigitalInput(DigitalIOID.intakeLimitSwitch);
+    limitSwitchUp = new DigitalInput(DigitalIOID.intakeLimitSwitchUp);
+    limitSwitchDown = new DigitalInput(DigitalIOID.intakeLimitSwitchDown);
   
 
     intakeRoller.restoreFactoryDefaults();
     intakePivot.restoreFactoryDefaults();
 
+    intakeRoller.setInverted(true);
+
     intakeRoller.setIdleMode(IdleMode.kBrake);
     intakePivot.setIdleMode(IdleMode.kBrake);
+
+    absoluteIntakeEncoder.setDistancePerRotation(180);
+    absoluteIntakeEncoder.setPositionOffset(dutyCycleOffset);
 
     kP = 0;
     kI = 0;
@@ -69,12 +78,17 @@ public class IntakeSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Intake FF", kFeedForward);
   }
 
-  public void findHome() {
-    while(!limitSwitch.get()) {
-      intakePivot.set(-0.1);
-    }
-    intakePivot.set(0);
-    intakePivotRelativeEncoder.setPosition(0);
+
+  public double getIntakeAngleDegrees() {
+    return absoluteIntakeEncoder.getDistance();
+  }
+
+  public boolean isDown() {
+    return limitSwitchDown.get();
+  }
+
+  public boolean isUp() {
+    return limitSwitchUp.get();
   }
 
   public void setIntakePosition(double positionDegrees) {
@@ -82,7 +96,13 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void setIntakePositionManual(double value) {
-    intakePivot.set(value);
+    /*if(isDown() && value < 0)
+      intakePivot.set(0);
+    else if(isUp() && value > 0)
+      intakePivot.set(0);
+    else */
+      intakePivot.set(value);
+    
   }
 
   public void runIntake(double speed) {
@@ -99,6 +119,11 @@ public class IntakeSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    SmartDashboard.putBoolean("Intake up", isUp());
+    SmartDashboard.putBoolean("Intake Down", isDown());
+    SmartDashboard.putNumber("Intake Angle", getIntakeAngleDegrees());
+    
+
     double p = SmartDashboard.getNumber("Intake P", 0);
     double i = SmartDashboard.getNumber("Intake I", 0);
     double d = SmartDashboard.getNumber("Intake D", 0);

@@ -45,11 +45,14 @@ public final class Constants {
 		public static final int rightDriveEncoder1 = 0;
 		public static final int rightDriveEncoder2 = 1;
 
-		public static final int shooterLimitSwitch = 5;
+		public static final int shooterLimitSwitch = 6;
 
 		public static final int shooterEncoder = 4;
+
+		public static final int intakeEncoder = 5;
 	
-		public static final int intakeLimitSwitch = 6;
+		public static final int intakeLimitSwitchUp = 7;
+		public static final int intakeLimitSwitchDown = 8;
 
 	}
 
