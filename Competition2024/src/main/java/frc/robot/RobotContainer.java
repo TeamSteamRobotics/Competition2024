@@ -65,11 +65,14 @@ public class RobotContainer {
   private final Trigger pidShoot = m_driverController.leftTrigger();
   private final Trigger shootStop = m_driverController.rightTrigger();
 
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     m_driveSubsystem.setDefaultCommand(new Drive(m_driveSubsystem, m_driverController::getLeftY, m_driverController::getRightX));
     configureBindings();
+
   }
+    
 
   /**
    * Use this method to define your trigger->command mappings. Triggers can be created via the
@@ -108,5 +111,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     return new TopLevelAuto(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem);
+    
   }
+  
 }
