@@ -21,15 +21,15 @@ public class DriveDistance extends PIDCommand {
         // This should return the measurement
         () -> driveSubsystem.getDistanceMeters(),
         // This should return the setpoint (can also be a constant)
-        () -> driveSubsystem.getDistanceMeters() + distance,
+        driveSubsystem.getDistanceMeters() + distance,
         // This uses the output
         output -> {
           driveSubsystem.drive(-output, 0);
         });
-        
-    addRequirements(driveSubsystem);
+        System.out.println("reading: " + driveSubsystem.getDistanceMeters());
+        addRequirements(driveSubsystem);
     SmartDashboard.putData("DriveDistance", getController());
-    getController().setTolerance(.01,0);
+    //getController().setTolerance(.01,0);
   }
 
 
@@ -38,4 +38,6 @@ public class DriveDistance extends PIDCommand {
   public boolean isFinished() {
     return getController().atSetpoint();
   }
+  //public static void print() {
+    //System.out.println();
 }

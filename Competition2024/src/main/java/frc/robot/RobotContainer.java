@@ -21,6 +21,7 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.ZachVisionSubsystem;
+import frc.robot.commands.Driving.DriveDistance;
 
 import frc.robot.subsystems.ClimbSubsystem;
 
@@ -48,7 +49,8 @@ public class RobotContainer {
 
   // Driver Controller Bindings:
   private final Trigger retractClimb = m_driverController.leftBumper();
-  private final Trigger raiseClimb = m_driverController.rightBumper();
+  //private final Trigger raiseClimb = m_driverController.rightBumper();
+  private final Trigger DriveDistance = m_driverController.rightBumper();
 
   private final Trigger shooterAngleUp = m_driverController.povUp();
   private final Trigger shooterAngleDown = m_driverController.povDown();
@@ -64,6 +66,7 @@ public class RobotContainer {
 
   private final Trigger pidShoot = m_driverController.leftTrigger();
   private final Trigger shootStop = m_driverController.rightTrigger();
+  
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -82,7 +85,8 @@ public class RobotContainer {
    */
   private void configureBindings() {
     retractClimb.onTrue(new RetractClimb(m_climbSubsystem));
-    raiseClimb.onTrue(new RaiseClimb(m_climbSubsystem));
+   // raiseClimb.onTrue(new RaiseClimb(m_climbSubsystem));
+   DriveDistance.onTrue(new DriveDistance(m_driveSubsystem, 1.0));
 
     runShootAnglePID.onTrue(new AngleShooterPID(m_shooterSubsystem));
     advanceToShooter.whileTrue(new AdvanceNote(m_shooterSubsystem));
