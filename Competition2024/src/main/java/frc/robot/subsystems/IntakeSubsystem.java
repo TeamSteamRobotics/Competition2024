@@ -29,8 +29,9 @@ public class IntakeSubsystem extends SubsystemBase {
 
   private DigitalInput limitSwitchUp;
   private DigitalInput limitSwitchDown;
+  private DigitalInput beamBrake;
 
-  private double dutyCycleOffset = 0;
+  private double dutyCycleOffset = 0.00797222;
 
   private double kP, kI, kD;
   private double kFeedForward;
@@ -46,12 +47,13 @@ public class IntakeSubsystem extends SubsystemBase {
 
     limitSwitchUp = new DigitalInput(DigitalIOID.intakeLimitSwitchUp);
     limitSwitchDown = new DigitalInput(DigitalIOID.intakeLimitSwitchDown);
+    beamBrake = new DigitalInput(DigitalIOID.intakeBeamBreak);
   
 
     intakeRoller.restoreFactoryDefaults();
     intakePivot.restoreFactoryDefaults();
 
-    intakeRoller.setInverted(true);
+    intakeRoller.setInverted(false);
 
     intakeRoller.setIdleMode(IdleMode.kBrake);
     intakePivot.setIdleMode(IdleMode.kBrake);
@@ -83,12 +85,16 @@ public class IntakeSubsystem extends SubsystemBase {
     return absoluteIntakeEncoder.getDistance();
   }
 
+  public boolean noteIntaked() {
+    return !beamBrake.get(); 
+  }
+
   public boolean isDown() {
-    return limitSwitchDown.get();
+    return !limitSwitchDown.get();
   }
 
   public boolean isUp() {
-    return limitSwitchUp.get();
+    return !limitSwitchUp.get();
   }
 
   public void setIntakePosition(double positionDegrees) {
@@ -96,11 +102,11 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void setIntakePositionManual(double value) {
-    /*if(isDown() && value < 0)
+    if(getIntakeAngleDegrees()  > 204 && value < 0)
       intakePivot.set(0);
     else if(isUp() && value > 0)
       intakePivot.set(0);
-    else */
+    else 
       intakePivot.set(value);
     
   }
@@ -122,7 +128,7 @@ public class IntakeSubsystem extends SubsystemBase {
     SmartDashboard.putBoolean("Intake up", isUp());
     SmartDashboard.putBoolean("Intake Down", isDown());
     SmartDashboard.putNumber("Intake Angle", getIntakeAngleDegrees());
-    
+    SmartDashboard.putBoolean("Note Intaked", noteIntaked());
 
     double p = SmartDashboard.getNumber("Intake P", 0);
     double i = SmartDashboard.getNumber("Intake I", 0);

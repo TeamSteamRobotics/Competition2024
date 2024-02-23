@@ -54,6 +54,8 @@ public final class Constants {
 		public static final int intakeLimitSwitchUp = 7;
 		public static final int intakeLimitSwitchDown = 8;
 
+		public static final int intakeBeamBreak = 9;
+
 	}
 
 

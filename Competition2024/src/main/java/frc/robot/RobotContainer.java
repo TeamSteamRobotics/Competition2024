@@ -49,8 +49,8 @@ public class RobotContainer {
 
   // Driver Controller Bindings:
   private final Trigger retractClimb = m_driverController.leftBumper();
-  //private final Trigger raiseClimb = m_driverController.rightBumper();
-  private final Trigger DriveDistance = m_driverController.rightBumper();
+  private final Trigger raiseClimb = m_driverController.rightBumper();
+  //private final Trigger DriveDistance = m_driverController.rightBumper();
 
   private final Trigger shooterAngleUp = m_driverController.povUp();
   private final Trigger shooterAngleDown = m_driverController.povDown();
@@ -85,8 +85,8 @@ public class RobotContainer {
    */
   private void configureBindings() {
     retractClimb.onTrue(new RetractClimb(m_climbSubsystem));
-   // raiseClimb.onTrue(new RaiseClimb(m_climbSubsystem));
-   DriveDistance.onTrue(new DriveDistance(m_driveSubsystem, 1.0));
+    raiseClimb.onTrue(new RaiseClimb(m_climbSubsystem));
+   //DriveDistance.onTrue(new DriveDistance(m_driveSubsystem, 1.0));
 
     runShootAnglePID.onTrue(new AngleShooterPID(m_shooterSubsystem));
     advanceToShooter.whileTrue(new AdvanceNote(m_shooterSubsystem));

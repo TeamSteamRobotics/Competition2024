@@ -3,12 +3,6 @@
 	<widget field="DriveDistance" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
 		<location x="693" y="401"/>
 	</widget>
-	<widget field="Right Encoder" type="Quadrature Encoder" class="edu.wpi.first.smartdashboard.livewindow.elements.EncoderDisplay">
-		<location x="0" y="173"/>
-	</widget>
-	<widget field="Left Encoder" type="Quadrature Encoder" class="edu.wpi.first.smartdashboard.livewindow.elements.EncoderDisplay">
-		<location x="0" y="0"/>
-	</widget>
 	<widget field="Intake Angle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="618"/>
 	</widget>
@@ -143,5 +137,4 @@
 </dashboard>
 <live-window>
 </live-window>
-	<hidden field="Drive Distance"/>
 </xml>
