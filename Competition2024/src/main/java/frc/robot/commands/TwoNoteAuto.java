@@ -8,11 +8,17 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.commands.Intaking.Intake;
+import frc.robot.commands.Shooting.AdvanceNote;
+import frc.robot.commands.Shooting.AngleShooterPID;
 import frc.robot.commands.Shooting.ShootPID;
 import frc.robot.subsystems.AprilVisionSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.commands.Intaking.AngleIntakePID;
+import frc.robot.commands.Intaking.AngleIntakeUp;
+import frc.robot.commands.Intaking.AngleIntakeDown;
 
 
 
@@ -35,8 +41,10 @@ SequentialCommandGroup autoCmdGroup;
     }
   @Override
   public void initialize() {
+
     autoCmdGroup.addCommands(new InstantCommand(() -> shooterSubsystem.setShooterSpeedPID(1200)));
     autoCmdGroup.addCommands(new WaitCommand(5));
+    autoCmdGroup.addCommands(new AdvanceNote(shooterSubsystem).withTimeout(3));
     autoCmdGroup.addCommands(new InstantCommand(() -> shooterSubsystem.stopShooter()));
 
     autoCmdGroup.schedule();
