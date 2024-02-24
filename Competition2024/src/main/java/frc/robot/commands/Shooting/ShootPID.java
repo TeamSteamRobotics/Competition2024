@@ -15,7 +15,7 @@ public class ShootPID extends Command {
   public ShootPID(ShooterSubsystem p_shooterSubsystem, double p_speed) {
     shooterSubsystem = p_shooterSubsystem;
     speed = p_speed;
-    addRequirements(shooterSubsystem);
+    //addRequirements(shooterSubsystem);
   }
 
   // Called when the command is initially scheduled.

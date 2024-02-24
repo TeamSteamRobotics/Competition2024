@@ -5,6 +5,8 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.InteligentShoot;
+import frc.robot.commands.SmartShoot;
 import frc.robot.commands.TopLevelAuto;
 import frc.robot.commands.Climbing.RaiseClimb;
 import frc.robot.commands.Climbing.RetractClimb;
@@ -12,6 +14,7 @@ import frc.robot.commands.Driving.Drive;
 import frc.robot.commands.Intaking.AngleIntakeDown;
 import frc.robot.commands.Intaking.AngleIntakeUp;
 import frc.robot.commands.Intaking.Intake;
+import frc.robot.commands.Intaking.IntakeAnglePID;
 import frc.robot.commands.Intaking.Vomit;
 import frc.robot.commands.Shooting.AdvanceNote;
 import frc.robot.commands.Shooting.AngleShooterDown;
@@ -24,7 +27,7 @@ import frc.robot.subsystems.ZachVisionSubsystem;
 import frc.robot.commands.Driving.DriveDistance;
 
 import frc.robot.subsystems.ClimbSubsystem;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -85,10 +88,12 @@ public class RobotContainer {
    */
   private void configureBindings() {
     retractClimb.onTrue(new RetractClimb(m_climbSubsystem));
-    raiseClimb.onTrue(new RaiseClimb(m_climbSubsystem));
+   // raiseClimb.onTrue(new RaiseClimb(m_climbSubsystem));
+   raiseClimb.whileTrue(new SmartShoot(m_shooterSubsystem));
+    //raiseClimb.onTrue(new IntakeAnglePID(m_intakeSubsystem, SmartDashboard.getNumber("IntakeAnglePID", 0)));
    //DriveDistance.onTrue(new DriveDistance(m_driveSubsystem, 1.0));
 
-    runShootAnglePID.onTrue(new AngleShooterPID(m_shooterSubsystem));
+    //runShootAnglePID.onTrue(new AngleShooterPID(m_shooterSubsystem));
     advanceToShooter.whileTrue(new AdvanceNote(m_shooterSubsystem));
 
     shooterAngleUp.whileTrue(new AngleShooterUp(m_shooterSubsystem));
@@ -101,7 +106,7 @@ public class RobotContainer {
     vomit.whileTrue(new Vomit(m_intakeSubsystem));
 
 
-    pidShoot.whileTrue(new InstantCommand(() -> m_shooterSubsystem.setShooterSpeedPID(1200)));
+    pidShoot.whileTrue(new InstantCommand(() -> m_shooterSubsystem.setShooterSpeedPID(1325)));
     shootStop.onTrue(new InstantCommand(() -> m_shooterSubsystem.stopShooter()));
   }
 

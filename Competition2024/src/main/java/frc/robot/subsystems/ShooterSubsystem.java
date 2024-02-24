@@ -45,7 +45,7 @@ public class ShooterSubsystem extends SubsystemBase {
   private double shootkFeedForward;
   private double shootMinOutput, shootMaxOutput;
 
-  private TreeMap<Double, Double> distanceSpeedTable;
+  private TreeMap<Double, Double> distanceAngleTable;
 
   public ShooterSubsystem() {
     leftShooter = new CANSparkMax(CANID.leftShooter, MotorType.kBrushless);
@@ -59,7 +59,7 @@ public class ShooterSubsystem extends SubsystemBase {
     absoluteAngleEncoder = new DutyCycleEncoder(DigitalIOID.shooterEncoder);
     shooterLimitSwitch = new DigitalInput(DigitalIOID.shooterLimitSwitch);
 
-    distanceSpeedTable = new TreeMap<Double, Double>();
+    distanceAngleTable = new TreeMap<Double, Double>();
 
     rightShooterEncoder = rightShooter.getEncoder();
 
@@ -120,6 +120,7 @@ public class ShooterSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Shooter I Gain", shootkI);
     SmartDashboard.putNumber("Shooter D Gain", shootkD);
     SmartDashboard.putNumber("Shooter Feed Forward", shootkFeedForward);
+    populateDistanceAngleTable();
   }
 
   public void runShooterManual(double value) {
@@ -171,20 +172,29 @@ public class ShooterSubsystem extends SubsystemBase {
     shootRightPIDController.setReference(speed, ControlType.kVelocity);
   }
 
-  public void populateDistanceSpeedTable() {
+  public void populateDistanceAngleTable() {
+    distanceAngleTable.put(0.6, 52.0);
+    distanceAngleTable.put(1.1, 46.0);
+    distanceAngleTable.put(1.6, 40.0);
+    distanceAngleTable.put(2.1, 36.0);
+    distanceAngleTable.put(2.6, 33.0);
+    distanceAngleTable.put(3.1, 30.0);
+    distanceAngleTable.put(3.6, 30.0);
+    distanceAngleTable.put(4.1, 30.0);
+
     // use distanceSpeedTable.put(distance, speed) using experimental values
   }
 
   /*
     * AN ENTRY IS A POINT (KEY, VALUE)
     * THE KEY REPRESENTS THE DISTANCE 
-    * THE VALUE REPRESENTS THE SPEED REQUIRED TO SHOOT THAT DISTANCE
+    * THE VALUE REPRESENTS THE ANGLE REQUIRED TO SHOOT THAT DISTANCE
     * THINK OF IT AS AN (X,Y) POINT 
-    * (KEY, VALUE) = (DISTANCE, SPEED)
+    * (KEY, VALUE) = (DISTANCE, ANGLE)
   */  
-  public double getTargetSpeed(double distance) {
-    Entry<Double, Double> lower = distanceSpeedTable.floorEntry(distance);
-    Entry<Double, Double> upper = distanceSpeedTable.ceilingEntry(distance);
+  public double getTargetAngle(double distance) {
+    Entry<Double, Double> lower = distanceAngleTable.floorEntry(distance);
+    Entry<Double, Double> upper = distanceAngleTable.ceilingEntry(distance);
 
     if(lower == null)
       return upper.getValue();
@@ -196,18 +206,18 @@ public class ShooterSubsystem extends SubsystemBase {
 
 
 
-  public double getShooterAngle(double distanceFromSpeaker){
+  public double calculateShooterAngleDegree(double distanceFromSpeaker){
         double yVelocity = 17.54;
         double t = 0.55;
         double xVelocity;
 
         xVelocity = distanceFromSpeaker/t;
 
-        double shooterAngle = 0;//(Math.atan2(yVelocity/xVelocity))*(180/Math.PI);
+        double shooterAngle = (Math.atan2(yVelocity,xVelocity))*(180/Math.PI);
 
         return shooterAngle;
   }
-  public double getMotorSpeed(double distanceFromSpeaker){
+  public double claclutateShooterSpeedRPM(double distanceFromSpeaker){
         double yVelocity = 17.54;
         double t = 0.55;
         double xVelocity;

@@ -36,6 +36,10 @@ public class Robot extends TimedRobot {
     SmartDashboard.putString("AutoCSVInput", "");
     SmartDashboard.putBoolean("Validate Auto Input", false);
     SmartDashboard.putNumber("ShootAngle", 30);
+    SmartDashboard.putNumber("IntakeAnglePID", 0);
+    SmartDashboard.putNumber("DistanceToShoot", 0);
+    SmartDashboard.putNumber("TargetSpd", 0);//800;//shoot.claclutateShooterSpeedRPM(distance);
+    SmartDashboard.putNumber("TargetAng", 0);
     for (int port = 5800; port <= 5807; port++) {
             PortForwarder.add(port, "limelight.local", port);
         }

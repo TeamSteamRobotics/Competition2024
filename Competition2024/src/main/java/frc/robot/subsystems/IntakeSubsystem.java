@@ -31,7 +31,7 @@ public class IntakeSubsystem extends SubsystemBase {
   private DigitalInput limitSwitchDown;
   private DigitalInput beamBrake;
 
-  private double dutyCycleOffset = 0.00797222;
+  private double dutyCycleOffset = 0.9456111;//0.00797222;
 
   private double kP, kI, kD;
   private double kFeedForward;
@@ -58,9 +58,9 @@ public class IntakeSubsystem extends SubsystemBase {
     intakeRoller.setIdleMode(IdleMode.kBrake);
     intakePivot.setIdleMode(IdleMode.kBrake);
 
-    absoluteIntakeEncoder.setDistancePerRotation(180);
-    absoluteIntakeEncoder.setPositionOffset(dutyCycleOffset);
-
+    absoluteIntakeEncoder.setDistancePerRotation(360);
+    absoluteIntakeEncoder.setPositionOffset(318.5 / 360.0);//-378/360);
+    //absoluteIntakeEncoder.reset();
     kP = 0;
     kI = 0;
     kD = 0;
@@ -82,7 +82,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
 
   public double getIntakeAngleDegrees() {
-    return absoluteIntakeEncoder.getDistance();
+    return (absoluteIntakeEncoder.getDistance() + 360) / 2;
   }
 
   public boolean noteIntaked() {
@@ -106,8 +106,10 @@ public class IntakeSubsystem extends SubsystemBase {
       intakePivot.set(0);
     else if(isUp() && value > 0)
       intakePivot.set(0);
-    else 
+    else {
       intakePivot.set(value);
+      SmartDashboard.putNumber("Intake Output", value);
+    }
     
   }
 
