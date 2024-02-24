@@ -5,9 +5,9 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.InteligentShoot;
-import frc.robot.commands.SmartShoot;
+import frc.robot.commands.CoordinatePrint;
 import frc.robot.commands.TopLevelAuto;
+import frc.robot.commands.TwoNoteAuto;
 import frc.robot.commands.Climbing.RaiseClimb;
 import frc.robot.commands.Climbing.RetractClimb;
 import frc.robot.commands.Driving.Drive;
@@ -24,8 +24,9 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.ZachVisionSubsystem;
+import frc.robot.subsystems.AprilVisionSubsystem.ReturnTarget;
 import frc.robot.commands.Driving.DriveDistance;
-
+import frc.robot.subsystems.AprilVisionSubsystem;
 import frc.robot.subsystems.ClimbSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -45,6 +46,8 @@ public class RobotContainer {
   private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ClimbSubsystem m_climbSubsystem = new ClimbSubsystem();
+  private final AprilVisionSubsystem m_aVisionSubsystem = new AprilVisionSubsystem();
+  
   //private final ZachVisionSubsystem m_ZachVisionSubsystem = new ZachVisionSubsystem();
 
 
@@ -52,8 +55,8 @@ public class RobotContainer {
 
   // Driver Controller Bindings:
   private final Trigger retractClimb = m_driverController.leftBumper();
-  private final Trigger raiseClimb = m_driverController.rightBumper();
-  //private final Trigger DriveDistance = m_driverController.rightBumper();
+  //private final Trigger raiseClimb = m_driverController.rightBumper();
+  private final Trigger DriveDistance = m_driverController.rightBumper();
 
   private final Trigger shooterAngleUp = m_driverController.povUp();
   private final Trigger shooterAngleDown = m_driverController.povDown();
@@ -74,6 +77,7 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     m_driveSubsystem.setDefaultCommand(new Drive(m_driveSubsystem, m_driverController::getLeftY, m_driverController::getRightX));
+    m_aVisionSubsystem.setDefaultCommand(new CoordinatePrint(m_aVisionSubsystem, 4, ReturnTarget.TARGET));
     configureBindings();
   }
 
@@ -110,6 +114,7 @@ public class RobotContainer {
     shootStop.onTrue(new InstantCommand(() -> m_shooterSubsystem.stopShooter()));
   }
 
+    
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *

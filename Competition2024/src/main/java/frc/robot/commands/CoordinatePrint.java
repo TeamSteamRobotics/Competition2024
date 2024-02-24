@@ -1,5 +1,5 @@
 package frc.robot.commands;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.AprilVisionSubsystem;
 import frc.robot.subsystems.AprilVisionSubsystem.ReturnTarget;
@@ -16,6 +16,7 @@ public class CoordinatePrint extends Command{
 
     @Override
     public void execute() {
+        SmartDashboard.putNumber("DISTANCE: ", av.getCoordinates(id, tt).z);
         System.out.println("X: " + av.getCoordinates(id, tt).x);
         System.out.println("Y: " + av.getCoordinates(id, tt).y);
         System.out.println("Z: " + av.getCoordinates(id, tt).z);
