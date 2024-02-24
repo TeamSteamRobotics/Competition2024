@@ -56,8 +56,8 @@ public class RobotContainer {
   private final CommandXboxController m_driverController = new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
   // Driver Controller Bindings:
-  private final Trigger retractClimb = m_driverController.leftBumper();
-  private final Trigger raiseClimb = m_driverController.rightBumper();
+  //private final Trigger retractClimb = m_driverController.leftBumper();
+  //private final Trigger raiseClimb = m_driverController.rightBumper();
   //private final Trigger DriveDistance = m_driverController.rightBumper();
 
   private final Trigger shooterAngleUp = m_driverController.povUp();
@@ -75,7 +75,7 @@ public class RobotContainer {
   private final Trigger pidShoot = m_driverController.leftTrigger();
   private final Trigger shootStop = m_driverController.rightTrigger();
   
-  private final Trigger twoNoteTest = m_driverController.x();
+  private final Trigger twoNoteTest = m_driverController.leftBumper();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -94,9 +94,9 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    retractClimb.onTrue(new RetractClimb(m_climbSubsystem));
+    //retractClimb.onTrue(new RetractClimb(m_climbSubsystem));
    // raiseClimb.onTrue(new RaiseClimb(m_climbSubsystem));
-   raiseClimb.whileTrue(new SmartShoot(m_shooterSubsystem, m_aVisionSubsystem));
+   //raiseClimb.whileTrue(new SmartShoot(m_shooterSubsystem, m_aVisionSubsystem));
     //raiseClimb.onTrue(new IntakeAnglePID(m_intakeSubsystem, SmartDashboard.getNumber("IntakeAnglePID", 0)));
    //DriveDistance.onTrue(new DriveDistance(m_driveSubsystem, 1.0));
 
@@ -115,7 +115,7 @@ public class RobotContainer {
 
     pidShoot.whileTrue(new InstantCommand(() -> m_shooterSubsystem.setShooterSpeedPID(1500)));
     shootStop.onTrue(new InstantCommand(() -> m_shooterSubsystem.stopShooter()));
-    //twoNoteTest.onTrue(new TwoNoteAuto(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem));
+    twoNoteTest.onTrue(new TwoNoteAuto(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem));
   }
 
     

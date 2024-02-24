@@ -16,7 +16,6 @@ import frc.robot.subsystems.AprilVisionSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
-import frc.robot.commands.Intaking.AngleIntakePID;
 import frc.robot.commands.Intaking.AngleIntakeUp;
 import frc.robot.commands.Intaking.AngleIntakeDown;
 
@@ -42,7 +41,8 @@ SequentialCommandGroup autoCmdGroup;
   @Override
   public void initialize() {
 
-    autoCmdGroup.addCommands(new InstantCommand(() -> shooterSubsystem.setShooterSpeedPID(1200)));
+    autoCmdGroup.addCommands(new InstantCommand(() -> shooterSubsystem.setShooterSpeedPID(1500)));
+    autoCmdGroup.addCommands(new SmartShoot(shooterSubsystem, avSubsystem));
     autoCmdGroup.addCommands(new WaitCommand(5));
     autoCmdGroup.addCommands(new AdvanceNote(shooterSubsystem).withTimeout(3));
     autoCmdGroup.addCommands(new InstantCommand(() -> shooterSubsystem.stopShooter()));
