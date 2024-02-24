@@ -34,7 +34,7 @@ public class InteligentShoot extends Command {
     System.out.println("Reached Init");
     new ParallelRaceGroup(
       new ShootPID(shoot, shooterSpeedRPM),
-      new AngleShooterPID(shoot, shooterAngleDegrees),
+      //new AngleShooterPID(shoot, shooterAngleDegrees),
       new WaitCommand(5)
     ).andThen(new AdvanceNote(shoot));
     System.out.println("end of init");

@@ -53,14 +53,14 @@ public class IntakeSubsystem extends SubsystemBase {
     intakeRoller.restoreFactoryDefaults();
     intakePivot.restoreFactoryDefaults();
 
-    intakeRoller.setInverted(false);
+    intakeRoller.setInverted(true);
 
     intakeRoller.setIdleMode(IdleMode.kBrake);
     intakePivot.setIdleMode(IdleMode.kBrake);
 
-    absoluteIntakeEncoder.setDistancePerRotation(360);
-    absoluteIntakeEncoder.setPositionOffset(318.5 / 360.0);//-378/360);
-    //absoluteIntakeEncoder.reset();
+    absoluteIntakeEncoder.setDistancePerRotation(180);
+    absoluteIntakeEncoder.reset();
+    absoluteIntakeEncoder.setPositionOffset(64.0 / 180.0);
     kP = 0;
     kI = 0;
     kD = 0;
@@ -82,7 +82,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
 
   public double getIntakeAngleDegrees() {
-    return (absoluteIntakeEncoder.getDistance() + 360) / 2;
+    return -absoluteIntakeEncoder.getDistance();
   }
 
   public boolean noteIntaked() {

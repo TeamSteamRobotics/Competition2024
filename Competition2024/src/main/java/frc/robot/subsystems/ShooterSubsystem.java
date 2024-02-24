@@ -151,7 +151,7 @@ public class ShooterSubsystem extends SubsystemBase {
       angleMotor.set(0);
     else if(getAngle() > 61 && value > 0)
       angleMotor.set(0);
-    else if(getAngle() < 30 && value < 0)
+    else if(getAngle() < 13 && value < 0)
       angleMotor.set(0);
     else
       angleMotor.set(UtilHelpers.clamp(value, -0.4, 0.4));

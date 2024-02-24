@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.CoordinatePrint;
+import frc.robot.commands.SmartShoot;
 import frc.robot.commands.TopLevelAuto;
 import frc.robot.commands.TwoNoteAuto;
 import frc.robot.commands.Climbing.RaiseClimb;
@@ -33,6 +34,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.TwoNoteAuto;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -55,8 +57,8 @@ public class RobotContainer {
 
   // Driver Controller Bindings:
   private final Trigger retractClimb = m_driverController.leftBumper();
-  //private final Trigger raiseClimb = m_driverController.rightBumper();
-  private final Trigger DriveDistance = m_driverController.rightBumper();
+  private final Trigger raiseClimb = m_driverController.rightBumper();
+  //private final Trigger DriveDistance = m_driverController.rightBumper();
 
   private final Trigger shooterAngleUp = m_driverController.povUp();
   private final Trigger shooterAngleDown = m_driverController.povDown();
@@ -73,6 +75,7 @@ public class RobotContainer {
   private final Trigger pidShoot = m_driverController.leftTrigger();
   private final Trigger shootStop = m_driverController.rightTrigger();
   
+  private final Trigger twoNoteTest = m_driverController.x();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -93,7 +96,7 @@ public class RobotContainer {
   private void configureBindings() {
     retractClimb.onTrue(new RetractClimb(m_climbSubsystem));
    // raiseClimb.onTrue(new RaiseClimb(m_climbSubsystem));
-   raiseClimb.whileTrue(new SmartShoot(m_shooterSubsystem));
+   raiseClimb.whileTrue(new SmartShoot(m_shooterSubsystem, m_aVisionSubsystem));
     //raiseClimb.onTrue(new IntakeAnglePID(m_intakeSubsystem, SmartDashboard.getNumber("IntakeAnglePID", 0)));
    //DriveDistance.onTrue(new DriveDistance(m_driveSubsystem, 1.0));
 
@@ -110,8 +113,9 @@ public class RobotContainer {
     vomit.whileTrue(new Vomit(m_intakeSubsystem));
 
 
-    pidShoot.whileTrue(new InstantCommand(() -> m_shooterSubsystem.setShooterSpeedPID(1325)));
+    pidShoot.whileTrue(new InstantCommand(() -> m_shooterSubsystem.setShooterSpeedPID(1500)));
     shootStop.onTrue(new InstantCommand(() -> m_shooterSubsystem.stopShooter()));
+    //twoNoteTest.onTrue(new TwoNoteAuto(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem));
   }
 
     

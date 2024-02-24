@@ -4,6 +4,8 @@
 
 package frc.robot.commands.Shooting;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
@@ -14,14 +16,14 @@ import frc.robot.subsystems.ShooterSubsystem;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class AngleShooterPID extends PIDCommand {
   /** Creates a new AngleShooter. */
-  public AngleShooterPID(ShooterSubsystem shoot, double angle) {
+  public AngleShooterPID(ShooterSubsystem shoot, DoubleSupplier angle) {
     super(
         // The controller that the command will use
         new PIDController(0.01, 0, 0),
         // This should return the measurement
         () -> shoot.getAngle(),
         // This should return the setpoint (can also be a constant)
-        () -> angle,// SmartDashboard.getNumber("ShootAngle", 30),
+        () -> angle.getAsDouble(),// SmartDashboard.getNumber("ShootAngle", 30),
         // This uses the output
         output -> {
           shoot.angleShooter(output);

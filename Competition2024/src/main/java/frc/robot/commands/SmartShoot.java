@@ -4,12 +4,16 @@
 
 package frc.robot.commands;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.Shooting.AngleShooterPID;
 import frc.robot.commands.Shooting.ShootPID;
+import frc.robot.subsystems.AprilVisionSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.AprilVisionSubsystem.ReturnTarget;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -17,18 +21,15 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class SmartShoot extends ParallelRaceGroup {
   /** Creates a new SmartShoot. */
   private double shooterSpeedRPM, shooterAngleDegrees;
-  private double distance;
-  public SmartShoot(ShooterSubsystem shoot) { 
-    distance = SmartDashboard.getNumber("DistanceToShoot", 0);
-    shooterSpeedRPM = SmartDashboard.getNumber("TargetSpd", 0);//800;//shoot.claclutateShooterSpeedRPM(distance);
-    shooterAngleDegrees = SmartDashboard.getNumber("TargetAng", 0);//52.44;//= shoot.calculateShooterAngleDegree(distance);
-    //SmartDashboard.putNumber("CalcRPM", shooterSpeedRPM);
-    //SmartDashboard.putNumber("Calc Angle", shooterAngleDegrees);
-    // Add your commands in the addCommands() call, e.g.
+  public SmartShoot(ShooterSubsystem shoot, AprilVisionSubsystem aprilVision) { 
+    shooterAngleDegrees = shoot.getTargetAngle(aprilVision.getCoordinates(4, ReturnTarget.TARGET).z);
+    shooterSpeedRPM = 1500; 
+    System.out.println("Speed: " + shooterSpeedRPM);
+    System.out.println("Angle: " + shooterAngleDegrees);
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new ShootPID(shoot, SmartDashboard.getNumber("TargetSpd", 0)),
-      new AngleShooterPID(shoot, SmartDashboard.getNumber("TargetAng", 0)));
+      new ShootPID(shoot, shooterSpeedRPM),
+      new AngleShooterPID(shoot, () -> shoot.getTargetAngle(aprilVision.getCoordinates(4, ReturnTarget.TARGET).z)));
      // new WaitCommand(5));
   }
 }
