@@ -42,7 +42,8 @@ SequentialCommandGroup autoCmdGroup;
   @Override
   public void initialize() {
 
-    autoCmdGroup.addCommands(new InstantCommand(() -> shooterSubsystem.setShooterSpeedPID(1200)));
+    autoCmdGroup.addCommands(new InstantCommand(() -> shooterSubsystem.setShooterSpeedPID(1500)));
+    autoCmdGroup.addCommands(new SmartShoot(shooterSubsystem, avSubsystem));
     autoCmdGroup.addCommands(new WaitCommand(5));
     autoCmdGroup.addCommands(new AdvanceNote(shooterSubsystem).withTimeout(3));
     autoCmdGroup.addCommands(new InstantCommand(() -> shooterSubsystem.stopShooter()));
