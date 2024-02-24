@@ -75,8 +75,7 @@ public class RobotContainer {
   private final Trigger pidShoot = m_driverController.leftTrigger();
   private final Trigger shootStop = m_driverController.rightTrigger();
   
-  private final Trigger twoNoteTest = m_driverController.x();
-
+  //private final Trigger twoNoteTest = m_driverController.x();
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     m_driveSubsystem.setDefaultCommand(new Drive(m_driveSubsystem, m_driverController::getLeftY, m_driverController::getRightX));
@@ -100,14 +99,17 @@ public class RobotContainer {
     //raiseClimb.onTrue(new IntakeAnglePID(m_intakeSubsystem, SmartDashboard.getNumber("IntakeAnglePID", 0)));
    //DriveDistance.onTrue(new DriveDistance(m_driveSubsystem, 1.0));
 
-    //runShootAnglePID.onTrue(new AngleShooterPID(m_shooterSubsystem));
+    runShootAnglePID.onTrue(new IntakeAnglePID(m_intakeSubsystem, () -> SmartDashboard.getNumber("IntakeAnglePID", 0)));
     advanceToShooter.whileTrue(new AdvanceNote(m_shooterSubsystem));
 
     shooterAngleUp.whileTrue(new AngleShooterUp(m_shooterSubsystem));
     shooterAngleDown.whileTrue(new AngleShooterDown(m_shooterSubsystem));
 
-    intakeAngleUp.whileTrue(new AngleIntakeUp(m_intakeSubsystem));
-    intakeAngleDown.whileTrue(new AngleIntakeDown(m_intakeSubsystem));
+    //intakeAngleUp.whileTrue(new AngleIntakeUp(m_intakeSubsystem));
+    //intakeAngleDown.whileTrue(new AngleIntakeDown(m_intakeSubsystem));
+
+    intakeAngleDown.onTrue(new IntakeAnglePID(m_intakeSubsystem, () -> 195));
+    intakeAngleUp.onTrue(new IntakeAnglePID(m_intakeSubsystem, () -> 0));
 
     intake.whileTrue(new Intake(m_intakeSubsystem));
     vomit.whileTrue(new Vomit(m_intakeSubsystem));

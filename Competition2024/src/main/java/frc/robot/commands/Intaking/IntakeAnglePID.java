@@ -4,6 +4,8 @@
 
 package frc.robot.commands.Intaking;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
@@ -14,21 +16,21 @@ import frc.robot.subsystems.IntakeSubsystem;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class IntakeAnglePID extends PIDCommand {
   /** Creates a new IntakeAnglePID. */
-  public IntakeAnglePID(IntakeSubsystem intake, double value) {
+  public IntakeAnglePID(IntakeSubsystem intake, DoubleSupplier value) {
     super(
         // The controller that the command will use
-        new PIDController(0, 0, 0),
+        new PIDController(0.003, 0.01, 0),
         // This should return the measurement
         () -> intake.getIntakeAngleDegrees(),
         // This should return the setpoint (can also be a constant)
-        () -> value,
+        () -> value.getAsDouble(),
         // This uses the output
         output -> {
           // Use the output here
           intake.setIntakePositionManual(-output);
         });
     addRequirements(intake);
-    SmartDashboard.putData(getController());
+    getController().setIZone(7);    
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
   }

@@ -1,10 +1,10 @@
 <xml version="1.0">
 <dashboard>
-	<widget field="Right Encoder" type="Quadrature Encoder" class="edu.wpi.first.smartdashboard.livewindow.elements.EncoderDisplay">
-		<location x="192" y="145"/>
+	<widget field="IntakeAngle" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="175" y="357"/>
 	</widget>
-	<widget field="Left Encoder" type="Quadrature Encoder" class="edu.wpi.first.smartdashboard.livewindow.elements.EncoderDisplay">
-		<location x="0" y="173"/>
+	<widget field="DISTANCE: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="670"/>
 	</widget>
 	<widget field="TargetAng" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="542"/>
@@ -25,13 +25,10 @@
 		<location x="0" y="0"/>
 	</widget>
 	<widget field="Intake Angle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="595" y="619"/>
+		<location x="303" y="438"/>
 	</widget>
 	<widget field="IntakeAnglePID" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="369"/>
-	</widget>
-	<widget field="PIDController[1]" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
-		<location x="41" y="579"/>
 	</widget>
 	<widget field="limelight_Stream" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="349"/>
@@ -45,9 +42,6 @@
 	<widget field="Note Intaked" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="216" y="2"/>
 		<height>49</height>
-	</widget>
-	<widget field="DriveDistance" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
-		<location x="693" y="401"/>
 	</widget>
 	<widget field="Intake Down" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="465" y="349"/>
@@ -180,4 +174,11 @@
 </dashboard>
 <live-window>
 </live-window>
+	<hidden field="DriveDistance"/>
+	<hidden field="PIDController[3]"/>
+	<hidden field="PIDController[2]"/>
+	<hidden field="PIDController[4]"/>
+	<hidden field="Right Encoder"/>
+	<hidden field="PIDController[1]"/>
+	<hidden field="Left Encoder"/>
 </xml>

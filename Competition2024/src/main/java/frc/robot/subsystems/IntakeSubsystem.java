@@ -16,6 +16,7 @@ import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import frc.robot.UtilHelpers;
 import frc.robot.Constants.CANID;
 import frc.robot.Constants.DigitalIOID;
 
@@ -107,7 +108,7 @@ public class IntakeSubsystem extends SubsystemBase {
     else if(isUp() && value > 0)
       intakePivot.set(0);
     else {
-      intakePivot.set(value);
+      intakePivot.set(UtilHelpers.clamp(value, -0.4, 0.4));
       SmartDashboard.putNumber("Intake Output", value);
     }
     
