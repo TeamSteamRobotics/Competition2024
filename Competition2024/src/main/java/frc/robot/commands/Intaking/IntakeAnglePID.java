@@ -30,7 +30,8 @@ public class IntakeAnglePID extends PIDCommand {
           intake.setIntakePositionManual(-output);
         });
     addRequirements(intake);
-    getController().setIZone(7);    
+    getController().setIZone(7);  
+    getController().setTolerance(2);  
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
   }
@@ -38,6 +39,6 @@ public class IntakeAnglePID extends PIDCommand {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return getController().atSetpoint();
   }
 }

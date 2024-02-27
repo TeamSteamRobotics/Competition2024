@@ -19,7 +19,7 @@ public class AngleShooterPID extends PIDCommand {
   public AngleShooterPID(ShooterSubsystem shoot, DoubleSupplier angle) {
     super(
         // The controller that the command will use
-        new PIDController(0.01, 0, 0),
+        new PIDController(0.04, 0.0, 0),
         // This should return the measurement
         () -> shoot.getAngle(),
         // This should return the setpoint (can also be a constant)
@@ -30,7 +30,10 @@ public class AngleShooterPID extends PIDCommand {
           // Use the output here
         });
    // addRequirements(shoot);
+   getController().setIZone(5);
     SmartDashboard.putData("Angle Shooter", getController());
+    SmartDashboard.putNumber("Desired Angle", angle.getAsDouble());
+    //getController().setTolerance(0.3);
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
   }
@@ -38,6 +41,6 @@ public class AngleShooterPID extends PIDCommand {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return getController().atSetpoint();
   }
 }

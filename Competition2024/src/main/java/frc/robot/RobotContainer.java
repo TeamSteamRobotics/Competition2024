@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.CoordinatePrint;
+import frc.robot.commands.Handoff;
 import frc.robot.commands.SmartShoot;
 import frc.robot.commands.TopLevelAuto;
 import frc.robot.commands.TwoNoteAuto;
@@ -59,6 +60,9 @@ public class RobotContainer {
   //private final Trigger retractClimb = m_driverController.leftBumper();
   //private final Trigger raiseClimb = m_driverController.rightBumper();
   //private final Trigger DriveDistance = m_driverController.rightBumper();
+  private final Trigger handoff = m_driverController.leftBumper();
+
+  private final Trigger smartShooter = m_driverController.rightBumper();
 
   private final Trigger shooterAngleUp = m_driverController.povUp();
   private final Trigger shooterAngleDown = m_driverController.povDown();
@@ -102,6 +106,9 @@ public class RobotContainer {
     runShootAnglePID.onTrue(new IntakeAnglePID(m_intakeSubsystem, () -> SmartDashboard.getNumber("IntakeAnglePID", 0)));
     advanceToShooter.whileTrue(new AdvanceNote(m_shooterSubsystem));
 
+    handoff.onTrue(new Handoff(m_intakeSubsystem, m_shooterSubsystem));
+    smartShooter.onTrue(new SmartShoot(m_shooterSubsystem, m_aVisionSubsystem));
+
     shooterAngleUp.whileTrue(new AngleShooterUp(m_shooterSubsystem));
     shooterAngleDown.whileTrue(new AngleShooterDown(m_shooterSubsystem));
 
@@ -117,7 +124,7 @@ public class RobotContainer {
 
     pidShoot.whileTrue(new InstantCommand(() -> m_shooterSubsystem.setShooterSpeedPID(1500)));
     shootStop.onTrue(new InstantCommand(() -> m_shooterSubsystem.stopShooter()));
-    twoNoteTest.onTrue(new TwoNoteAuto(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem));
+    //twoNoteTest.onTrue(new TwoNoteAuto(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem));
   }
 
     

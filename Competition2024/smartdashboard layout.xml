@@ -1,10 +1,19 @@
 <xml version="1.0">
 <dashboard>
+	<widget field="Right Encoder" type="Quadrature Encoder" class="edu.wpi.first.smartdashboard.livewindow.elements.EncoderDisplay">
+		<location x="0" y="562"/>
+	</widget>
+	<widget field="Left Encoder" type="Quadrature Encoder" class="edu.wpi.first.smartdashboard.livewindow.elements.EncoderDisplay">
+		<location x="0" y="173"/>
+	</widget>
+	<widget field="Desired Angle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="749"/>
+	</widget>
 	<widget field="IntakeAngle" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
 		<location x="175" y="357"/>
 	</widget>
 	<widget field="DISTANCE: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="670"/>
+		<location x="329" y="280"/>
 	</widget>
 	<widget field="TargetAng" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="542"/>
@@ -174,11 +183,4 @@
 </dashboard>
 <live-window>
 </live-window>
-	<hidden field="DriveDistance"/>
-	<hidden field="PIDController[3]"/>
-	<hidden field="PIDController[2]"/>
-	<hidden field="PIDController[4]"/>
-	<hidden field="Right Encoder"/>
-	<hidden field="PIDController[1]"/>
-	<hidden field="Left Encoder"/>
 </xml>

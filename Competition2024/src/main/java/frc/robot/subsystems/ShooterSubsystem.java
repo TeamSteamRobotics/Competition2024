@@ -173,14 +173,13 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void populateDistanceAngleTable() {
-    distanceAngleTable.put(0.6, 52.0);
-    distanceAngleTable.put(1.1, 46.0);
-    distanceAngleTable.put(1.6, 40.0);
-    distanceAngleTable.put(2.1, 36.0);
+    distanceAngleTable.put(1.3, 61.0);
+    distanceAngleTable.put(1.5, 55.0);
+    distanceAngleTable.put(2.2, 40.0);
     distanceAngleTable.put(2.6, 33.0);
     distanceAngleTable.put(3.1, 30.0);
     distanceAngleTable.put(3.6, 30.0);
-    distanceAngleTable.put(4.1, 30.0);
+    distanceAngleTable.put(4.1, 27.0);
 
     // use distanceSpeedTable.put(distance, speed) using experimental values
   }
