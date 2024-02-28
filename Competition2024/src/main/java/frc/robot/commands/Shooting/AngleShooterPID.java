@@ -19,7 +19,7 @@ public class AngleShooterPID extends PIDCommand {
   public AngleShooterPID(ShooterSubsystem shoot, DoubleSupplier angle) {
     super(
         // The controller that the command will use
-        new PIDController(0.04, 0.0, 0),
+        new PIDController(0.004, 0.01, 0),
         // This should return the measurement
         () -> shoot.getAngle(),
         // This should return the setpoint (can also be a constant)
@@ -27,6 +27,7 @@ public class AngleShooterPID extends PIDCommand {
         // This uses the output
         output -> {
           shoot.angleShooter(output);
+          System.out.println(angle.getAsDouble());
           // Use the output here
         });
    // addRequirements(shoot);
@@ -41,6 +42,6 @@ public class AngleShooterPID extends PIDCommand {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return getController().atSetpoint();
+    return false;//getController().atSetpoint();
   }
 }

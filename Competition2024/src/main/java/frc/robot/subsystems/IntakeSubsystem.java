@@ -60,7 +60,7 @@ public class IntakeSubsystem extends SubsystemBase {
     intakePivot.setIdleMode(IdleMode.kBrake);
 
     absoluteIntakeEncoder.setDistancePerRotation(180);
-    absoluteIntakeEncoder.reset();
+    //absoluteIntakeEncoder.reset();
     absoluteIntakeEncoder.setPositionOffset(64.0 / 180.0);
     kP = 0;
     kI = 0;

@@ -6,6 +6,15 @@
 	<widget field="Left Encoder" type="Quadrature Encoder" class="edu.wpi.first.smartdashboard.livewindow.elements.EncoderDisplay">
 		<location x="0" y="173"/>
 	</widget>
+	<widget field="PID Intake" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
+		<location x="659" y="367"/>
+	</widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
+		<location x="1118" y="23"/>
+		<width>417</width>
+		<height>261</height>
+		<property name="Camera Choice" value="limelight"/>
+	</static-widget>
 	<widget field="Desired Angle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="749"/>
 	</widget>
@@ -127,9 +136,6 @@
 	<widget field="Validate Auto Input" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.CheckBox">
 		<location x="420" y="586"/>
 	</widget>
-	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.RobotPreferences">
-		<location x="1235" y="58"/>
-	</static-widget>
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
 		<location x="378" y="679"/>
 		<property name="Text" value="Right Drive Encoder"/>

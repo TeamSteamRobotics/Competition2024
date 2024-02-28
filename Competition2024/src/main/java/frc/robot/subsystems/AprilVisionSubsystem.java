@@ -53,7 +53,7 @@ public class AprilVisionSubsystem extends SubsystemBase {
                     fidLocFound = false;
                 }
             }if(!fidLocFound){
-                System.out.println("TARGET FIDUCIAL NOT FOUND!");
+                //System.out.println("TARGET FIDUCIAL NOT FOUND!");
                 coordinate.aprilTagVisible = false;
             }else{
                 coordinate.x = thirteenthReason.Results.Fiducial[fidLocation].t6t_rs[0];
