@@ -94,6 +94,8 @@ public class ShooterSubsystem extends SubsystemBase {
     //leftShooter.follow(rightShooter);
     //leftAdvanceMotor.follow(rightAdvanceMoto
     leftShooter.setInverted(true);
+    leftShooter.setSmartCurrentLimit(40);
+    rightShooter.setSmartCurrentLimit(40);
 
     absoluteAngleEncoder.setDistancePerRotation(360);
     absoluteAngleEncoder.setPositionOffset(dutyCycleOffset);
