@@ -1,13 +1,13 @@
 <xml version="1.0">
 <dashboard>
-	<widget field="PIDTurn" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
-		<location x="237" y="586"/>
-	</widget>
 	<widget field="Right Encoder" type="Quadrature Encoder" class="edu.wpi.first.smartdashboard.livewindow.elements.EncoderDisplay">
 		<location x="155" y="145"/>
 	</widget>
 	<widget field="Left Encoder" type="Quadrature Encoder" class="edu.wpi.first.smartdashboard.livewindow.elements.EncoderDisplay">
 		<location x="0" y="602"/>
+	</widget>
+	<widget field="PIDTurn" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
+		<location x="237" y="586"/>
 	</widget>
 	<widget field="Shooter beam" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="582"/>
@@ -22,9 +22,9 @@
 		<location x="659" y="367"/>
 	</widget>
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
-		<location x="1118" y="23"/>
-		<width>417</width>
-		<height>261</height>
+		<location x="401" y="62"/>
+		<width>1148</width>
+		<height>576</height>
 		<property name="Camera Choice" value="limelight"/>
 	</static-widget>
 	<widget field="Desired Angle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
