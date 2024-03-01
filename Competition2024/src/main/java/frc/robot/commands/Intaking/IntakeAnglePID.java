@@ -30,9 +30,9 @@ public class IntakeAnglePID extends PIDCommand {
           intake.setIntakePositionManual(-output);
         });
     addRequirements(intake);
-    getController().setIZone(7);  
+    //getController().setIZone(7);  
     SmartDashboard.putData("PID Intake", getController());
-    getController().setTolerance(0.5);  
+    //getController().setTolerance(0.5);  
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
   }
