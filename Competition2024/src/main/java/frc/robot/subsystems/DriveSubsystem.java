@@ -141,7 +141,7 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public double getDistanceMeters() {
-    return (getLeftSideMeters() + getRightSideMeters()) / 2;
+    return -(getLeftSideMeters() + getRightSideMeters()) / 2;
   }
 
   public double getRateMetersPerSecond() {

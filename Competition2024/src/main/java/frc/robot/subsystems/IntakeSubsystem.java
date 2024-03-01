@@ -30,7 +30,6 @@ public class IntakeSubsystem extends SubsystemBase {
 
   private DigitalInput limitSwitchUp;
   private DigitalInput limitSwitchDown;
-  private DigitalInput beamBrake;
 
   private double dutyCycleOffset = 0.9456111;//0.00797222;
 
@@ -48,7 +47,6 @@ public class IntakeSubsystem extends SubsystemBase {
 
     limitSwitchUp = new DigitalInput(DigitalIOID.intakeLimitSwitchUp);
     limitSwitchDown = new DigitalInput(DigitalIOID.intakeLimitSwitchDown);
-    beamBrake = new DigitalInput(DigitalIOID.intakeBeamBreak);
   
 
     intakeRoller.restoreFactoryDefaults();
@@ -84,10 +82,6 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public double getIntakeAngleDegrees() {
     return -absoluteIntakeEncoder.getDistance();
-  }
-
-  public boolean noteIntaked() {
-    return !beamBrake.get(); 
   }
 
   public boolean isDown() {
@@ -131,7 +125,6 @@ public class IntakeSubsystem extends SubsystemBase {
     SmartDashboard.putBoolean("Intake up", isUp());
     SmartDashboard.putBoolean("Intake Down", isDown());
     SmartDashboard.putNumber("Intake Angle", getIntakeAngleDegrees());
-    SmartDashboard.putBoolean("Note Intaked", noteIntaked());
 
     double p = SmartDashboard.getNumber("Intake P", 0);
     double i = SmartDashboard.getNumber("Intake I", 0);

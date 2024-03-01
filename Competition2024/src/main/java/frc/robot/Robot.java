@@ -38,6 +38,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("ShootAngle", 30);
     SmartDashboard.putNumber("IntakeAnglePID", 0);
     SmartDashboard.putNumber("DistanceToShoot", 0);
+    SmartDashboard.putNumber("DriveDist", 0);
     SmartDashboard.putNumber("TargetSpd", 0);//800;//shoot.claclutateShooterSpeedRPM(distance);
     SmartDashboard.putNumber("TargetAng", 0);
     for (int port = 5800; port <= 5807; port++) {

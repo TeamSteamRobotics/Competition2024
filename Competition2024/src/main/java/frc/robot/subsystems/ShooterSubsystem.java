@@ -36,6 +36,9 @@ public class ShooterSubsystem extends SubsystemBase {
 
   private DutyCycleEncoder absoluteAngleEncoder;
   private DigitalInput shooterLimitSwitch;
+
+  private DigitalInput shooterBeamBreak;
+
   private double dutyCycleOffset = 0.0702778;
 
   private SparkPIDController shootRightPIDController;
@@ -59,6 +62,8 @@ public class ShooterSubsystem extends SubsystemBase {
     absoluteAngleEncoder = new DutyCycleEncoder(DigitalIOID.shooterEncoder);
     shooterLimitSwitch = new DigitalInput(DigitalIOID.shooterLimitSwitch);
 
+    shooterBeamBreak = new DigitalInput(9);
+
     distanceAngleTable = new TreeMap<Double, Double>();
 
     rightShooterEncoder = rightShooter.getEncoder();
@@ -68,6 +73,7 @@ public class ShooterSubsystem extends SubsystemBase {
     angleMotor.restoreFactoryDefaults();
     leftAdvanceMotor.restoreFactoryDefaults();
     rightAdvanceMotor.restoreFactoryDefaults();
+
 
 
     //leftShooter.setInverted(false);
@@ -238,6 +244,8 @@ public class ShooterSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Shooter RPM", rightShooterEncoder.getVelocity());
     SmartDashboard.putNumber("Angle", absoluteAngleEncoder.getDistance());
     SmartDashboard.putBoolean("Limit Shooter", shooterLimitSwitch.get());
+
+    SmartDashboard.putBoolean("Shooter beam", shooterBeamBreak.get());
 
     if((shootP != shootkP)) { shootRightPIDController.setP(shootP); shootLeftPIDController.setP(shootP); shootkP = shootP; }
     if((shootI != shootkI)) { shootRightPIDController.setI(shootI); shootLeftPIDController.setI(shootI); shootkI = shootI; }

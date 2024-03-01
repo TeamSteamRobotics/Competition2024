@@ -25,7 +25,7 @@ public class Handoff extends SequentialCommandGroup {
       new AngleShooterPID(shoot, () -> 60).withTimeout(1),
       new Vomit(intake).withTimeout(1),
       new AdvanceNote(shoot).withTimeout(1),
-      new AngleShooterPID(shoot, () -> 30).withTimeout(1),
+      new AngleShooterPID(shoot, () -> 25).withTimeout(1),
       new IntakeAnglePID(intake, () -> 195).withTimeout(1));
   }
 }

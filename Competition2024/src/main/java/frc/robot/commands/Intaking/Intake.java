@@ -31,6 +31,6 @@ public class Intake extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return intake.noteIntaked();
+    return false;
   }
 }

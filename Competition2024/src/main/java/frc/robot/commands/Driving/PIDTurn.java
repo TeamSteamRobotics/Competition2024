@@ -17,11 +17,11 @@ public class PIDTurn extends PIDCommand {
   public PIDTurn(DriveSubsystem drive, double turn) {
     super(
         // The controller that the command will use
-        new PIDController(0.05, 0, 0),
+        new PIDController(0.07, 0.002, 0.01),
         // This should return the measurement
         () -> drive.getAngleDegrees(),
         // This should return the setpoint (can also be a constant)
-        () -> drive.getAngleDegrees() + turn,
+        turn,
         // This uses the output
         output -> {
           drive.drive(0, output);
@@ -31,12 +31,13 @@ public class PIDTurn extends PIDCommand {
     // Configure additional PID options by calling `getController` here.
     addRequirements(drive);
     SmartDashboard.putData("PIDTurn", getController());
+    getController().setTolerance(1, 0.5);
   }
 
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return getController().atSetpoint();
+    return getController().atSetpoint();//getController().atSetpoint();
   }
 }

@@ -5,6 +5,8 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.AutoTest;
+import frc.robot.commands.BasicAuto;
 import frc.robot.commands.CoordinatePrint;
 import frc.robot.commands.Handoff;
 import frc.robot.commands.SmartShoot;
@@ -28,6 +30,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.ZachVisionSubsystem;
 import frc.robot.subsystems.AprilVisionSubsystem.ReturnTarget;
 import frc.robot.commands.Driving.DriveDistance;
+import frc.robot.commands.Driving.PIDTurn;
 import frc.robot.subsystems.AprilVisionSubsystem;
 import frc.robot.subsystems.ClimbSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -55,30 +58,32 @@ public class RobotContainer {
 
 
   private final CommandXboxController m_driverController = new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  private final CommandXboxController m_operatorController = new CommandXboxController(OperatorConstants.kOperatorControllerPort);
 
   // Driver Controller Bindings:
   //private final Trigger retractClimb = m_driverController.leftBumper();
   //private final Trigger raiseClimb = m_driverController.rightBumper();
   //private final Trigger DriveDistance = m_driverController.rightBumper();
-  private final Trigger handoff = m_driverController.leftBumper();
+  private final Trigger handoff = m_operatorController.leftBumper();
 
-  private final Trigger smartShooter = m_driverController.rightBumper();
+  private final Trigger smartShooter = m_operatorController.rightBumper();
 
-  private final Trigger shooterAngleUp = m_driverController.povUp();
-  private final Trigger shooterAngleDown = m_driverController.povDown();
+  private final Trigger shooterAngleUp = m_operatorController.povUp();
+  private final Trigger shooterAngleDown = m_operatorController.povDown();
 
-  private final Trigger intakeAngleDown = m_driverController.povLeft();
-  private final Trigger intakeAngleUp = m_driverController.povRight();
+  private final Trigger intakeAngleDown = m_operatorController.povLeft();
+  private final Trigger intakeAngleUp = m_operatorController.povRight();
 
-  private final Trigger advanceToShooter = m_driverController.b();
-  private final Trigger runShootAnglePID = m_driverController.y();
+  private final Trigger advanceToShooter = m_operatorController.b();
+  private final Trigger runShootAnglePID = m_operatorController.y();
 
-  private final Trigger intake = m_driverController.a();
-  private final Trigger vomit = m_driverController.x();
+  private final Trigger intake = m_operatorController.a();
+  private final Trigger vomit = m_operatorController.x();
 
-  private final Trigger pidShoot = m_driverController.leftTrigger();
-  private final Trigger shootStop = m_driverController.rightTrigger();
-  
+  private final Trigger pidShoot = m_operatorController.leftTrigger();
+  private final Trigger shootStop = m_operatorController.rightTrigger();
+  private final Trigger driveDistance = m_driverController.a();
+  private final Trigger pidTurn = m_driverController.y();
   //private final Trigger twoNoteTest = m_driverController.x();
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -119,9 +124,13 @@ public class RobotContainer {
     intakeAngleUp.onTrue(new IntakeAnglePID(m_intakeSubsystem, () -> 0));
 
     intake.whileTrue(new Intake(m_intakeSubsystem));
+
     vomit.whileTrue(new Vomit(m_intakeSubsystem));
 
 
+    driveDistance.onTrue(new DriveDistance(m_driveSubsystem, SmartDashboard.getNumber("DriveDist", 0)));
+
+    pidTurn.onTrue(new PIDTurn(m_driveSubsystem, 0));
     pidShoot.whileTrue(new InstantCommand(() -> m_shooterSubsystem.setShooterSpeedPID(1500)));
     shootStop.onTrue(new InstantCommand(() -> m_shooterSubsystem.stopShooter()));
     //twoNoteTest.onTrue(new TwoNoteAuto(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem));
@@ -134,6 +143,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new TopLevelAuto(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem);
+    return new BasicAuto(m_driveSubsystem);
   }
 }
