@@ -51,20 +51,20 @@ public class DriveSubsystem extends SubsystemBase {
     backLeftMotor = new CANSparkMax(CANID.backLeft, MotorType.kBrushless);
     backRightMotor = new CANSparkMax(CANID.backRight, MotorType.kBrushless);
 
-    frontLeftMotor.restoreFactoryDefaults();
+    /*frontLeftMotor.restoreFactoryDefaults();
     frontRightMotor.restoreFactoryDefaults();
     backLeftMotor.restoreFactoryDefaults();
     backRightMotor.restoreFactoryDefaults();
 
-    frontLeftMotor.setSmartCurrentLimit(40);
-    frontRightMotor.setSmartCurrentLimit(40);
-    backLeftMotor.setSmartCurrentLimit(40);
-    backRightMotor.setSmartCurrentLimit(40);
+    frontLeftMotor.setSmartCurrentLimit(50);
+    frontRightMotor.setSmartCurrentLimit(50);
+    backLeftMotor.setSmartCurrentLimit(50);
+    backRightMotor.setSmartCurrentLimit(50);
 
 
     frontLeftMotor.follow(backLeftMotor);
     frontRightMotor.follow(backRightMotor);
-    backRightMotor.setInverted(true);
+    backRightMotor.setInverted(true);*/
     
     diffDrive = new DifferentialDrive(backLeftMotor, backRightMotor);
 

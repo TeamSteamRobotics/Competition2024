@@ -7,6 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Intaking.IntakeAnglePID;
 import frc.robot.commands.Intaking.Vomit;
+import frc.robot.commands.Shooting.RetreatNote;
 import frc.robot.commands.Shooting.AdvanceNote;
 import frc.robot.commands.Shooting.AngleShooterPID;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -24,8 +25,8 @@ public class Handoff extends SequentialCommandGroup {
       new IntakeAnglePID(intake, () -> 0).withTimeout(1),
       new AngleShooterPID(shoot, () -> 60).withTimeout(1),
       new Vomit(intake).withTimeout(1),
-      new AdvanceNote(shoot).withTimeout(1),
+      new AdvanceNote(shoot).onlyWhile(() -> !shoot.isAtShooter()),
       new AngleShooterPID(shoot, () -> 25).withTimeout(1),
-      new IntakeAnglePID(intake, () -> 195).withTimeout(1));
+      new IntakeAnglePID(intake, () -> 80).withTimeout(1));
   }
 }

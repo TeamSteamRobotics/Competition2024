@@ -30,11 +30,14 @@ public class ClimbSubsystem extends SubsystemBase {
 
     rightEncoder = rightClimb.getEncoder();
 
-    leftClimb.restoreFactoryDefaults();
+    /*leftClimb.restoreFactoryDefaults();
     rightClimb.restoreFactoryDefaults();
 
     leftClimb.setIdleMode(IdleMode.kBrake);
     rightClimb.setIdleMode(IdleMode.kBrake);
+
+    leftClimb.setSmartCurrentLimit(40);
+    rightClimb.setSmartCurrentLimit(40);*/
   }
 
 

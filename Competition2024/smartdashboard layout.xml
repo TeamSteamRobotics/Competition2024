@@ -6,6 +6,11 @@
 	<widget field="Left Encoder" type="Quadrature Encoder" class="edu.wpi.first.smartdashboard.livewindow.elements.EncoderDisplay">
 		<location x="0" y="602"/>
 	</widget>
+	<widget field="Ready to Shoot" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
+		<location x="628" y="620"/>
+		<width>187</width>
+		<height>120</height>
+	</widget>
 	<widget field="PIDTurn" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
 		<location x="237" y="586"/>
 	</widget>
@@ -22,9 +27,9 @@
 		<location x="659" y="367"/>
 	</widget>
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
-		<location x="401" y="62"/>
-		<width>1148</width>
-		<height>576</height>
+		<location x="1103" y="62"/>
+		<width>446</width>
+		<height>285</height>
 		<property name="Camera Choice" value="limelight"/>
 	</static-widget>
 	<widget field="Desired Angle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
@@ -68,10 +73,6 @@
 	</widget>
 	<widget field="limelight_PipelineName" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="266"/>
-	</widget>
-	<widget field="Note Intaked" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="216" y="2"/>
-		<height>49</height>
 	</widget>
 	<widget field="Intake Down" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="465" y="349"/>

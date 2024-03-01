@@ -68,34 +68,34 @@ public class ShooterSubsystem extends SubsystemBase {
 
     rightShooterEncoder = rightShooter.getEncoder();
 
-    leftShooter.restoreFactoryDefaults();
+    /*leftShooter.restoreFactoryDefaults();
     rightShooter.restoreFactoryDefaults();
     angleMotor.restoreFactoryDefaults();
     leftAdvanceMotor.restoreFactoryDefaults();
-    rightAdvanceMotor.restoreFactoryDefaults();
+    rightAdvanceMotor.restoreFactoryDefaults();*/
 
 
 
     //leftShooter.setInverted(false);
-    rightShooter.setInverted(false);
+    //rightShooter.setInverted(false);
     //rightAdvanceMotor.setInverted(true);
     //leftAdvanceMotor.setInverted(true);
-    angleMotor.setInverted(true);
+    //angleMotor.setInverted(true);
 
 
-    leftShooter.setIdleMode(IdleMode.kCoast);
-    rightShooter.setIdleMode(IdleMode.kCoast);
+    //leftShooter.setIdleMode(IdleMode.kCoast);
+    //rightShooter.setIdleMode(IdleMode.kCoast);
 
-    angleMotor.setIdleMode(IdleMode.kBrake);
-    leftAdvanceMotor.setIdleMode(IdleMode.kBrake);
-    rightAdvanceMotor.setIdleMode(IdleMode.kBrake);
+    //angleMotor.setIdleMode(IdleMode.kBrake);
+    //leftAdvanceMotor.setIdleMode(IdleMode.kBrake);
+    //rightAdvanceMotor.setIdleMode(IdleMode.kBrake);
 
 
     //leftShooter.follow(rightShooter);
     //leftAdvanceMotor.follow(rightAdvanceMoto
-    leftShooter.setInverted(true);
-    leftShooter.setSmartCurrentLimit(40);
-    rightShooter.setSmartCurrentLimit(40);
+    //leftShooter.setInverted(true);
+    //leftShooter.setSmartCurrentLimit(40);
+    //rightShooter.setSmartCurrentLimit(40);
 
     absoluteAngleEncoder.setDistancePerRotation(360);
     absoluteAngleEncoder.setPositionOffset(dutyCycleOffset);
@@ -129,6 +129,10 @@ public class ShooterSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Shooter D Gain", shootkD);
     SmartDashboard.putNumber("Shooter Feed Forward", shootkFeedForward);
     populateDistanceAngleTable();
+  }
+
+  public double getShooterRPM() {
+    return rightShooterEncoder.getVelocity();
   }
 
   public void runShooterManual(double value) {
@@ -169,9 +173,18 @@ public class ShooterSubsystem extends SubsystemBase {
     return absoluteAngleEncoder.getDistance();
   }
 
+  public boolean isAtShooter() {
+    return !shooterBeamBreak.get();
+  }
+
   public void advanceNote() {
     rightAdvanceMotor.set(-0.25);
     leftAdvanceMotor.set(0.25);
+  }
+
+  public void retreatNote() {
+    rightAdvanceMotor.set(0.25);
+    leftAdvanceMotor.set(-0.25);
   }
 
   //Speed in RPM to achieve

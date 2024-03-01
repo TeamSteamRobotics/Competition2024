@@ -49,13 +49,13 @@ public class IntakeSubsystem extends SubsystemBase {
     limitSwitchDown = new DigitalInput(DigitalIOID.intakeLimitSwitchDown);
   
 
-    intakeRoller.restoreFactoryDefaults();
-    intakePivot.restoreFactoryDefaults();
+    //intakeRoller.restoreFactoryDefaults();
+    //intakePivot.restoreFactoryDefaults();
 
-    intakeRoller.setInverted(true);
+    //intakeRoller.setInverted(true);
 
-    intakeRoller.setIdleMode(IdleMode.kBrake);
-    intakePivot.setIdleMode(IdleMode.kBrake);
+    //intakeRoller.setIdleMode(IdleMode.kBrake);
+    //intakePivot.setIdleMode(IdleMode.kBrake);
 
     absoluteIntakeEncoder.setDistancePerRotation(180);
     //absoluteIntakeEncoder.reset();
@@ -125,6 +125,10 @@ public class IntakeSubsystem extends SubsystemBase {
     SmartDashboard.putBoolean("Intake up", isUp());
     SmartDashboard.putBoolean("Intake Down", isDown());
     SmartDashboard.putNumber("Intake Angle", getIntakeAngleDegrees());
+
+    if(isUp()) {
+      absoluteIntakeEncoder.reset();
+    }
 
     double p = SmartDashboard.getNumber("Intake P", 0);
     double i = SmartDashboard.getNumber("Intake I", 0);

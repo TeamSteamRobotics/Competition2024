@@ -24,8 +24,6 @@ public class SmartShoot extends ParallelRaceGroup {
   public SmartShoot(ShooterSubsystem shoot, AprilVisionSubsystem aprilVision) { 
     shooterAngleDegrees = shoot.getTargetAngle(aprilVision.getCoordinates(4, ReturnTarget.TARGET).z);
     shooterSpeedRPM = 1500; 
-    System.out.println("Speed: " + shooterSpeedRPM);
-    System.out.println("Angle: " + shooterAngleDegrees);
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ShootPID(shoot, shooterSpeedRPM),
