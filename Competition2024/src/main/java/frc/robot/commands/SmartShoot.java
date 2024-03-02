@@ -7,6 +7,7 @@ package frc.robot.commands;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.Shooting.AngleShooterPID;
@@ -33,6 +34,7 @@ public class SmartShoot extends ParallelRaceGroup {
       new ShootPID(shoot, shooterSpeedRPM),
       new AngleShooterPID(shoot, () -> shoot.getTargetAngle(aprilVision.getCoordinates(4, ReturnTarget.TARGET).z)));
     }else{
+      addCommands(new InstantCommand(() -> System.out.println("APRILTAG NOT VISIBLE. COMMAND NOT RUN!!!!")));
       notVisibleEnd = true;
       System.out.println("APRILTAG IS NOT VISIBLE!!");
     }
