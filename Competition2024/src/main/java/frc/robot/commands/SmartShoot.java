@@ -20,14 +20,22 @@ import frc.robot.subsystems.AprilVisionSubsystem.ReturnTarget;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class SmartShoot extends ParallelRaceGroup {
   /** Creates a new SmartShoot. */
+  private boolean notVisibleEnd = false;
   private double shooterSpeedRPM, shooterAngleDegrees;
   public SmartShoot(ShooterSubsystem shoot, AprilVisionSubsystem aprilVision) { 
-    shooterAngleDegrees = shoot.getTargetAngle(aprilVision.getCoordinates(4, ReturnTarget.TARGET).z);
+    
+    //shooterAngleDegrees = shoot.getTargetAngle(aprilVision.getCoordinates(4, ReturnTarget.TARGET).z);
     shooterSpeedRPM = 1500; 
     // addCommands(new FooCommand(), new BarCommand());
+    if(aprilVision.getCoordinates(4, ReturnTarget.TARGET).aprilTagVisible){
+      notVisibleEnd = false;
     addCommands(
       new ShootPID(shoot, shooterSpeedRPM),
       new AngleShooterPID(shoot, () -> shoot.getTargetAngle(aprilVision.getCoordinates(4, ReturnTarget.TARGET).z)));
+    }else{
+      notVisibleEnd = true;
+      System.out.println("APRILTAG IS NOT VISIBLE!!");
+    }
      // new WaitCommand(5));
   }
 }

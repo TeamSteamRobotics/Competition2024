@@ -69,6 +69,9 @@ public class AprilVisionSubsystem extends SubsystemBase {
             coordinate.aprilTagVisible = false;
             System.out.println("NO FIDUCIALS IN VIEW!");
         }
+    }else{
+         coordinate.aprilTagVisible = false;
+         System.out.println("THIRTEENTH REASON IS NULL");
     }
     }
     private void updateRobotCoordinates(int targetId) {
@@ -100,6 +103,9 @@ public class AprilVisionSubsystem extends SubsystemBase {
             coordinate.aprilTagVisible = false;
             System.out.println("NO FIDUCIALS IN VIEW!");
         }
+    }else{
+         coordinate.aprilTagVisible = false;
+         System.out.println("THIRTEENTH REASON IS NULL");
     }
     }
     private void updateFieldCoordinates(int targetId) {
@@ -118,6 +124,9 @@ public class AprilVisionSubsystem extends SubsystemBase {
             coordinate.aprilTagVisible = false;
             System.out.println("NO FIDUCIALS IN VIEW!");
         }
+    }else{
+         coordinate.aprilTagVisible = false;
+         System.out.println("THIRTEENTH REASON IS NULL");
     }
     }
 public class Coordinate {
