@@ -43,6 +43,7 @@ public class AprilVisionSubsystem extends SubsystemBase {
     private void updateTargetCoordinates(int targetId) {
         String jsonString = tableEntry.getString("");
         limelightjson thirteenthReason = gson.fromJson(jsonString, limelightjson.class);
+        if(thirteenthReason != null){
         if (thirteenthReason.Results.Fiducial.length != 0) {
              for (int i = 0; i < thirteenthReason.Results.Fiducial.length; i++) {
                 if(thirteenthReason.Results.Fiducial[i].fID == targetId){
@@ -69,9 +70,11 @@ public class AprilVisionSubsystem extends SubsystemBase {
             System.out.println("NO FIDUCIALS IN VIEW!");
         }
     }
+    }
     private void updateRobotCoordinates(int targetId) {
         String jsonString = tableEntry.getString("");
         limelightjson thirteenthReason = gson.fromJson(jsonString, limelightjson.class);
+        if(thirteenthReason != null){
         if (thirteenthReason.Results.Fiducial.length != 0) {
              for (int i = 0; i < thirteenthReason.Results.Fiducial.length; i++) {
                 if(thirteenthReason.Results.Fiducial[i].fID == targetId){
@@ -98,9 +101,11 @@ public class AprilVisionSubsystem extends SubsystemBase {
             System.out.println("NO FIDUCIALS IN VIEW!");
         }
     }
+    }
     private void updateFieldCoordinates(int targetId) {
         String jsonString = tableEntry.getString("");
         limelightjson thirteenthReason = gson.fromJson(jsonString, limelightjson.class);
+        if(thirteenthReason != null){
         if (thirteenthReason.Results.Fiducial.length != 0) {
                 coordinate.x = thirteenthReason.Results.Fiducial[0].t6r_fs[0];
                 coordinate.y = thirteenthReason.Results.Fiducial[0].t6r_fs[1];
@@ -113,6 +118,7 @@ public class AprilVisionSubsystem extends SubsystemBase {
             coordinate.aprilTagVisible = false;
             System.out.println("NO FIDUCIALS IN VIEW!");
         }
+    }
     }
 public class Coordinate {
     public double x;
