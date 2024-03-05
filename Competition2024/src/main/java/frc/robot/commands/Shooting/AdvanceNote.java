@@ -12,7 +12,7 @@ public class AdvanceNote extends Command {
   private ShooterSubsystem shooter;
   public AdvanceNote(ShooterSubsystem p_shooter) {
     shooter = p_shooter;
-    addRequirements(shooter);
+    //addRequirements(shooter);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 

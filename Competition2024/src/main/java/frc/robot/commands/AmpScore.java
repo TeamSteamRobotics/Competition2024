@@ -4,22 +4,22 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Intaking.IntakeAnglePID;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.commands.Intaking.Vomit;
-import frc.robot.commands.Shooting.RetreatNote;
 import frc.robot.commands.Shooting.AdvanceNote;
 import frc.robot.commands.Shooting.AngleShooterPID;
+import frc.robot.commands.Shooting.ShootPID;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class Handoff extends SequentialCommandGroup {
-  /** Creates a new Handoff. */
-  public Handoff(IntakeSubsystem intake, ShooterSubsystem shoot) {
+public class AmpScore extends SequentialCommandGroup {
+  /** Creates a new AmpScore. */
+  public AmpScore(IntakeSubsystem intake, ShooterSubsystem shoot) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
@@ -30,7 +30,10 @@ public class Handoff extends SequentialCommandGroup {
         new AdvanceNote(shoot)
       ).onlyWhile(() -> !shoot.isAtShooter()),
       new AngleShooterPID(shoot, () -> 25).withTimeout(1),
-      new IntakeAnglePID(intake, () -> 80).withTimeout(1));
-      //new RetreatNote(shoot).onlyWhile(() -> shoot.isAtShooter()));
+      new IntakeAnglePID(intake, () -> 80).withTimeout(1),
+      new ParallelCommandGroup(
+        new AngleShooterPID(shoot, () -> 58.2),
+        new ShootPID(shoot, 410))
+      );
   }
 }

@@ -178,8 +178,8 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void advanceNote() {
-    rightAdvanceMotor.set(-0.25);
-    leftAdvanceMotor.set(0.25);
+    rightAdvanceMotor.set(-0.2);
+    leftAdvanceMotor.set(0.2);
   }
 
   public void retreatNote() {
@@ -194,13 +194,16 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void populateDistanceAngleTable() {
-    distanceAngleTable.put(1.3, 61.0);
-    distanceAngleTable.put(1.5, 55.0);
-    distanceAngleTable.put(2.2, 40.0);
-    distanceAngleTable.put(2.6, 33.0);
-    distanceAngleTable.put(3.1, 30.0);
-    distanceAngleTable.put(3.6, 30.0);
-    distanceAngleTable.put(4.1, 27.0);
+    distanceAngleTable.put(1.4, 62.0);
+    distanceAngleTable.put(1.8, 48.0);
+    distanceAngleTable.put(2.3, 38.0);
+    distanceAngleTable.put(2.55, 36.8);
+    distanceAngleTable.put(2.8, 35.5);
+    distanceAngleTable.put(3.0, 33.0);
+    distanceAngleTable.put(3.3, 29.1);
+    distanceAngleTable.put(3.7, 27.0);
+    distanceAngleTable.put(3.9, 25.6);
+    distanceAngleTable.put(2.9, 34.0);
 
     // use distanceSpeedTable.put(distance, speed) using experimental values
   }

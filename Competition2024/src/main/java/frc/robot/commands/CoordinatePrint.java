@@ -16,7 +16,10 @@ public class CoordinatePrint extends Command{
 
     @Override
     public void execute() {
-        SmartDashboard.putNumber("DISTANCE: ", av.getCoordinates(id, tt).z);
+        SmartDashboard.putNumber("DISTANCE: ", Math.sqrt(
+            Math.pow(av.getCoordinates(4, ReturnTarget.TARGET).z, 2) +
+            Math.pow(av.getCoordinates(4, ReturnTarget.TARGET).x, 2)
+          ));
         //System.out.println("X: " + av.getCoordinates(id, tt).x);
         //System.out.println("Y: " + av.getCoordinates(id, tt).y);
         //System.out.println("Z: " + av.getCoordinates(id, tt).z);

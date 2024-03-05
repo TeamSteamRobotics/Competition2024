@@ -7,6 +7,7 @@ package frc.robot;
 import frc.robot.commands.Shooting.ShootPID;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.AmpScore;
 import frc.robot.commands.BasicAuto;
 import frc.robot.commands.CoordinatePrint;
 import frc.robot.commands.Handoff;
@@ -77,6 +78,7 @@ public class RobotContainer {
   private final Trigger intake = m_operatorController.a();
   private final Trigger vomit = m_operatorController.x();
   private final Trigger retreat = m_operatorController.b();
+  private final Trigger ampScore = m_operatorController.y();
   private final Trigger ampAngle = m_operatorController.rightStick();
 
 
@@ -104,6 +106,7 @@ public class RobotContainer {
   private void configureBindings() {
     retractClimb.whileTrue(new RetractClimb(m_climbSubsystem));
     raiseClimb.whileTrue(new RaiseClimb(m_climbSubsystem));
+    ampScore.whileTrue(new AmpScore(m_intakeSubsystem, m_shooterSubsystem));
    //raiseClimb.whileTrue(new SmartShoot(m_shooterSubsystem, m_aVisionSubsystem));
     //raiseClimb.onTrue(new IntakeAnglePID(m_intakeSubsystem, SmartDashboard.getNumber("IntakeAnglePID", 0)));
    //DriveDistance.onTrue(new DriveDistance(m_driveSubsystem, 1.0));
@@ -117,7 +120,7 @@ public class RobotContainer {
     shooterAngleUp.whileTrue(new AngleShooterUp(m_shooterSubsystem));
     shooterAngleDown.whileTrue(new AngleShooterDown(m_shooterSubsystem));
 
-    runShooter.whileTrue(new ShootPID(m_shooterSubsystem, 410));
+    runShooter.whileTrue(new ShootPID(m_shooterSubsystem, 1500));
     ampAngle.onTrue(new AngleShooterPID(m_shooterSubsystem, () -> 58.2));
 
     

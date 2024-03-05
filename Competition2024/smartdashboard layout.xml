@@ -1,9 +1,22 @@
 <xml version="1.0">
 <dashboard>
 	<widget field="Right Encoder" type="Quadrature Encoder" class="edu.wpi.first.smartdashboard.livewindow.elements.EncoderDisplay">
-		<location x="155" y="145"/>
+		<location x="852" y="677"/>
 	</widget>
 	<widget field="Left Encoder" type="Quadrature Encoder" class="edu.wpi.first.smartdashboard.livewindow.elements.EncoderDisplay">
+		<location x="155" y="137"/>
+	</widget>
+	<widget field="Limit Shooter" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="622"/>
+	</widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
+		<location x="888" y="2"/>
+		<width>679</width>
+		<height>450</height>
+		<property name="Degrees Rotation" value="180"/>
+		<property name="Camera Choice" value="USB Camera 0"/>
+	</static-widget>
+	<widget field="Auto Selector" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="602"/>
 	</widget>
 	<widget field="Ready to Shoot" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
@@ -26,12 +39,6 @@
 	<widget field="PID Intake" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
 		<location x="659" y="367"/>
 	</widget>
-	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
-		<location x="1103" y="62"/>
-		<width>446</width>
-		<height>285</height>
-		<property name="Camera Choice" value="limelight"/>
-	</static-widget>
 	<widget field="Desired Angle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="749"/>
 	</widget>
@@ -96,17 +103,13 @@
 		<location x="481" y="399"/>
 	</widget>
 	<widget field="ShootAngle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="375" y="8"/>
-	</widget>
-	<widget field="Limit Shooter" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="850" y="6"/>
-		<height>44</height>
+		<location x="242" y="18"/>
 	</widget>
 	<widget field="Angle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="798" y="312"/>
+		<location x="619" y="285"/>
 	</widget>
 	<widget field="Shooter RPM" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="944" y="416"/>
+		<location x="647" y="485"/>
 	</widget>
 	<widget field="Intake Position Feed Forward" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="729"/>
@@ -124,10 +127,10 @@
 		<location x="0" y="153"/>
 	</widget>
 	<widget field="Gyro reading" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="937" y="84"/>
+		<location x="460" y="143"/>
 	</widget>
 	<widget field="Through Bore Encoder Distance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="273" y="125"/>
+		<location x="163" y="117"/>
 	</widget>
 	<widget field="Shooter Feed Forward" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="37" y="522"/>
@@ -164,7 +167,7 @@
 		<property name="Background" value="204.255.204.255"/>
 	</widget>
 	<widget field="navX-Sensor[4]" type="Gyro" class="edu.wpi.first.smartdashboard.gui.elements.Compass">
-		<location x="726" y="158"/>
+		<location x="601" y="2"/>
 	</widget>
 	<widget field="Reset Encoders" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
 		<location x="430" y="213"/>
@@ -173,26 +176,10 @@
 		<location x="578" y="210"/>
 	</widget>
 	<widget field="Through Bore Right Encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="475" y="91"/>
+		<location x="171" y="93"/>
 	</widget>
 	<widget field="Through Bore Left Encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="259" y="90"/>
-	</widget>
-	<widget field="Built In Encoder Distance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="548" y="50"/>
-	</widget>
-	<widget field="BR Encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="403" y="68"/>
-	</widget>
-	<widget field="FR Encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="406" y="48"/>
-	</widget>
-	<widget field="BL Encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="260" y="69"/>
-	</widget>
-	<widget field="FL Encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="262" y="48"/>
-		<height>19</height>
+		<location x="195" y="66"/>
 	</widget>
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.ConnectionIndicator">
 		<location x="1277" y="466"/>

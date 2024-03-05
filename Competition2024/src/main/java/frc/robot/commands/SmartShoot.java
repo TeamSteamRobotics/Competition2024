@@ -27,7 +27,11 @@ public class SmartShoot extends ParallelRaceGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ShootPID(shoot, shooterSpeedRPM),
-      new AngleShooterPID(shoot, () -> shoot.getTargetAngle(aprilVision.getCoordinates(4, ReturnTarget.TARGET).z)));
+      new AngleShooterPID(shoot, () -> shoot.getTargetAngle(
+        Math.sqrt(
+          Math.pow(aprilVision.getCoordinates(4, ReturnTarget.TARGET).z, 2) +
+          Math.pow(aprilVision.getCoordinates(4, ReturnTarget.TARGET).x, 2)
+        ))));
      // new WaitCommand(5));
   }
 }
