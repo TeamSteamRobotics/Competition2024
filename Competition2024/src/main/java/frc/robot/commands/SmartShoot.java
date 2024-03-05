@@ -7,6 +7,7 @@ package frc.robot.commands;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.Shooting.AngleShooterPID;
@@ -20,11 +21,15 @@ import frc.robot.subsystems.AprilVisionSubsystem.ReturnTarget;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class SmartShoot extends ParallelRaceGroup {
   /** Creates a new SmartShoot. */
+  private boolean notVisibleEnd = false;
   private double shooterSpeedRPM, shooterAngleDegrees;
   public SmartShoot(ShooterSubsystem shoot, AprilVisionSubsystem aprilVision) { 
-    shooterAngleDegrees = shoot.getTargetAngle(aprilVision.getCoordinates(4, ReturnTarget.TARGET).z);
+    
+    //shooterAngleDegrees = shoot.getTargetAngle(aprilVision.getCoordinates(4, ReturnTarget.TARGET).z);
     shooterSpeedRPM = 1500; 
     // addCommands(new FooCommand(), new BarCommand());
+    if(aprilVision.getCoordinates(4, ReturnTarget.TARGET).aprilTagVisible){
+      notVisibleEnd = false;
     addCommands(
       new ShootPID(shoot, shooterSpeedRPM),
       new AngleShooterPID(shoot, () -> shoot.getTargetAngle(
@@ -32,6 +37,11 @@ public class SmartShoot extends ParallelRaceGroup {
           Math.pow(aprilVision.getCoordinates(4, ReturnTarget.TARGET).z, 2) +
           Math.pow(aprilVision.getCoordinates(4, ReturnTarget.TARGET).x, 2)
         ))));
+    }else{
+      addCommands(new InstantCommand(() -> System.out.println("APRILTAG NOT VISIBLE. COMMAND NOT RUN!!!!")));
+      notVisibleEnd = true;
+      System.out.println("APRILTAG IS NOT VISIBLE!!");
+    }
      // new WaitCommand(5));
   }
 }
