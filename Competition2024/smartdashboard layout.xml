@@ -1,10 +1,19 @@
 <xml version="1.0">
 <dashboard>
-	<widget field="Right Encoder" type="Quadrature Encoder" class="edu.wpi.first.smartdashboard.livewindow.elements.EncoderDisplay">
-		<location x="852" y="677"/>
+	<widget field="limelight_Stream" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="100"/>
 	</widget>
-	<widget field="Left Encoder" type="Quadrature Encoder" class="edu.wpi.first.smartdashboard.livewindow.elements.EncoderDisplay">
-		<location x="155" y="137"/>
+	<widget field="limelight_Interface" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="193"/>
+	</widget>
+	<widget field="limelight_PipelineName" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="137"/>
+	</widget>
+	<widget field="Intake Angle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="303" y="438"/>
+	</widget>
+	<widget field="Fiducial Found" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="642"/>
 	</widget>
 	<widget field="Limit Shooter" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="622"/>
@@ -16,9 +25,6 @@
 		<property name="Degrees Rotation" value="180"/>
 		<property name="Camera Choice" value="USB Camera 0"/>
 	</static-widget>
-	<widget field="Auto Selector" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="602"/>
-	</widget>
 	<widget field="Ready to Shoot" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
 		<location x="628" y="620"/>
 		<width>187</width>
@@ -32,12 +38,6 @@
 	</widget>
 	<widget field="DriveDist" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="562"/>
-	</widget>
-	<widget field="DriveDistance" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
-		<location x="0" y="173"/>
-	</widget>
-	<widget field="PID Intake" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
-		<location x="659" y="367"/>
 	</widget>
 	<widget field="Desired Angle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="749"/>
@@ -54,50 +54,17 @@
 	<widget field="TargetSpd" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="80"/>
 	</widget>
-	<widget field="Calc Angle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="60"/>
-	</widget>
-	<widget field="CalcRPM" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="40"/>
-	</widget>
 	<widget field="DistanceToShoot" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="20"/>
 	</widget>
-	<widget field="Intake Output" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="0"/>
-	</widget>
-	<widget field="Intake Angle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="303" y="438"/>
-	</widget>
 	<widget field="IntakeAnglePID" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="369"/>
-	</widget>
-	<widget field="limelight_Stream" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="349"/>
-	</widget>
-	<widget field="limelight_Interface" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="286"/>
-	</widget>
-	<widget field="limelight_PipelineName" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="266"/>
 	</widget>
 	<widget field="Intake Down" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="465" y="349"/>
 	</widget>
 	<widget field="Intake up" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="468" y="314"/>
-	</widget>
-	<widget field="Intake FF" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="329"/>
-	</widget>
-	<widget field="Intake D " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="309"/>
-	</widget>
-	<widget field="Intake I " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="133"/>
-	</widget>
-	<widget field="Intake P" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="113"/>
 	</widget>
 	<widget field="Angle Shooter" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
 		<location x="481" y="399"/>
@@ -111,20 +78,8 @@
 	<widget field="Shooter RPM" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="647" y="485"/>
 	</widget>
-	<widget field="Intake Position Feed Forward" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="729"/>
-	</widget>
-	<widget field="Intake Position D Gain" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="709"/>
-	</widget>
-	<widget field="Intake Position I Gain" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="420"/>
-	</widget>
-	<widget field="Intake Position P Gain" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="400"/>
-	</widget>
 	<widget field="turn setpoint" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="153"/>
+		<location x="4" y="173"/>
 	</widget>
 	<widget field="Gyro reading" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="460" y="143"/>
@@ -152,34 +107,17 @@
 	<widget field="Validate Auto Input" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.CheckBox">
 		<location x="420" y="586"/>
 	</widget>
-	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
-		<location x="378" y="679"/>
-		<property name="Text" value="Right Drive Encoder"/>
-	</static-widget>
-	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.Label">
-		<location x="192" y="680"/>
-		<property name="Text" value="Left Drive Encoder"/>
-	</static-widget>
 	<widget field="AutoCSVInput" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="348" y="520"/>
 		<width>732</width>
 		<height>65</height>
 		<property name="Background" value="204.255.204.255"/>
 	</widget>
-	<widget field="navX-Sensor[4]" type="Gyro" class="edu.wpi.first.smartdashboard.gui.elements.Compass">
-		<location x="601" y="2"/>
-	</widget>
 	<widget field="Reset Encoders" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
 		<location x="430" y="213"/>
 	</widget>
 	<widget field="Reset Gyro" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
 		<location x="578" y="210"/>
-	</widget>
-	<widget field="Through Bore Right Encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="171" y="93"/>
-	</widget>
-	<widget field="Through Bore Left Encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="195" y="66"/>
 	</widget>
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.ConnectionIndicator">
 		<location x="1277" y="466"/>
@@ -189,4 +127,7 @@
 </dashboard>
 <live-window>
 </live-window>
+	<hidden field="Intake Output"/>
+	<hidden field="Calc Angle"/>
+	<hidden field="CalcRPM"/>
 </xml>

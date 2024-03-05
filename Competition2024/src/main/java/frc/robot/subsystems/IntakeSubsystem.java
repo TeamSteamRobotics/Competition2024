@@ -26,57 +26,26 @@ public class IntakeSubsystem extends SubsystemBase {
 
   private DutyCycleEncoder absoluteIntakeEncoder;
 
-  private SparkPIDController pidController;
 
   private DigitalInput limitSwitchUp;
   private DigitalInput limitSwitchDown;
 
   private double dutyCycleOffset = 0.9456111;//0.00797222;
 
-  private double kP, kI, kD;
-  private double kFeedForward;
-  private double minOutput, maxOutput;
-  
   public IntakeSubsystem() {
     intakeRoller = new CANSparkMax(CANID.intakeRoller, MotorType.kBrushless);
     intakePivot = new CANSparkFlex(CANID.intakePivot, MotorType.kBrushless);
 
     absoluteIntakeEncoder = new DutyCycleEncoder(DigitalIOID.intakeEncoder);
 
-    pidController = intakePivot.getPIDController();
 
     limitSwitchUp = new DigitalInput(DigitalIOID.intakeLimitSwitchUp);
     limitSwitchDown = new DigitalInput(DigitalIOID.intakeLimitSwitchDown);
-  
 
-    //intakeRoller.restoreFactoryDefaults();
-    //intakePivot.restoreFactoryDefaults();
-
-    //intakeRoller.setInverted(true);
-
-    //intakeRoller.setIdleMode(IdleMode.kBrake);
-    //intakePivot.setIdleMode(IdleMode.kBrake);
 
     absoluteIntakeEncoder.setDistancePerRotation(180);
     //absoluteIntakeEncoder.reset();
     absoluteIntakeEncoder.setPositionOffset(64.0 / 180.0);
-    kP = 0;
-    kI = 0;
-    kD = 0;
-    kFeedForward = 0;
-    minOutput = -1;
-    maxOutput = 1;
-
-    pidController.setP(kP);
-    pidController.setI(kI);
-    pidController.setD(kD);
-    pidController.setFF(kFeedForward);
-    pidController.setOutputRange(minOutput, maxOutput);
-
-    SmartDashboard.putNumber("Intake P", kP);
-    SmartDashboard.putNumber("Intake I ", kI);
-    SmartDashboard.putNumber("Intake D ", kD);
-    SmartDashboard.putNumber("Intake FF", kFeedForward);
   }
 
 
@@ -92,18 +61,13 @@ public class IntakeSubsystem extends SubsystemBase {
     return !limitSwitchUp.get();
   }
 
-  public void setIntakePosition(double positionDegrees) {
-    pidController.setReference(positionDegrees, ControlType.kPosition);
-  }
-
   public void setIntakePositionManual(double value) {
     if(getIntakeAngleDegrees()  > 204 && value < 0)
       intakePivot.set(0);
     else if(isUp() && value > 0)
       intakePivot.set(0);
     else {
-      intakePivot.set(UtilHelpers.clamp(value, -0.4, 0.4));
-      SmartDashboard.putNumber("Intake Output", value);
+      intakePivot.set(value);
     }
     
   }
@@ -129,15 +93,5 @@ public class IntakeSubsystem extends SubsystemBase {
     if(isUp()) {
       absoluteIntakeEncoder.reset();
     }
-
-    double p = SmartDashboard.getNumber("Intake P", 0);
-    double i = SmartDashboard.getNumber("Intake I", 0);
-    double d = SmartDashboard.getNumber("Intake D", 0);
-    double ff = SmartDashboard.getNumber("Intake FF", 0);
-
-    if((p != kP)) { pidController.setP(p); kP = p; }
-    if((i != kI)) { pidController.setI(i); kI = i; }
-    if((d != kD)) { pidController.setD(d); kD = d; }
-    if((ff != kFeedForward)) { pidController.setFF(ff); kFeedForward = ff; }  
   }
 }

@@ -27,8 +27,6 @@ public class AngleShooterPID extends PIDCommand {
         // This uses the output
         output -> {
           shoot.angleShooter(output);
-          System.out.println(angle.getAsDouble());
-          // Use the output here
         });
    // addRequirements(shoot);
    getController().setIZone(5);

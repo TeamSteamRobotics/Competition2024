@@ -33,16 +33,12 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard
     m_robotContainer = new RobotContainer();
-    CameraServer.startAutomaticCapture();
+    CameraServer.startAutomaticCapture().setResolution(640, 480);
     SmartDashboard.putNumber("turn setpoint", 0);
     SmartDashboard.putString("AutoCSVInput", "");
     SmartDashboard.putBoolean("Validate Auto Input", false);
-    SmartDashboard.putNumber("ShootAngle", 30);
     SmartDashboard.putNumber("IntakeAnglePID", 0);
     SmartDashboard.putNumber("DistanceToShoot", 0);
-    SmartDashboard.putNumber("DriveDist", 0);
-    SmartDashboard.putNumber("TargetSpd", 0);//800;//shoot.claclutateShooterSpeedRPM(distance);
-    SmartDashboard.putNumber("TargetAng", 0);
     for (int port = 5800; port <= 5807; port++) {
             PortForwarder.add(port, "limelight.local", port);
         }

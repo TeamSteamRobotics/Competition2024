@@ -14,6 +14,7 @@ import frc.robot.commands.Handoff;
 import frc.robot.commands.SmartShoot;
 import frc.robot.commands.Climbing.RaiseClimb;
 import frc.robot.commands.Climbing.RetractClimb;
+import frc.robot.commands.Driving.CenterOnTarget;
 import frc.robot.commands.Driving.Drive;
 import frc.robot.commands.Intaking.Intake;
 import frc.robot.commands.Intaking.IntakeAnglePID;
@@ -26,6 +27,7 @@ import frc.robot.commands.Shooting.RetreatNote;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.ZachVisionSubsystem;
 import frc.robot.subsystems.AprilVisionSubsystem.ReturnTarget;
 import frc.robot.commands.Driving.DriveDistance;
 import frc.robot.commands.Driving.PIDTurn;
@@ -49,19 +51,23 @@ public class RobotContainer {
   private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
   private final ClimbSubsystem m_climbSubsystem = new ClimbSubsystem();
   private final AprilVisionSubsystem m_aVisionSubsystem = new AprilVisionSubsystem();
-  
-  //private final ZachVisionSubsystem m_ZachVisionSubsystem = new ZachVisionSubsystem();
+  private final ZachVisionSubsystem m_ZachVisionSubsystem = new ZachVisionSubsystem();
 
 
   private final CommandXboxController m_driverController = new CommandXboxController(OperatorConstants.kDriverControllerPort);
   private final CommandXboxController m_operatorController = new CommandXboxController(OperatorConstants.kOperatorControllerPort);
 
   // Driver Controller Bindings:
-  private final Trigger retractClimb = m_driverController.leftBumper();
-  private final Trigger raiseClimb = m_driverController.rightBumper();
-  //private final Trigger DriveDistance = m_driverController.rightBumper();
-  private final Trigger handoff = m_operatorController.leftBumper();
+  private final Trigger driverRetractClimb = m_driverController.leftBumper();
+  private final Trigger driverRaiseClimb = m_driverController.rightBumper();
 
+  private final Trigger autoAim = m_driverController.a();
+
+
+  private final Trigger operatorRetractClimb = m_operatorController.axisLessThan(1, -0.5);
+  private final Trigger operatorRaiseClimb = m_operatorController.axisGreaterThan(1, 0.5);
+
+  private final Trigger handoff = m_operatorController.leftBumper();
   private final Trigger smartShooter = m_operatorController.rightBumper();
 
   private final Trigger shooterAngleUp = m_operatorController.povUp();
@@ -81,12 +87,7 @@ public class RobotContainer {
   private final Trigger ampScore = m_operatorController.y();
   private final Trigger ampAngle = m_operatorController.rightStick();
 
-
- // private final Trigger pidShoot = m_operatorController.leftTrigger();
-  //private final Trigger shootStop = m_operatorController.rightTrigger();
-  private final Trigger driveDistance = m_driverController.a();
-  private final Trigger pidTurn = m_driverController.y();
-  //private final Trigger twoNoteTest = m_driverController.x();
+  
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     m_driveSubsystem.setDefaultCommand(new Drive(m_driveSubsystem, m_driverController::getLeftY, m_driverController::getRightX));
@@ -104,12 +105,16 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    retractClimb.whileTrue(new RetractClimb(m_climbSubsystem));
-    raiseClimb.whileTrue(new RaiseClimb(m_climbSubsystem));
+    driverRetractClimb.whileTrue(new RetractClimb(m_climbSubsystem));
+    driverRaiseClimb.whileTrue(new RaiseClimb(m_climbSubsystem));
+
+    autoAim.onTrue(new CenterOnTarget(m_ZachVisionSubsystem, m_driveSubsystem));
+
+
+    operatorRetractClimb.whileTrue(new RetractClimb(m_climbSubsystem));
+    operatorRaiseClimb.whileTrue(new RetractClimb(m_climbSubsystem));
+
     ampScore.whileTrue(new AmpScore(m_intakeSubsystem, m_shooterSubsystem));
-   //raiseClimb.whileTrue(new SmartShoot(m_shooterSubsystem, m_aVisionSubsystem));
-    //raiseClimb.onTrue(new IntakeAnglePID(m_intakeSubsystem, SmartDashboard.getNumber("IntakeAnglePID", 0)));
-   //DriveDistance.onTrue(new DriveDistance(m_driveSubsystem, 1.0));
 
     //runShootAnglePID.onTrue(new IntakeAnglePID(m_intakeSubsystem, () -> SmartDashboard.getNumber("IntakeAnglePID", 0)));
     advanceToShooter.whileTrue(new AdvanceNote(m_shooterSubsystem).withTimeout(0.1));
@@ -128,7 +133,7 @@ public class RobotContainer {
     //intakeAngleUp.whileTrue(new AngleIntakeUp(m_intakeSubsystem));
     //intakeAngleDown.whileTrue(new AngleIntakeDown(m_intakeSubsystem));
 
-    intakeAngleDown.onTrue(new IntakeAnglePID(m_intakeSubsystem, () -> 180));
+    intakeAngleDown.onTrue(new IntakeAnglePID(m_intakeSubsystem, () -> 190));
     intakeAngleMid.onTrue(new IntakeAnglePID(m_intakeSubsystem, () -> 80));
     intakeAngleUp.onTrue(new IntakeAnglePID(m_intakeSubsystem, () -> 0));
 
@@ -137,12 +142,7 @@ public class RobotContainer {
     vomit.whileTrue(new Vomit(m_intakeSubsystem));
     
 
-    driveDistance.onTrue(new DriveDistance(m_driveSubsystem, SmartDashboard.getNumber("DriveDist", 0)));
     retreat.whileTrue(new RetreatNote(m_shooterSubsystem));
-    pidTurn.onTrue(new PIDTurn(m_driveSubsystem, 0));
-    //pidShoot.whileTrue(new InstantCommand(() -> m_shooterSubsystem.setShooterSpeedPID(1500)));
-    //shootStop.onTrue(new InstantCommand(() -> m_shooterSubsystem.stopShooter()));
-    //twoNoteTest.onTrue(new TwoNoteAuto(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem));
   }
 
     

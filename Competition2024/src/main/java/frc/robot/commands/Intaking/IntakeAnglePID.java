@@ -19,7 +19,7 @@ public class IntakeAnglePID extends PIDCommand {
   public IntakeAnglePID(IntakeSubsystem intake, DoubleSupplier value) {
     super(
         // The controller that the command will use
-        new PIDController(0.01, 0.01, 0),
+        new PIDController(0.005, 0.007, 0.0001),
         // This should return the measurement
         () -> intake.getIntakeAngleDegrees(),
         // This should return the setpoint (can also be a constant)
@@ -30,10 +30,8 @@ public class IntakeAnglePID extends PIDCommand {
           intake.setIntakePositionManual(-output);
         });
     addRequirements(intake);
-    //getController().setIZone(7);  
-    SmartDashboard.putData("PID Intake", getController());
+    getController().setIZone(7);  
     //getController().setTolerance(0.5);  
-    // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
   }
 
