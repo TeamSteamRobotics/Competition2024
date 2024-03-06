@@ -7,19 +7,19 @@ package frc.robot.commands.Shooting;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class AdvanceNote extends Command {
+public class RetreatNote extends Command {
   /** Creates a new AdvanceNote. */
   private ShooterSubsystem shooter;
-  public AdvanceNote(ShooterSubsystem p_shooter) {
+  public RetreatNote(ShooterSubsystem p_shooter) {
     shooter = p_shooter;
-    //addRequirements(shooter);
+    addRequirements(shooter);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooter.advanceNote();
+    shooter.retreatNote();
   }
 
   @Override

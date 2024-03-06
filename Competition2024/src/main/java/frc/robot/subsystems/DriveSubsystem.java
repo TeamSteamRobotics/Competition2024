@@ -50,21 +50,6 @@ public class DriveSubsystem extends SubsystemBase {
     frontRightMotor = new CANSparkMax(CANID.frontRight, MotorType.kBrushless);
     backLeftMotor = new CANSparkMax(CANID.backLeft, MotorType.kBrushless);
     backRightMotor = new CANSparkMax(CANID.backRight, MotorType.kBrushless);
-
-    frontLeftMotor.restoreFactoryDefaults();
-    frontRightMotor.restoreFactoryDefaults();
-    backLeftMotor.restoreFactoryDefaults();
-    backRightMotor.restoreFactoryDefaults();
-
-    frontLeftMotor.setSmartCurrentLimit(40);
-    frontRightMotor.setSmartCurrentLimit(40);
-    backLeftMotor.setSmartCurrentLimit(40);
-    backRightMotor.setSmartCurrentLimit(40);
-
-
-    frontLeftMotor.follow(backLeftMotor);
-    frontRightMotor.follow(backRightMotor);
-    backRightMotor.setInverted(true);
     
     diffDrive = new DifferentialDrive(backLeftMotor, backRightMotor);
 
@@ -141,7 +126,7 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public double getDistanceMeters() {
-    return (getLeftSideMeters() + getRightSideMeters()) / 2;
+    return -(getLeftSideMeters() + getRightSideMeters()) / 2;
   }
 
   public double getRateMetersPerSecond() {
@@ -173,16 +158,9 @@ public class DriveSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
     currentRobotPose = odometry.update(getRotation2d(), getLeftSideMeters(), getRightSideMeters());
 
-    SmartDashboard.putNumber("Through Bore Left Encoder", getLeftSideMeters()); // One rotation should be 0.4787
-    SmartDashboard.putNumber("Through Bore Right Encoder", getRightSideMeters()); // same as above
     SmartDashboard.putNumber("Through Bore Encoder Distance", getDistanceMeters());
-    SmartDashboard.putNumber("Robot Rate (m/s)", getRateMetersPerSecond());
 
-    SmartDashboard.putNumber("Gyro reading", getAngleDegrees());
-
-    SmartDashboard.putData(navX);
-    SmartDashboard.putData("Left Encoder", leftThroughBoreEncoder);
-    SmartDashboard.putData("Right Encoder", rightThroughBoreEncoder);
+    SmartDashboard.putNumber("Gyro reading", getAngleDegrees());    
   }
 }
 

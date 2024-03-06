@@ -36,6 +36,9 @@ public class ShooterSubsystem extends SubsystemBase {
 
   private DutyCycleEncoder absoluteAngleEncoder;
   private DigitalInput shooterLimitSwitch;
+
+  private DigitalInput shooterBeamBreak;
+
   private double dutyCycleOffset = 0.0702778;
 
   private SparkPIDController shootRightPIDController;
@@ -45,7 +48,7 @@ public class ShooterSubsystem extends SubsystemBase {
   private double shootkFeedForward;
   private double shootMinOutput, shootMaxOutput;
 
-  private TreeMap<Double, Double> distanceSpeedTable;
+  private TreeMap<Double, Double> distanceAngleTable;
 
   public ShooterSubsystem() {
     leftShooter = new CANSparkMax(CANID.leftShooter, MotorType.kBrushless);
@@ -59,35 +62,40 @@ public class ShooterSubsystem extends SubsystemBase {
     absoluteAngleEncoder = new DutyCycleEncoder(DigitalIOID.shooterEncoder);
     shooterLimitSwitch = new DigitalInput(DigitalIOID.shooterLimitSwitch);
 
-    distanceSpeedTable = new TreeMap<Double, Double>();
+    shooterBeamBreak = new DigitalInput(9);
+
+    distanceAngleTable = new TreeMap<Double, Double>();
 
     rightShooterEncoder = rightShooter.getEncoder();
 
-    leftShooter.restoreFactoryDefaults();
+    /*leftShooter.restoreFactoryDefaults();
     rightShooter.restoreFactoryDefaults();
     angleMotor.restoreFactoryDefaults();
     leftAdvanceMotor.restoreFactoryDefaults();
-    rightAdvanceMotor.restoreFactoryDefaults();
+    rightAdvanceMotor.restoreFactoryDefaults();*/
+
 
 
     //leftShooter.setInverted(false);
-    rightShooter.setInverted(false);
+    //rightShooter.setInverted(false);
     //rightAdvanceMotor.setInverted(true);
     //leftAdvanceMotor.setInverted(true);
-    angleMotor.setInverted(true);
+    //angleMotor.setInverted(true);
 
 
-    leftShooter.setIdleMode(IdleMode.kCoast);
-    rightShooter.setIdleMode(IdleMode.kCoast);
+    //leftShooter.setIdleMode(IdleMode.kCoast);
+    //rightShooter.setIdleMode(IdleMode.kCoast);
 
-    angleMotor.setIdleMode(IdleMode.kBrake);
-    leftAdvanceMotor.setIdleMode(IdleMode.kBrake);
-    rightAdvanceMotor.setIdleMode(IdleMode.kBrake);
+    //angleMotor.setIdleMode(IdleMode.kBrake);
+    //leftAdvanceMotor.setIdleMode(IdleMode.kBrake);
+    //rightAdvanceMotor.setIdleMode(IdleMode.kBrake);
 
 
     //leftShooter.follow(rightShooter);
     //leftAdvanceMotor.follow(rightAdvanceMoto
-    leftShooter.setInverted(true);
+    //leftShooter.setInverted(true);
+    //leftShooter.setSmartCurrentLimit(40);
+    //rightShooter.setSmartCurrentLimit(40);
 
     absoluteAngleEncoder.setDistancePerRotation(360);
     absoluteAngleEncoder.setPositionOffset(dutyCycleOffset);
@@ -120,6 +128,11 @@ public class ShooterSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Shooter I Gain", shootkI);
     SmartDashboard.putNumber("Shooter D Gain", shootkD);
     SmartDashboard.putNumber("Shooter Feed Forward", shootkFeedForward);
+    populateDistanceAngleTable();
+  }
+
+  public double getShooterRPM() {
+    return rightShooterEncoder.getVelocity();
   }
 
   public void runShooterManual(double value) {
@@ -150,7 +163,7 @@ public class ShooterSubsystem extends SubsystemBase {
       angleMotor.set(0);
     else if(getAngle() > 61 && value > 0)
       angleMotor.set(0);
-    else if(getAngle() < 30 && value < 0)
+    else if(getAngle() < 13 && value < 0)
       angleMotor.set(0);
     else
       angleMotor.set(UtilHelpers.clamp(value, -0.4, 0.4));
@@ -160,9 +173,18 @@ public class ShooterSubsystem extends SubsystemBase {
     return absoluteAngleEncoder.getDistance();
   }
 
+  public boolean isAtShooter() {
+    return !shooterBeamBreak.get();
+  }
+
   public void advanceNote() {
-    rightAdvanceMotor.set(-0.25);
-    leftAdvanceMotor.set(0.25);
+    rightAdvanceMotor.set(-0.2);
+    leftAdvanceMotor.set(0.2);
+  }
+
+  public void retreatNote() {
+    rightAdvanceMotor.set(0.25);
+    leftAdvanceMotor.set(-0.25);
   }
 
   //Speed in RPM to achieve
@@ -171,20 +193,31 @@ public class ShooterSubsystem extends SubsystemBase {
     shootRightPIDController.setReference(speed, ControlType.kVelocity);
   }
 
-  public void populateDistanceSpeedTable() {
+  public void populateDistanceAngleTable() {
+    distanceAngleTable.put(1.4, 62.0);
+    distanceAngleTable.put(1.8, 48.0);
+    distanceAngleTable.put(2.3, 38.0);
+    distanceAngleTable.put(2.55, 36.8);
+    distanceAngleTable.put(2.8, 35.5);
+    distanceAngleTable.put(3.0, 33.0);
+    distanceAngleTable.put(3.3, 29.1);
+    distanceAngleTable.put(3.7, 27.0);
+    distanceAngleTable.put(3.9, 25.6);
+    distanceAngleTable.put(2.9, 34.0);
+
     // use distanceSpeedTable.put(distance, speed) using experimental values
   }
 
   /*
     * AN ENTRY IS A POINT (KEY, VALUE)
     * THE KEY REPRESENTS THE DISTANCE 
-    * THE VALUE REPRESENTS THE SPEED REQUIRED TO SHOOT THAT DISTANCE
+    * THE VALUE REPRESENTS THE ANGLE REQUIRED TO SHOOT THAT DISTANCE
     * THINK OF IT AS AN (X,Y) POINT 
-    * (KEY, VALUE) = (DISTANCE, SPEED)
+    * (KEY, VALUE) = (DISTANCE, ANGLE)
   */  
-  public double getTargetSpeed(double distance) {
-    Entry<Double, Double> lower = distanceSpeedTable.floorEntry(distance);
-    Entry<Double, Double> upper = distanceSpeedTable.ceilingEntry(distance);
+  public double getTargetAngle(double distance) {
+    Entry<Double, Double> lower = distanceAngleTable.floorEntry(distance);
+    Entry<Double, Double> upper = distanceAngleTable.ceilingEntry(distance);
 
     if(lower == null)
       return upper.getValue();
@@ -196,18 +229,18 @@ public class ShooterSubsystem extends SubsystemBase {
 
 
 
-  public double getShooterAngle(double distanceFromSpeaker){
+  public double calculateShooterAngleDegree(double distanceFromSpeaker){
         double yVelocity = 17.54;
         double t = 0.55;
         double xVelocity;
 
         xVelocity = distanceFromSpeaker/t;
 
-        double shooterAngle = 0;//(Math.atan2(yVelocity/xVelocity))*(180/Math.PI);
+        double shooterAngle = (Math.atan2(yVelocity,xVelocity))*(180/Math.PI);
 
         return shooterAngle;
   }
-  public double getMotorSpeed(double distanceFromSpeaker){
+  public double claclutateShooterSpeedRPM(double distanceFromSpeaker){
         double yVelocity = 17.54;
         double t = 0.55;
         double xVelocity;
@@ -229,6 +262,8 @@ public class ShooterSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Shooter RPM", rightShooterEncoder.getVelocity());
     SmartDashboard.putNumber("Angle", absoluteAngleEncoder.getDistance());
     SmartDashboard.putBoolean("Limit Shooter", shooterLimitSwitch.get());
+
+    SmartDashboard.putBoolean("Shooter beam", shooterBeamBreak.get());
 
     if((shootP != shootkP)) { shootRightPIDController.setP(shootP); shootLeftPIDController.setP(shootP); shootkP = shootP; }
     if((shootI != shootkI)) { shootRightPIDController.setI(shootI); shootLeftPIDController.setI(shootI); shootkI = shootI; }

@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class AprilVisionSubsystem extends SubsystemBase {
@@ -43,6 +44,7 @@ public class AprilVisionSubsystem extends SubsystemBase {
     private void updateTargetCoordinates(int targetId) {
         String jsonString = tableEntry.getString("");
         limelightjson thirteenthReason = gson.fromJson(jsonString, limelightjson.class);
+        if(thirteenthReason != null){
         if (thirteenthReason.Results.Fiducial.length != 0) {
              for (int i = 0; i < thirteenthReason.Results.Fiducial.length; i++) {
                 if(thirteenthReason.Results.Fiducial[i].fID == targetId){
@@ -53,7 +55,8 @@ public class AprilVisionSubsystem extends SubsystemBase {
                     fidLocFound = false;
                 }
             }if(!fidLocFound){
-                System.out.println("TARGET FIDUCIAL NOT FOUND!");
+                //System.out.println("TARGET FIDUCIAL NOT FOUND!");
+                SmartDashboard.putBoolean("Fiducial Found", false);
                 coordinate.aprilTagVisible = false;
             }else{
                 coordinate.x = thirteenthReason.Results.Fiducial[fidLocation].t6t_rs[0];
@@ -63,15 +66,21 @@ public class AprilVisionSubsystem extends SubsystemBase {
                 coordinate.ry = thirteenthReason.Results.Fiducial[fidLocation].t6t_rs[4];
                 coordinate.rz = thirteenthReason.Results.Fiducial[fidLocation].t6t_rs[5];
                 coordinate.aprilTagVisible = true;
+                SmartDashboard.putBoolean("Fiducial Found", true);
             } 
         }else{
             coordinate.aprilTagVisible = false;
-            System.out.println("NO FIDUCIALS IN VIEW!");
+            SmartDashboard.putBoolean("Fiducial Found", false);
         }
+    }else{
+         coordinate.aprilTagVisible = false;
+         System.out.println("THIRTEENTH REASON IS NULL");
+    }
     }
     private void updateRobotCoordinates(int targetId) {
         String jsonString = tableEntry.getString("");
         limelightjson thirteenthReason = gson.fromJson(jsonString, limelightjson.class);
+        if(thirteenthReason != null){
         if (thirteenthReason.Results.Fiducial.length != 0) {
              for (int i = 0; i < thirteenthReason.Results.Fiducial.length; i++) {
                 if(thirteenthReason.Results.Fiducial[i].fID == targetId){
@@ -82,7 +91,7 @@ public class AprilVisionSubsystem extends SubsystemBase {
                     fidLocFound = false;
                 }
             }if(!fidLocFound){
-                System.out.println("TARGET FIDUCIAL NOT FOUND!");
+                SmartDashboard.putBoolean("Fiducial Found", false);
                 coordinate.aprilTagVisible = false;
             }else{
                 coordinate.x = thirteenthReason.Results.Fiducial[fidLocation].t6r_ts[0];
@@ -92,15 +101,21 @@ public class AprilVisionSubsystem extends SubsystemBase {
                 coordinate.ry = thirteenthReason.Results.Fiducial[fidLocation].t6r_ts[4];
                 coordinate.rz = thirteenthReason.Results.Fiducial[fidLocation].t6r_ts[5];
                 coordinate.aprilTagVisible = true;
+                SmartDashboard.putBoolean("Fiducial Found", true);
             } 
         }else{
             coordinate.aprilTagVisible = false;
-            System.out.println("NO FIDUCIALS IN VIEW!");
+            SmartDashboard.putBoolean("Fiducial Found", false);
         }
+    }else{
+         coordinate.aprilTagVisible = false;
+         System.out.println("THIRTEENTH REASON IS NULL");
+    }
     }
     private void updateFieldCoordinates(int targetId) {
         String jsonString = tableEntry.getString("");
         limelightjson thirteenthReason = gson.fromJson(jsonString, limelightjson.class);
+        if(thirteenthReason != null){
         if (thirteenthReason.Results.Fiducial.length != 0) {
                 coordinate.x = thirteenthReason.Results.Fiducial[0].t6r_fs[0];
                 coordinate.y = thirteenthReason.Results.Fiducial[0].t6r_fs[1];
@@ -109,10 +124,15 @@ public class AprilVisionSubsystem extends SubsystemBase {
                 coordinate.ry = thirteenthReason.Results.Fiducial[0].t6r_fs[4];
                 coordinate.rz = thirteenthReason.Results.Fiducial[0].t6r_fs[5];
                 coordinate.aprilTagVisible = true;
+                SmartDashboard.putBoolean("Fiducial Found", true);
         }else{
             coordinate.aprilTagVisible = false;
-            System.out.println("NO FIDUCIALS IN VIEW!");
+            SmartDashboard.putBoolean("Fiducial Found", false);
         }
+    }else{
+         coordinate.aprilTagVisible = false;
+         System.out.println("THIRTEENTH REASON IS NULL");
+    }
     }
 public class Coordinate {
     public double x;
