@@ -27,6 +27,8 @@ public class GoToPoint extends Command {
   public Pose2d getAvPose(int tag, ReturnTarget rt){
     Pose2d currentPose = new Pose2d(avSubsystem.getCoordinates(tag, rt).x, avSubsystem.getCoordinates(tag, rt).x, new Rotation2d(avSubsystem.getCoordinates(tag, rt).rx));
     return currentPose;
+   
+    
   }
   public GoToPoint(DriveSubsystem p_driveSubsystem, AprilVisionSubsystem p_avSubsystem, Pose2d p_endPose) {
     driveSubsystem = p_driveSubsystem;
@@ -53,6 +55,11 @@ public class GoToPoint extends Command {
       new PIDTurn(driveSubsystem, theta), 
       new DriveDistance(driveSubsystem, distance)
     );
+    System.out.println("Robot intends to drive" + distance);
+System.out.println("Robot intends to drive at angle" + theta);
+
+    
+    
     
     done = true;
   }
