@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.Driving.DriveDistance;
 import frc.robot.commands.Intaking.Intake;
+import frc.robot.commands.Intaking.IntakeAnglePID;
 import frc.robot.commands.Shooting.AdvanceNote;
 import frc.robot.subsystems.AprilVisionSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
@@ -26,12 +27,16 @@ public class ZachTwoNote extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ParallelCommandGroup(
+
         new SmartShoot(shoot, aprilVision),
         new WaitCommand(3).andThen(new AdvanceNote(shoot).withTimeout(0.1))
       ).withTimeout(3.1),
-      new DriveDistance(drive, -2),
+      new ParallelCommandGroup(
+        new DriveDistance(drive, 2),
+        new IntakeAnglePID(intake, () -> 195)
+      ),
       new ParallelRaceGroup(
-        new DriveDistance(drive, -1),
+        new DriveDistance(drive, 1),
         new Intake(intake)
       ),
       new ParallelCommandGroup(
