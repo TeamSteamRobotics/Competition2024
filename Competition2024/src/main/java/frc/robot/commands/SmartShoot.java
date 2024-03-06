@@ -28,8 +28,8 @@ public class SmartShoot extends ParallelRaceGroup {
     //shooterAngleDegrees = shoot.getTargetAngle(aprilVision.getCoordinates(4, ReturnTarget.TARGET).z);
     shooterSpeedRPM = 1500; 
     // addCommands(new FooCommand(), new BarCommand());
-    if(aprilVision.getCoordinates(4, ReturnTarget.TARGET).aprilTagVisible){
-      notVisibleEnd = false;
+    /*if(aprilVision.getCoordinates(4, ReturnTarget.TARGET).aprilTagVisible){
+      notVisibleEnd = false;*/
     addCommands(
       new ShootPID(shoot, shooterSpeedRPM),
       new AngleShooterPID(shoot, () -> shoot.getTargetAngle(
@@ -37,11 +37,11 @@ public class SmartShoot extends ParallelRaceGroup {
           Math.pow(aprilVision.getCoordinates(4, ReturnTarget.TARGET).z, 2) +
           Math.pow(aprilVision.getCoordinates(4, ReturnTarget.TARGET).x, 2)
         ))));
-    }else{
+   /* }else{
       addCommands(new InstantCommand(() -> System.out.println("APRILTAG NOT VISIBLE. COMMAND NOT RUN!!!!")));
       notVisibleEnd = true;
       System.out.println("APRILTAG IS NOT VISIBLE!!");
-    }
+    }*/
      // new WaitCommand(5));
   }
 }

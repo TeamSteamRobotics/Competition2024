@@ -32,8 +32,8 @@ public class AmpScore extends SequentialCommandGroup {
       new AngleShooterPID(shoot, () -> 25).withTimeout(1),
       new IntakeAnglePID(intake, () -> 80).withTimeout(1),
       new ParallelCommandGroup(
-        new AngleShooterPID(shoot, () -> 58.2),
-        new ShootPID(shoot, 410))
+        new AngleShooterPID(shoot, () -> 50),//58.2),57
+        new ShootPID(shoot, 430))
       );
   }
 }
