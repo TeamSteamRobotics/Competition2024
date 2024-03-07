@@ -31,13 +31,13 @@ public class IntakeAnglePID extends PIDCommand {
         });
     addRequirements(intake);
     getController().setIZone(7);  
-    //getController().setTolerance(0.5);  
+    getController().setTolerance(2, 0.5);  
     // Configure additional PID options by calling `getController` here.
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false; //getController().atSetpoint();
+    return getController().atSetpoint();
   }
 }

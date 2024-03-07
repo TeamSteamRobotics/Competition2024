@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -27,22 +28,20 @@ public class ZachTwoNote extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ParallelCommandGroup(
-
         new SmartShoot(shoot, aprilVision),
-        new WaitCommand(3).andThen(new AdvanceNote(shoot).withTimeout(0.1))
-      ).withTimeout(3.1),
-      new ParallelCommandGroup(
-        new DriveDistance(drive, 2),
-        new IntakeAnglePID(intake, () -> 195)
-      ),
+        new WaitCommand(2.5).andThen(new AdvanceNote(shoot).withTimeout(0.1))
+      ).withTimeout(2.6),
+      new IntakeAnglePID(intake, () -> 195).withTimeout(1.4),
+      new InstantCommand(() -> drive.resetEncoders()),
       new ParallelRaceGroup(
         new DriveDistance(drive, 1),
         new Intake(intake)
-      ),
+      ).withTimeout(1.5),
+      new Handoff(intake, shoot),
       new ParallelCommandGroup(
         new SmartShoot(shoot, aprilVision),
-        new WaitCommand(3).andThen(new AdvanceNote(shoot).withTimeout(0.1))
-      ).withTimeout(3.1)
+        new WaitCommand(2.5).andThen(new AdvanceNote(shoot).withTimeout(0.1))
+      ).withTimeout(2.6)
     );
   }
 }

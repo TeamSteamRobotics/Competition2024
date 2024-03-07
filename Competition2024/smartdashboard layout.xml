@@ -29,7 +29,7 @@
 		<property name="Camera Choice" value="USB Camera 0"/>
 	</static-widget>
 	<widget field="Ready to Shoot" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
-		<location x="628" y="620"/>
+		<location x="666" y="37"/>
 		<width>187</width>
 		<height>120</height>
 	</widget>

@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.VideoSource;
 import edu.wpi.first.net.PortForwarder;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -33,7 +34,14 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard
     m_robotContainer = new RobotContainer();
-    CameraServer.startAutomaticCapture().setResolution(640, 480);
+    VideoSource vid1 = CameraServer.startAutomaticCapture(0);
+    vid1.setResolution(640, 480);
+    vid1.setFPS(30);
+
+    VideoSource vid2 = CameraServer.startAutomaticCapture(1);
+    vid2.setResolution(640, 480);
+    vid2.setFPS(30);
+
     SmartDashboard.putNumber("turn setpoint", 0);
     SmartDashboard.putString("AutoCSVInput", "");
     SmartDashboard.putBoolean("Validate Auto Input", false);

@@ -23,14 +23,14 @@ public class Handoff extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new IntakeAnglePID(intake, () -> 0).withTimeout(1),
-      new AngleShooterPID(shoot, () -> 55).withTimeout(1),
+      new IntakeAnglePID(intake, () -> 0),//.withTimeout(0.9),
+      new AngleShooterPID(shoot, () -> 55).withTimeout(0.7),
       new ParallelCommandGroup(
         new Vomit(intake),
         new AdvanceNote(shoot)
       ).onlyWhile(() -> !shoot.isAtShooter()),
-      new AngleShooterPID(shoot, () -> 25).withTimeout(1),
-      new IntakeAnglePID(intake, () -> 80).withTimeout(1));
+      new AngleShooterPID(shoot, () -> 25).withTimeout(0.6),
+      new IntakeAnglePID(intake, () -> 80));//.withTimeout(0.9));
       //new RetreatNote(shoot).onlyWhile(() -> shoot.isAtShooter()));
   }
 }
