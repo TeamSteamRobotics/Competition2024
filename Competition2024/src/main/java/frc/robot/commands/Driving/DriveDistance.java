@@ -29,7 +29,7 @@ public class DriveDistance extends PIDCommand {
           driveSubsystem.drive(output, 0);
         });
         //System.out.println("reading: " + driveSubsystem.getDistanceMeters());
-        addRequirements(driveSubsystem);
+        //addRequirements(driveSubsystem);
   }
 
 
