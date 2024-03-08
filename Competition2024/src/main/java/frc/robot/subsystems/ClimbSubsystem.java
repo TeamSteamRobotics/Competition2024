@@ -22,7 +22,7 @@ public class ClimbSubsystem extends SubsystemBase {
 
   private RelativeEncoder rightEncoder;
 
-  private double climbSpeed = 0.4;
+  private double climbSpeed = 0.8;
   
   public ClimbSubsystem() {
     leftClimb = new CANSparkMax(CANID.leftClimb, MotorType.kBrushless);
