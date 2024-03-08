@@ -28,7 +28,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
 
   private DigitalInput limitSwitchUp;
-  private DigitalInput limitSwitchDown;
+  private DigitalInput beamBreak;
 
   private double dutyCycleOffset = 0.9456111;//0.00797222;
 
@@ -40,7 +40,8 @@ public class IntakeSubsystem extends SubsystemBase {
 
 
     limitSwitchUp = new DigitalInput(DigitalIOID.intakeLimitSwitchUp);
-    limitSwitchDown = new DigitalInput(DigitalIOID.intakeLimitSwitchDown);
+
+    beamBreak = new DigitalInput(DigitalIOID.intakeBeamBreak);
 
 
     absoluteIntakeEncoder.setDistancePerRotation(180);
@@ -53,8 +54,8 @@ public class IntakeSubsystem extends SubsystemBase {
     return -absoluteIntakeEncoder.getDistance();
   }
 
-  public boolean isDown() {
-    return !limitSwitchDown.get();
+  public boolean noteIn() {
+    return beamBreak.get();
   }
 
   public boolean isUp() {
@@ -87,7 +88,7 @@ public class IntakeSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putBoolean("Intake up", isUp());
-    SmartDashboard.putBoolean("Intake Down", isDown());
+    SmartDashboard.putBoolean("NoteIn", noteIn());
     SmartDashboard.putNumber("Intake Angle", getIntakeAngleDegrees());
 
     if(isUp()) {

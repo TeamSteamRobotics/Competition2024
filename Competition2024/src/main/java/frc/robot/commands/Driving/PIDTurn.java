@@ -31,7 +31,7 @@ public class PIDTurn extends PIDCommand {
     // Configure additional PID options by calling `getController` here.
     addRequirements(drive);
     SmartDashboard.putData("PIDTurn", getController());
-    getController().setTolerance(1, 0.5);
+    getController().setTolerance(1, 1);//0.5);
   }
 
 

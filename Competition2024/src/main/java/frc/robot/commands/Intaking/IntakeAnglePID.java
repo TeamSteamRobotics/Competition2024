@@ -31,7 +31,7 @@ public class IntakeAnglePID extends PIDCommand {
         });
     addRequirements(intake);
     getController().setIZone(7);  
-    getController().setTolerance(2, 0.5);  
+    getController().setTolerance(2, 1.5);  
     // Configure additional PID options by calling `getController` here.
   }
 

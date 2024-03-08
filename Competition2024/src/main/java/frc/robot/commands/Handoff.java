@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.Intaking.Intake;
 import frc.robot.commands.Intaking.IntakeAnglePID;
 import frc.robot.commands.Intaking.Vomit;
 import frc.robot.commands.Shooting.RetreatNote;
@@ -23,12 +24,16 @@ public class Handoff extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new IntakeAnglePID(intake, () -> 0),//.withTimeout(0.9),
-      new AngleShooterPID(shoot, () -> 55).withTimeout(0.7),
+      new Intake(intake),
+      new ParallelCommandGroup(
+        new IntakeAnglePID(intake, () -> 0),//.withTimeout(0.9),
+        new AngleShooterPID(shoot, () -> 50).withTimeout(0.75)
+      ),
       new ParallelCommandGroup(
         new Vomit(intake),
         new AdvanceNote(shoot)
       ).onlyWhile(() -> !shoot.isAtShooter()),
+      new Vomit(intake).withTimeout(0.1),
       new AngleShooterPID(shoot, () -> 25).withTimeout(0.6),
       new IntakeAnglePID(intake, () -> 80));//.withTimeout(0.9));
       //new RetreatNote(shoot).onlyWhile(() -> shoot.isAtShooter()));

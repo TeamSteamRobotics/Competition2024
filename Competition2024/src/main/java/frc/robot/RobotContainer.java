@@ -12,6 +12,7 @@ import frc.robot.commands.BasicAuto;
 import frc.robot.commands.CoordinatePrint;
 import frc.robot.commands.Handoff;
 import frc.robot.commands.SmartShoot;
+import frc.robot.commands.ThreeNoteAuto;
 import frc.robot.commands.ZachTwoNote;
 import frc.robot.commands.ZachTwoNote;
 import frc.robot.commands.Climbing.RaiseClimb;
@@ -121,7 +122,7 @@ public class RobotContainer {
     //runShootAnglePID.onTrue(new IntakeAnglePID(m_intakeSubsystem, () -> SmartDashboard.getNumber("IntakeAnglePID", 0)));
     advanceToShooter.whileTrue(new AdvanceNote(m_shooterSubsystem).withTimeout(0.1));
 
-    handoff.onTrue(new Handoff(m_intakeSubsystem, m_shooterSubsystem));
+    handoff.toggleOnTrue(new Handoff(m_intakeSubsystem, m_shooterSubsystem));
     smartShooter.whileTrue(new SmartShoot(m_shooterSubsystem, m_aVisionSubsystem));
 
     shooterAngleUp.whileTrue(new AngleShooterUp(m_shooterSubsystem));
@@ -139,7 +140,7 @@ public class RobotContainer {
     intakeAngleMid.onTrue(new IntakeAnglePID(m_intakeSubsystem, () -> 80));
     intakeAngleUp.onTrue(new IntakeAnglePID(m_intakeSubsystem, () -> 0));
 
-    intake.whileTrue(new Intake(m_intakeSubsystem));
+    //intake.toggleOnTrue(new Intake(m_intakeSubsystem).andThen(new Handoff(m_intakeSubsystem, m_shooterSubsystem)));
 
     vomit.whileTrue(new Vomit(m_intakeSubsystem));
     
@@ -154,6 +155,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new ZachTwoNote(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem, m_aVisionSubsystem);
+    return new ThreeNoteAuto(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem, m_aVisionSubsystem);
   }
 }

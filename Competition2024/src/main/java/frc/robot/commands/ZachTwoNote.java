@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -34,9 +35,9 @@ public class ZachTwoNote extends SequentialCommandGroup {
       new IntakeAnglePID(intake, () -> 195).withTimeout(1.4),
       new InstantCommand(() -> drive.resetEncoders()),
       new ParallelRaceGroup(
-        new DriveDistance(drive, 1),
+        new DriveDistance(drive, 1.5),
         new Intake(intake)
-      ).withTimeout(1.5),
+      ),
       new Handoff(intake, shoot),
       new ParallelCommandGroup(
         new SmartShoot(shoot, aprilVision),
