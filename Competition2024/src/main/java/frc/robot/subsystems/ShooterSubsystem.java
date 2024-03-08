@@ -103,26 +103,26 @@ public class ShooterSubsystem extends SubsystemBase {
     shootRightPIDController = rightShooter.getPIDController();
     shootLeftPIDController = leftShooter.getPIDController();
 
-    shootkP = 0.002000;
-    shootkI = 0.000002;
-    shootkD = 0.01;
+    shootkP = 0.001;
+    shootkI = 0.000001;
+    shootkD = 0.0;
     shootkFeedForward = 0;
-    shootMinOutput = -0.6;
-    shootMaxOutput = 0.6;
+    shootMinOutput = 0;
+    shootMaxOutput = 1;
 
     shootRightPIDController.setP(shootkP);
     shootRightPIDController.setI(shootkI);
     shootRightPIDController.setD(shootkD);
     shootRightPIDController.setFF(shootkFeedForward);
     shootRightPIDController.setOutputRange(shootMinOutput, shootMaxOutput);
-    shootRightPIDController.setIZone(400);
+    shootRightPIDController.setIZone(800);
 
     shootLeftPIDController.setP(shootkP);
     shootLeftPIDController.setI(shootkI);
     shootLeftPIDController.setD(shootkD);
     shootLeftPIDController.setFF(shootkFeedForward);
     shootLeftPIDController.setOutputRange(shootMinOutput, shootMaxOutput);
-    shootLeftPIDController.setIZone(400);
+    shootLeftPIDController.setIZone(800);
 
     SmartDashboard.putNumber("Shooter P Gain", shootkP);
     SmartDashboard.putNumber("Shooter I Gain", shootkI);
