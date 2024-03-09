@@ -1,5 +1,11 @@
 <xml version="1.0">
 <dashboard>
+	<widget field="SendableChooser[0]" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
+		<location x="0" y="213"/>
+	</widget>
+	<widget field="NoteIn" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="40"/>
+	</widget>
 	<widget field="Distance To Target" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="0"/>
 	</widget>
@@ -25,7 +31,6 @@
 		<location x="888" y="2"/>
 		<width>679</width>
 		<height>450</height>
-		<property name="Degrees Rotation" value="180"/>
 		<property name="Camera Choice" value="USB Camera 0"/>
 	</static-widget>
 	<widget field="Ready to Shoot" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">

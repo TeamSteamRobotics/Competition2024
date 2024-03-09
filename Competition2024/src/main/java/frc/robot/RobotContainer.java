@@ -12,9 +12,12 @@ import frc.robot.commands.BasicAuto;
 import frc.robot.commands.CoordinatePrint;
 import frc.robot.commands.Handoff;
 import frc.robot.commands.SmartShoot;
-import frc.robot.commands.ThreeNoteAuto;
-import frc.robot.commands.ZachTwoNote;
-import frc.robot.commands.ZachTwoNote;
+import frc.robot.commands.Auto.JustOneNote;
+import frc.robot.commands.Auto.OneNoteTaxi;
+import frc.robot.commands.Auto.ThreeNoteAutoBlue;
+import frc.robot.commands.Auto.ThreeNoteAutoRed;
+import frc.robot.commands.Auto.ZachTwoNote;
+import frc.robot.commands.Auto.ZeroNoteTaxi;
 import frc.robot.commands.Climbing.RaiseClimb;
 import frc.robot.commands.Climbing.RetractClimb;
 import frc.robot.commands.Driving.CenterOnTarget;
@@ -36,6 +39,7 @@ import frc.robot.commands.Driving.DriveDistance;
 import frc.robot.commands.Driving.PIDTurn;
 import frc.robot.subsystems.AprilVisionSubsystem;
 import frc.robot.subsystems.ClimbSubsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -55,6 +59,8 @@ public class RobotContainer {
   private final ClimbSubsystem m_climbSubsystem = new ClimbSubsystem();
   private final AprilVisionSubsystem m_aVisionSubsystem = new AprilVisionSubsystem();
   private final ZachVisionSubsystem m_ZachVisionSubsystem = new ZachVisionSubsystem();
+
+  private SendableChooser<Command> m_chooser = new SendableChooser<>();
 
 
   private final CommandXboxController m_driverController = new CommandXboxController(OperatorConstants.kDriverControllerPort);
@@ -95,6 +101,13 @@ public class RobotContainer {
   public RobotContainer() {
     m_driveSubsystem.setDefaultCommand(new Drive(m_driveSubsystem, m_driverController::getLeftY, m_driverController::getRightX));
     m_aVisionSubsystem.setDefaultCommand(new CoordinatePrint(m_aVisionSubsystem, 4, ReturnTarget.TARGET));
+    m_chooser.setDefaultOption("Two Note Center", new ZachTwoNote(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem, m_aVisionSubsystem));
+    m_chooser.addOption("Three Note Blue", new ThreeNoteAutoBlue(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem, m_aVisionSubsystem));
+    m_chooser.addOption("Three Note Red", new ThreeNoteAutoRed(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem, m_aVisionSubsystem));
+    m_chooser.addOption("One Note Taxi", new OneNoteTaxi(m_driveSubsystem, m_shooterSubsystem, m_aVisionSubsystem));
+    m_chooser.addOption("Zero Note Taxi", new ZeroNoteTaxi(m_driveSubsystem));
+    m_chooser.addOption("Just One Note", new JustOneNote(m_shooterSubsystem, m_aVisionSubsystem));
+    SmartDashboard.putData(m_chooser);
     configureBindings();
   }
 
@@ -155,6 +168,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new ThreeNoteAuto(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem, m_aVisionSubsystem);
-  }
+    return m_chooser.getSelected();
+}
 }
