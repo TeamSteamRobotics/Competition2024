@@ -31,6 +31,7 @@ public class IntakeAnglePID extends PIDCommand {
         });
     addRequirements(intake);
     getController().setIZone(7);  
+    SmartDashboard.putData("Intake angle", getController());
     getController().setTolerance(2, 1.5);  
     // Configure additional PID options by calling `getController` here.
   }

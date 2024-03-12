@@ -1,5 +1,8 @@
 <xml version="1.0">
 <dashboard>
+	<widget field="Intake angle" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
+		<location x="127" y="213"/>
+	</widget>
 	<widget field="SendableChooser[0]" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
 		<location x="0" y="213"/>
 	</widget>
