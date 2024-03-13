@@ -4,13 +4,18 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.proto.Controller;
+import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.Intaking.Intake;
 import frc.robot.commands.Intaking.IntakeAnglePID;
 import frc.robot.commands.Intaking.Vomit;
 import frc.robot.commands.Shooting.RetreatNote;
 import frc.robot.commands.Shooting.AdvanceNote;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import frc.robot.commands.Shooting.AngleShooterPID;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -35,7 +40,7 @@ public class Handoff extends SequentialCommandGroup {
       ).onlyWhile(() -> !shoot.isAtShooter()),
       new Vomit(intake).withTimeout(0.1),
       new AngleShooterPID(shoot, () -> 25).withTimeout(0.6),
-      new IntakeAnglePID(intake, () -> 80));//.withTimeout(0.9));
+      new IntakeAnglePID(intake, () -> 80));
       //new RetreatNote(shoot).onlyWhile(() -> shoot.isAtShooter()));
   }
 }

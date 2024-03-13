@@ -26,6 +26,7 @@ public class AngleShooterPID extends PIDCommand {
         () -> angle.getAsDouble(),// SmartDashboard.getNumber("ShootAngle", 30),
         // This uses the output
         output -> {
+          //System.out.println(angle);
           shoot.angleShooter(output);
         });
    // addRequirements(shoot);

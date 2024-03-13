@@ -12,6 +12,7 @@ import frc.robot.commands.BasicAuto;
 import frc.robot.commands.CoordinatePrint;
 import frc.robot.commands.Handoff;
 import frc.robot.commands.SmartShoot;
+import frc.robot.commands.SmartShoot;
 import frc.robot.commands.Auto.JustOneNote;
 import frc.robot.commands.Auto.OneNoteTaxi;
 import frc.robot.commands.Auto.ThreeNoteAutoBlue;
@@ -39,6 +40,7 @@ import frc.robot.commands.Driving.DriveDistance;
 import frc.robot.commands.Driving.PIDTurn;
 import frc.robot.subsystems.AprilVisionSubsystem;
 import frc.robot.subsystems.ClimbSubsystem;
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -65,6 +67,7 @@ public class RobotContainer {
 
   private final CommandXboxController m_driverController = new CommandXboxController(OperatorConstants.kDriverControllerPort);
   private final CommandXboxController m_operatorController = new CommandXboxController(OperatorConstants.kOperatorControllerPort);
+  private final GenericHID commandHID = new GenericHID(OperatorConstants.kOperatorControllerPort);
 
   // Driver Controller Bindings:
   private final Trigger driverRetractClimb = m_driverController.leftBumper();
@@ -95,6 +98,7 @@ public class RobotContainer {
   private final Trigger retreat = m_operatorController.b();
   private final Trigger ampScore = m_operatorController.y();
   private final Trigger ampAngle = m_operatorController.rightStick();
+
 
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -136,12 +140,13 @@ public class RobotContainer {
     advanceToShooter.whileTrue(new AdvanceNote(m_shooterSubsystem).withTimeout(0.1));
 
     handoff.toggleOnTrue(new Handoff(m_intakeSubsystem, m_shooterSubsystem));
+    //smartShooter.whileTrue(new SmartShoot(m_shooterSubsystem, m_aVisionSubsystem));
     smartShooter.whileTrue(new SmartShoot(m_shooterSubsystem, m_aVisionSubsystem));
-
     shooterAngleUp.whileTrue(new AngleShooterUp(m_shooterSubsystem));
     shooterAngleDown.whileTrue(new AngleShooterDown(m_shooterSubsystem));
 
     runShooter.whileTrue(new ShootPID(m_shooterSubsystem, 1500));
+    //runShooter.whileTrue(new SmarterShoot(m_shooterSubsystem, m_aVisionSubsystem));
     ampAngle.onTrue(new AngleShooterPID(m_shooterSubsystem, () -> 58.2));
 
     
