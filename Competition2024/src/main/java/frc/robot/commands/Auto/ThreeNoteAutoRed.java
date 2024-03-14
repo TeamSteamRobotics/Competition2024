@@ -5,6 +5,7 @@
 package frc.robot.commands.Auto;
 
 import edu.wpi.first.math.trajectory.TrajectoryUtil;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
@@ -29,35 +30,46 @@ import frc.robot.subsystems.ShooterSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ThreeNoteAutoRed extends SequentialCommandGroup {
+public class ThreeNoteAutoRed extends Command {
   /** Creates a new ZachTwoNote. */
   private boolean getNoteOne = true;
   private boolean getNoteTwo = true;
   private boolean getNoteThree = true;
 
-  public ThreeNoteAutoRed(DriveSubsystem drive, ShooterSubsystem shoot, IntakeSubsystem intake, AprilVisionSubsystem aprilVision) {
+  private SequentialCommandGroup noteOneCommands;
+  private SequentialCommandGroup noteTwoCommandsOptional;
+  private SequentialCommandGroup noteTwoCommandsAlways;
+  private SequentialCommandGroup noteThreeCommands;
+
+
+  public ThreeNoteAutoRed(DriveSubsystem drive, ShooterSubsystem shoot, IntakeSubsystem intake, AprilVisionSubsystem aprilVision, boolean p_getNoteOne, boolean p_getNoteTwo, boolean p_getNoteThree) {
+    getNoteOne = p_getNoteOne;
+    getNoteTwo = p_getNoteTwo;
+    getNoteThree = p_getNoteThree;
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(
+    noteOneCommands.addCommands(
       //START NOTE ONE
         new ParallelCommandGroup(
             new SmartShoot(shoot, aprilVision),
             new WaitCommand(1.75).andThen(new AdvanceNote(shoot).withTimeout(0.1))   
         ).withTimeout(1.85),     //Shoot fitst note
         new IntakeAnglePID(intake, () -> 195).withTimeout(.8),//.withTimeout(1.4),
-        new InstantCommand(() -> drive.resetEncoders()),
+        new InstantCommand(() -> drive.resetEncoders())
+    );
     //END NOTE ONE
     //START NOTE TWO
+    noteTwoCommandsOptional.addCommands(
         new ParallelRaceGroup(
-            //START KEEP ALWAYS
+            //START KEEP ALWAYS!
             new DriveDistance(drive, 1.0),
-            //END KEEP ALWAYS
+            //END KEEP ALWAYS!
             new Intake(intake)
         ),//.withTimeout(1.5),     //Intake second note
         new ParallelDeadlineGroup(
-            //START KEEP ALWAYS
+            //START KEEP ALWAYS!
             new DriveDistance(drive, -0.3).withTimeout(1.0),
-            //END KEEP ALWAYS
+            //END KEEP ALWAYS!
             new IntakeAnglePID(intake, () -> 0),
             new AngleShooterPID(shoot, () -> 55),
             new ShootPID(shoot, 1500)
@@ -84,33 +96,60 @@ public class ThreeNoteAutoRed extends SequentialCommandGroup {
         ).withTimeout(1.6),      //Shoot second note*/
         new InstantCommand(() -> drive.resetEncoders()),
         new ParallelDeadlineGroup(
-            //START KEEP ALWAYS
+            //START KEEP ALWAYS!
             new DriveDistance(drive, 1), 
-            //END KEEP ALWAYS
+            //END KEEP ALWAYS!
             new IntakeAnglePID(intake, () -> 195)
         ).withTimeout(1),
-        //START KEEP ALWAYS
+        //START KEEP ALWAYS!
         new InstantCommand(() -> drive.resetGyro()),
         new PIDTurn(drive, 70).withTimeout(1.2),     //turn 70 degrees
         new InstantCommand(() -> drive.resetEncoders()),
 
         new ParallelRaceGroup(
             new DriveDistance(drive, 1.3),    //drive back 1m
-            //END KEEP ALWAYS
+            //END KEEP ALWAYS!
             new Intake(intake)
         ),//.withTimeout(1.5),
 
-        //START *MAYBE* KEEP
+        //START *MAYBE* KEEP!
         new InstantCommand(() -> drive.resetGyro()),
-        //END *MAYBE* KEEP
+        //END *MAYBE* KEEP!
         new ParallelRaceGroup(
             new ShootPID(shoot, 1500),
-            //START ALWAYS KEEP
+            //START ALWAYS KEEP!
             new PIDTurn(drive, -45).withTimeout(0.6)
            
         ),
+        new InstantCommand(() -> drive.resetEncoders())
+        //END ALWAYS KEEP!
+    );
+
+    noteTwoCommandsAlways.addCommands(
+        
+        //START KEEP ALWAYS
+        new DriveDistance(drive, 1.0),
+   
+        new DriveDistance(drive, -0.3).withTimeout(1.0),
+
+        new DriveDistance(drive, 1), 
+
+        new InstantCommand(() -> drive.resetGyro()),
+        new PIDTurn(drive, 70).withTimeout(1.2),     //turn 70 degrees
         new InstantCommand(() -> drive.resetEncoders()),
-        //END ALWAYS KEEP
+
+        new DriveDistance(drive, 1.3), 
+
+        new InstantCommand(() -> drive.resetGyro()),
+
+        new PIDTurn(drive, -45).withTimeout(0.6),
+
+        new InstantCommand(() -> drive.resetEncoders())
+
+        //END KEEP ALWAYS
+
+    );
+    noteThreeCommands.addCommands(
         //END NOTE TWO
         //START NOTE THREE
         new ParallelDeadlineGroup(
@@ -134,5 +173,23 @@ public class ThreeNoteAutoRed extends SequentialCommandGroup {
         )
     );
     //END NOTE THREE
+  }
+  @Override
+  public void initialize() {
+    //Schedules note one if desired, otherwise skip intake/shoot.
+    if(getNoteOne){
+        noteOneCommands.schedule();
+    }
+
+    //Schedules note two if desired.
+    //If note two is not desired but note three IS desired, then run drive commands to get into position and schedule note three.
+    //If both note three and note two are both not desired, neither will be scheduled. This includes drive commands inherrited from note two.
+    if(getNoteTwo){
+        noteTwoCommandsOptional.schedule();
+    }else if(getNoteThree){
+        noteTwoCommandsAlways.schedule();
+        noteThreeCommands.schedule();
+    }
+
   }
 }
