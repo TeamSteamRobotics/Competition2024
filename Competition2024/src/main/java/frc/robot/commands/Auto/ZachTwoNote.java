@@ -34,7 +34,7 @@ public class ZachTwoNote extends SequentialCommandGroup {
         new SmartShoot(shoot, aprilVision),
         new WaitCommand(2.5).andThen(new AdvanceNote(shoot).withTimeout(0.1))
       ).withTimeout(2.6),
-      new IntakeAnglePID(intake, () -> 195).withTimeout(1.4),
+      new IntakeAnglePID(intake, () -> 195, false).withTimeout(1.4),
       new InstantCommand(() -> drive.resetEncoders()),
       new ParallelRaceGroup(
         new DriveDistance(drive, 1.5),

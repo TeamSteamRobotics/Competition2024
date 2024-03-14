@@ -23,14 +23,14 @@ public class AmpScore extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new IntakeAnglePID(intake, () -> 0).withTimeout(1),
+      new IntakeAnglePID(intake, () -> 0, false).withTimeout(1),
       new AngleShooterPID(shoot, () -> 55).withTimeout(1),
       new ParallelCommandGroup(
         new Vomit(intake),
         new AdvanceNote(shoot)
       ).onlyWhile(() -> !shoot.isAtShooter()),
       new AngleShooterPID(shoot, () -> 25).withTimeout(1),
-      new IntakeAnglePID(intake, () -> 80).withTimeout(1),
+      new IntakeAnglePID(intake, () -> 80, false).withTimeout(1),
       new ParallelCommandGroup(
         new AngleShooterPID(shoot, () -> 50),//58.2),57
         new ShootPID(shoot, 430))

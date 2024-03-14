@@ -26,7 +26,7 @@ public class Handoff extends SequentialCommandGroup {
     addCommands(
       new Intake(intake),
       new ParallelCommandGroup(
-        new IntakeAnglePID(intake, () -> 0),//.withTimeout(0.9),
+        new IntakeAnglePID(intake, () -> 0, false),//.withTimeout(0.9),
         new AngleShooterPID(shoot, () -> 50).withTimeout(0.75)
       ),
       new ParallelCommandGroup(
@@ -35,7 +35,7 @@ public class Handoff extends SequentialCommandGroup {
       ).onlyWhile(() -> !shoot.isAtShooter()),
       new Vomit(intake).withTimeout(0.1),
       new AngleShooterPID(shoot, () -> 25).withTimeout(0.6),
-      new IntakeAnglePID(intake, () -> 80));//.withTimeout(0.9));
+      new IntakeAnglePID(intake, () -> 80, false));//.withTimeout(0.9));
       //new RetreatNote(shoot).onlyWhile(() -> shoot.isAtShooter()));
   }
 }
