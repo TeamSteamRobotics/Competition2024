@@ -55,7 +55,7 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public boolean noteIn() {
-    return beamBreak.get();
+    return !beamBreak.get();
   }
 
   public boolean isUp() {

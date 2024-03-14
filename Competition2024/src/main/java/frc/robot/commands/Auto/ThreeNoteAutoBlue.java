@@ -56,7 +56,7 @@ public class ThreeNoteAutoBlue extends SequentialCommandGroup {
             new ShootPID(shoot, 1500),
             new SequentialCommandGroup(
                 new ParallelRaceGroup(
-                    new WaitCommand(0.5),
+                    new WaitCommand(1),
                     new AngleShooterPID(shoot, () -> 55)
                 ),
                 new ParallelCommandGroup(
@@ -77,7 +77,7 @@ public class ThreeNoteAutoBlue extends SequentialCommandGroup {
             new IntakeAnglePID(intake, () -> 195)
         ).withTimeout(1),
         new InstantCommand(() -> drive.resetGyro()),
-        new PIDTurn(drive, -70).withTimeout(1.2),     //turn 70 degrees
+        new PIDTurn(drive, -87).withTimeout(1.5),     //turn 70 degrees
         new InstantCommand(() -> drive.resetEncoders()),
         new ParallelRaceGroup(
             new DriveDistance(drive, 1.3),    //drive back 1m
@@ -87,7 +87,7 @@ public class ThreeNoteAutoBlue extends SequentialCommandGroup {
         new InstantCommand(() -> drive.resetGyro()),
         new ParallelRaceGroup(
             new ShootPID(shoot, 1500),
-            new PIDTurn(drive, 45).withTimeout(0.6)
+            new PIDTurn(drive, 55).withTimeout(0.8)
         ),
         new InstantCommand(() -> drive.resetEncoders()),
         new ParallelDeadlineGroup(
