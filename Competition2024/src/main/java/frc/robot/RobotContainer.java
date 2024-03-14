@@ -22,6 +22,8 @@ import frc.robot.commands.Climbing.RaiseClimb;
 import frc.robot.commands.Climbing.RetractClimb;
 import frc.robot.commands.Driving.CenterOnTarget;
 import frc.robot.commands.Driving.Drive;
+import frc.robot.commands.Intaking.AngleIntakeDown;
+import frc.robot.commands.Intaking.AngleIntakeUp;
 import frc.robot.commands.Intaking.Intake;
 import frc.robot.commands.Intaking.IntakeAnglePID;
 import frc.robot.commands.Intaking.Vomit;
@@ -108,6 +110,7 @@ public class RobotContainer {
     m_chooser.addOption("Zero Note Taxi", new ZeroNoteTaxi(m_driveSubsystem));
     m_chooser.addOption("Just One Note", new JustOneNote(m_shooterSubsystem, m_aVisionSubsystem));
     SmartDashboard.putData(m_chooser);
+    //PUT MANUAL OVERRIDE 
     configureBindings();
   }
 
@@ -135,7 +138,9 @@ public class RobotContainer {
     //runShootAnglePID.onTrue(new IntakeAnglePID(m_intakeSubsystem, () -> SmartDashboard.getNumber("IntakeAnglePID", 0)));
     advanceToShooter.whileTrue(new AdvanceNote(m_shooterSubsystem).withTimeout(0.1));
 
+    //TO MAKE MANUAL OVERRIDE
     handoff.toggleOnTrue(new Handoff(m_intakeSubsystem, m_shooterSubsystem));
+
     smartShooter.whileTrue(new SmartShoot(m_shooterSubsystem, m_aVisionSubsystem));
 
     shooterAngleUp.whileTrue(new AngleShooterUp(m_shooterSubsystem));
@@ -146,13 +151,18 @@ public class RobotContainer {
 
     
 
-    //intakeAngleUp.whileTrue(new AngleIntakeUp(m_intakeSubsystem));
-    //intakeAngleDown.whileTrue(new AngleIntakeDown(m_intakeSubsystem));
+    boolean manualIntakeMode = true;
+    boolean safetyBypass = true;
 
-    intakeAngleDown.onTrue(new IntakeAnglePID(m_intakeSubsystem, () -> 190));
-    intakeAngleMid.onTrue(new IntakeAnglePID(m_intakeSubsystem, () -> 80));
-    intakeAngleUp.onTrue(new IntakeAnglePID(m_intakeSubsystem, () -> 0));
-
+    if(manualIntakeMode){
+    intakeAngleUp.whileTrue(new AngleIntakeUp(m_intakeSubsystem, safetyBypass));
+    intakeAngleDown.whileTrue(new AngleIntakeDown(m_intakeSubsystem, safetyBypass));
+    }
+    if(!manualIntakeMode){
+    intakeAngleDown.onTrue(new IntakeAnglePID(m_intakeSubsystem, () -> 190, safetyBypass));
+    intakeAngleMid.onTrue(new IntakeAnglePID(m_intakeSubsystem, () -> 80, safetyBypass));
+    intakeAngleUp.onTrue(new IntakeAnglePID(m_intakeSubsystem, () -> 0, safetyBypass));
+    }
     //intake.toggleOnTrue(new Intake(m_intakeSubsystem).andThen(new Handoff(m_intakeSubsystem, m_shooterSubsystem)));
 
     vomit.whileTrue(new Vomit(m_intakeSubsystem));

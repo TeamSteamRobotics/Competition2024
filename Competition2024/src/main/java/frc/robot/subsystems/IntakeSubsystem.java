@@ -62,10 +62,13 @@ public class IntakeSubsystem extends SubsystemBase {
     return !limitSwitchUp.get();
   }
 
-  public void setIntakePositionManual(double value) {
-    if(getIntakeAngleDegrees()  > 204 && value < 0)
+  //DANGER!!!
+  //'&& FALSE' BYPASSES SAFETY MECHANISMS!!!!
+  //LAST RESORT!!!!
+  public void setIntakePositionManual(double value, boolean safetyBypass) {
+    if(getIntakeAngleDegrees()  > 204 && value < 0 && !safetyBypass)
       intakePivot.set(0);
-    else if(isUp() && value > 0)
+    else if(isUp() && value > 0 && !safetyBypass)
       intakePivot.set(0);
     else {
       intakePivot.set(value);

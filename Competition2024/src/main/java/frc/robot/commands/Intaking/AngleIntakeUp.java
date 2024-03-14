@@ -10,8 +10,10 @@ import frc.robot.subsystems.IntakeSubsystem;
 public class AngleIntakeUp extends Command {
   /** Creates a new AngleIntakeUp. */
   private IntakeSubsystem intake;
-  public AngleIntakeUp(IntakeSubsystem p_intake) {
+  private boolean safetyBypass;
+  public AngleIntakeUp(IntakeSubsystem p_intake, boolean p_safetyBypass) {
     intake = p_intake;
+    safetyBypass = p_safetyBypass;
     addRequirements(intake);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -23,7 +25,7 @@ public class AngleIntakeUp extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.setIntakePositionManual(0.1);
+    intake.setIntakePositionManual(0.1, safetyBypass);
   }
 
   // Called once the command ends or is interrupted.

@@ -16,7 +16,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class IntakeAnglePID extends PIDCommand {
   /** Creates a new IntakeAnglePID. */
-  public IntakeAnglePID(IntakeSubsystem intake, DoubleSupplier value) {
+  public IntakeAnglePID(IntakeSubsystem intake, DoubleSupplier value, boolean safetyBypass) {
     super(
         // The controller that the command will use
         new PIDController(0.005, 0.007, 0.0001),
@@ -27,7 +27,7 @@ public class IntakeAnglePID extends PIDCommand {
         // This uses the output
         output -> {
           // Use the output here
-          intake.setIntakePositionManual(-output);
+          intake.setIntakePositionManual(-output, safetyBypass);
         });
     addRequirements(intake);
     getController().setIZone(7);  
