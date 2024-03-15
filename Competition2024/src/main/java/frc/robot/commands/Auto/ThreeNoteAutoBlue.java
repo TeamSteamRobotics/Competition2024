@@ -77,10 +77,10 @@ public class ThreeNoteAutoBlue extends SequentialCommandGroup {
             new IntakeAnglePID(intake, () -> 195)
         ).withTimeout(1),
         new InstantCommand(() -> drive.resetGyro()),
-        new PIDTurn(drive, -87).withTimeout(1.5),     //turn 70 degrees
+        new PIDTurn(drive, -80).withTimeout(1.5),     //turn 70 degrees
         new InstantCommand(() -> drive.resetEncoders()),
         new ParallelRaceGroup(
-            new DriveDistance(drive, 1.3),    //drive back 1m
+            new DriveDistance(drive, 1.8),    //drive back 1m
             new Intake(intake)
         ),//.withTimeout(1.5),
 
