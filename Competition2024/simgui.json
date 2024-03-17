@@ -2,10 +2,16 @@
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
+      "/SmartDashboard/Angle Shooter": "PIDController",
+      "/SmartDashboard/Auto Chooser": "String Chooser",
       "/SmartDashboard/Drive Distance": "PIDController",
+      "/SmartDashboard/Field": "Field2d",
+      "/SmartDashboard/Intake angle": "PIDController",
       "/SmartDashboard/PIDController[2]": "PIDController",
+      "/SmartDashboard/PIDTurn": "PIDController",
       "/SmartDashboard/Reset Encoders": "Command",
       "/SmartDashboard/Reset Gyro": "Command",
+      "/SmartDashboard/SendableChooser[0]": "String Chooser",
       "/SmartDashboard/navX-Sensor[4]": "Gyro"
     }
   },

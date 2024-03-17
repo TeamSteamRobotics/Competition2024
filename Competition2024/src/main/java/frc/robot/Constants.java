@@ -14,6 +14,8 @@ package frc.robot;
  */
 public final class Constants {
 
+
+
 	public static class OperatorConstants {
 		public static final int kDriverControllerPort = 0;
 		public static final int kOperatorControllerPort = 1;
@@ -64,5 +66,8 @@ public final class Constants {
 		public static final double gearRatio = 9.82;
 		public static final double rotationsToMeters = (1/gearRatio) * wheelCircumfrenceMeters; 
 	}
+
+
+    public static final String DriveConstants = null;
 }
 

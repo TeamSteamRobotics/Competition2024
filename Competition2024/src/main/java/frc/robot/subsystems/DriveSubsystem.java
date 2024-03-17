@@ -3,12 +3,18 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.subsystems;
-
+import com.pathplanner.lib.util.PathPlannerLogging;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -19,6 +25,8 @@ import frc.robot.Constants.DigitalIOID;
 import frc.robot.Constants.OdometryConsts;
 
 import com.kauailabs.navx.frc.AHRS;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.util.ReplanningConfig;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
@@ -45,7 +53,12 @@ public class DriveSubsystem extends SubsystemBase {
 
   private Pose2d currentRobotPose;
 
+  private DifferentialDriveKinematics kinematics;
+  
+  private Field2d field = new Field2d();
+
   public DriveSubsystem() {
+
     frontLeftMotor = new CANSparkMax(CANID.frontLeft, MotorType.kBrushless);
     frontRightMotor = new CANSparkMax(CANID.frontRight, MotorType.kBrushless);
     backLeftMotor = new CANSparkMax(CANID.backLeft, MotorType.kBrushless);
@@ -71,9 +84,72 @@ public class DriveSubsystem extends SubsystemBase {
 
     odometry = new DifferentialDriveOdometry(navX.getRotation2d(), getLeftSideMeters(), getRightSideMeters(), new Pose2d(1 ,1 , new Rotation2d(0)));
 
+    kinematics = new DifferentialDriveKinematics(DriveConstants.dConstants.kTrackWidthMeters);
+
     SmartDashboard.putData("Reset Encoders", new InstantCommand(() -> resetEncoders(), this));
     SmartDashboard.putData("Reset Gyro", new InstantCommand(() -> resetGyro(), this));
+    
+     AutoBuilder.configureRamsete(
+            this::getPose, // Robot pose supplier
+            this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
+            this::getCurrentSpeeds, // Current ChassisSpeeds supplier
+            this::autoDrive, // Method that will drive the robot given ChassisSpeeds
+            new ReplanningConfig(), // Default path replanning config. See the API for the options here
+            () -> {
+              // Boolean supplier that controls when the path will be mirrored for the red alliance
+              // This will flip the path being followed to the red side of the field.
+              // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+
+              var alliance = DriverStation.getAlliance();
+              if (alliance.isPresent()) {
+                return alliance.get() == DriverStation.Alliance.Red;
+              }
+              return false;
+            },
+            this // Reference to this subsystem to set requirements
+    );   
+
+    PathPlannerLogging.setLogActivePathCallback((poses) -> field.getObject("path").setPoses(poses));
+
+    SmartDashboard.putData("Field", field);
   }
+
+  
+  public ChassisSpeeds getCurrentSpeeds(){
+    return kinematics.toChassisSpeeds(new DifferentialDriveWheelSpeeds(leftThroughBoreEncoder.getRate(), rightThroughBoreEncoder.getRate()));
+  }
+
+  public Pose2d getPose(){
+    return odometry.getPoseMeters();
+  }
+  
+  public void resetPose(Pose2d pose){
+    odometry.resetPosition(navX.getRotation2d(), getLeftSideMeters(), getRightSideMeters(), pose);
+  }
+  public void autoDrive(ChassisSpeeds speeds) {
+    double wheelCircumferenceMeters = 2 * Math.PI * DriveConstants.dConstants.kWheelRadiusMeters;
+    
+    // Convert ChassisSpeeds to wheel speeds in meters per second.
+    DifferentialDriveWheelSpeeds wheelSpeeds = new DifferentialDriveWheelSpeeds(
+        speeds.vxMetersPerSecond - (speeds.omegaRadiansPerSecond * DriveConstants.dConstants.kTrackWidthMeters / 2),
+        speeds.vxMetersPerSecond + (speeds.omegaRadiansPerSecond * DriveConstants.dConstants.kTrackWidthMeters / 2)
+    );
+
+    // Convert wheel speeds from meters per second to RPM.
+    double leftRPM = (wheelSpeeds.leftMetersPerSecond / wheelCircumferenceMeters) * 60;
+    double rightRPM = (wheelSpeeds.rightMetersPerSecond / wheelCircumferenceMeters) * 60;
+
+    // Assuming your motors are configured to accept speed values as a percentage of their maximum RPM,
+    // convert RPM to a normalized [-1, 1] value based on the maximum RPM.
+    double leftOutput = leftRPM / DriveConstants.dConstants.kMaxRPM;
+    double rightOutput = rightRPM / DriveConstants.dConstants.kMaxRPM;
+
+    // Apply the normalized values to your motors. Adjust as necessary for your specific setup.
+    frontLeftMotor.set(leftOutput);
+    frontRightMotor.set(rightOutput);
+    backLeftMotor.follow(frontLeftMotor);
+    backRightMotor.follow(frontRightMotor);
+}
 
   public void drive(double speed, double rotation){
     diffDrive.arcadeDrive(speed, rotation);
@@ -133,6 +209,7 @@ public class DriveSubsystem extends SubsystemBase {
     return (rightThroughBoreEncoder.getRate() + leftThroughBoreEncoder.getRate()) / 2;
   }
 
+
   public void resetGyro() {
     navX.reset();
   }
@@ -161,6 +238,11 @@ public class DriveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Through Bore Encoder Distance", getDistanceMeters());
 
     SmartDashboard.putNumber("Gyro reading", getAngleDegrees());    
+
+    field.setRobotPose(getPose());
   }
 }
+
+
+
 
