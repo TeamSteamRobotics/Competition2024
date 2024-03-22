@@ -130,10 +130,11 @@ public class DriveSubsystem extends SubsystemBase {
     double wheelCircumferenceMeters = 2 * Math.PI * DriveConstants.dConstants.kWheelRadiusMeters;
     
     // Convert ChassisSpeeds to wheel speeds in meters per second.
-    DifferentialDriveWheelSpeeds wheelSpeeds = new DifferentialDriveWheelSpeeds(
-        speeds.vxMetersPerSecond - (speeds.omegaRadiansPerSecond * DriveConstants.dConstants.kTrackWidthMeters / 2),
-        speeds.vxMetersPerSecond + (speeds.omegaRadiansPerSecond * DriveConstants.dConstants.kTrackWidthMeters / 2)
-    );
+    DifferentialDriveWheelSpeeds wheelSpeeds = kinematics.toWheelSpeeds(speeds);
+   // DifferentialDriveWheelSpeeds wheelSpeeds = new DifferentialDriveWheelSpeeds(
+   //     speeds.vxMetersPerSecond - (speeds.omegaRadiansPerSecond * DriveConstants.dConstants.kTrackWidthMeters / 2),
+   //     speeds.vxMetersPerSecond + (speeds.omegaRadiansPerSecond * DriveConstants.dConstants.kTrackWidthMeters / 2)
+    //);
 
     // Convert wheel speeds from meters per second to RPM.
     double leftRPM = (wheelSpeeds.leftMetersPerSecond / wheelCircumferenceMeters) * 60;
