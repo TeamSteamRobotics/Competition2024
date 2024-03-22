@@ -126,7 +126,7 @@ public class DriveSubsystem extends SubsystemBase {
   public void resetPose(Pose2d pose){
     odometry.resetPosition(navX.getRotation2d(), getLeftSideMeters(), getRightSideMeters(), pose);
   }
-  public void autoDrive(ChassisSpeeds speeds) {
+  public void autoDrive(ChassisSpeeds speeds) { 
     double wheelCircumferenceMeters = 2 * Math.PI * DriveConstants.dConstants.kWheelRadiusMeters;
     
     // Convert ChassisSpeeds to wheel speeds in meters per second.
@@ -146,10 +146,10 @@ public class DriveSubsystem extends SubsystemBase {
     double rightOutput = rightRPM / DriveConstants.dConstants.kMaxRPM;
 
     // Apply the normalized values to your motors. Adjust as necessary for your specific setup.
-    frontLeftMotor.set(leftOutput);
-    frontRightMotor.set(rightOutput);
-    backLeftMotor.follow(frontLeftMotor);
-    backRightMotor.follow(frontRightMotor);
+    backLeftMotor.set(leftOutput);
+    backRightMotor.set(rightOutput);
+    //backLeftMotor.follow(frontLeftMotor);
+    //backRightMotor.follow(frontRightMotor);
 }
 
   public void drive(double speed, double rotation){
