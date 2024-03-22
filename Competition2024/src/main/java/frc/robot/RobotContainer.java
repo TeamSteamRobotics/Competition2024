@@ -47,6 +47,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.Intaking.AmpVomit;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -98,7 +99,8 @@ public class RobotContainer {
   private final Trigger vomit = m_operatorController.x();
   private final Trigger retreat = m_operatorController.b();
   private final Trigger ampScore = m_operatorController.y();
-  private final Trigger ampAngle = m_operatorController.rightStick();
+  //private final Trigger ampAngle = m_operatorController.rightStick();
+  private final Trigger AmpVomit = m_operatorController.rightStick();
 
 
   
@@ -149,7 +151,8 @@ public class RobotContainer {
 
     runShooter.whileTrue(new ShootPID(m_shooterSubsystem, 1500));
     //runShooter.whileTrue(new SmarterShoot(m_shooterSubsystem, m_aVisionSubsystem));
-    ampAngle.onTrue(new AngleShooterPID(m_shooterSubsystem, () -> 58.2));
+    //ampAngle.onTrue(new AngleShooterPID(m_shooterSubsystem, () -> 58.2));
+    AmpVomit.onTrue(new AmpVomit(m_intakeSubsystem));
 
     
 
