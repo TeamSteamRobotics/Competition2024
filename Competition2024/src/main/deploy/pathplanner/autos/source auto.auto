@@ -14,7 +14,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "source auto"
+            "pathName": "source auto pt 1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "source auto pt2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "source auto pt 3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "source auto pt 4"
           }
         }
       ]
