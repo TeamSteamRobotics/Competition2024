@@ -14,7 +14,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "New Path"
+            "pathName": "amp auto"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "pt2 amp auto"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "pt3 amp auto"
           }
         }
       ]
