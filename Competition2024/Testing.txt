@@ -1,0 +1,28 @@
+- Teleoperated control from Xbox Controller
+    - Drive with wheels on ground
+    - Make sure it stops when we tell it to
+    - Get a feel for how twitchy robot is, think about adding filters
+- Encoder readings 
+    - Manually turn each wheel a full rotation while printing output (1/gear ratio)
+    - Push entire robot a distance and compare to readout using our methods
+- Gyro readings
+    - Spin robot 90, 180, 270, 360 degrees, compare that with printed output
+- Tuning DriveDistance and PIDTurn (if there's time, we will have to redo for mechanisms)
+    - Plugging in P, I, D variables and checking against encoder data
+- Testing Auto
+    - Test string parsing methods
+        - Input CSV through Smart Dashboard (N1, B3, S4) => (N B S)(1 3 4)
+        - What happens if we don't capitalize a letter or don't use spaces
+        - Print out letter componnets and number components
+    - Test conversion from components to points
+        - Print out values assigned to selected Pose2d's
+    - Test conversion from points to commands
+        - Start with one point and have it drive to that
+        - Try many different points relative to starting pose
+        - Points directly in front, at angles, behind
+    - Test sequencing
+        - Same as with just one point but stringing multiple points together
+        - Run multiple sequences, test edge cases like duplicate of points
+    - Test unit 
+        - Run realistic auto sequences
+        - Throw in intake or shoot commands

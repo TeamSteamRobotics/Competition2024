@@ -4,9 +4,16 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
+import edu.wpi.first.cscore.VideoSource;
+import edu.wpi.first.net.PortForwarder;
+import edu.wpi.first.util.PixelFormat;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -25,9 +32,23 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
-    // autonomous chooser on the dashboard.
+    // autonomous chooser on the dashboard
     m_robotContainer = new RobotContainer();
+    UsbCamera vid = CameraServer.startAutomaticCapture();
+    vid.setVideoMode(PixelFormat.kMJPEG, 176, 144, 30);
+      // 320, 240
+    SmartDashboard.putNumber("turn setpoint", 0);
+    SmartDashboard.putString("AutoCSVInput", "");
+    SmartDashboard.putBoolean("Validate Auto Input", false);
+    SmartDashboard.putNumber("IntakeAnglePID", 0);
+    SmartDashboard.putNumber("DistanceToShoot", 0);
+    for (int port = 5800; port <= 5807; port++) {
+            PortForwarder.add(port, "limelight.local", port);
+        }
+
+    
   }
 
   /**
@@ -44,6 +65,7 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+  
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -56,8 +78,8 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+    
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
