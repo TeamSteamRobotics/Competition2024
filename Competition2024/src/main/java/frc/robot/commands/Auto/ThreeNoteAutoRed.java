@@ -42,7 +42,7 @@ public class ThreeNoteAutoRed extends SequentialCommandGroup {
         new IntakeAnglePID(intake, () -> 195).withTimeout(.8),//.withTimeout(1.4),
         new InstantCommand(() -> drive.resetEncoders()),
         new ParallelRaceGroup(
-            new DriveDistance(drive, 1.0),
+            new DriveDistance(drive, 1.1), //1.0
             new Intake(intake)
         ),//.withTimeout(1.5),     //Intake second note
         new ParallelDeadlineGroup(
@@ -77,7 +77,7 @@ public class ThreeNoteAutoRed extends SequentialCommandGroup {
             new IntakeAnglePID(intake, () -> 195)
         ).withTimeout(1),
         new InstantCommand(() -> drive.resetGyro()),
-        new PIDTurn(drive, 80).withTimeout(1.5),     //turn 70 degrees
+        new PIDTurn(drive, 65).withTimeout(1.5),     //turn 73 degrees
         new InstantCommand(() -> drive.resetEncoders()),
         new ParallelRaceGroup(
             new DriveDistance(drive, 1.8),    //drive back 1m
@@ -87,7 +87,7 @@ public class ThreeNoteAutoRed extends SequentialCommandGroup {
         new InstantCommand(() -> drive.resetGyro()),
         new ParallelRaceGroup(
             new ShootPID(shoot, 1500),
-            new PIDTurn(drive, -55).withTimeout(0.8)
+            new PIDTurn(drive, -60).withTimeout(0.8)    //55
         ),
         new InstantCommand(() -> drive.resetEncoders()),
         new ParallelDeadlineGroup(

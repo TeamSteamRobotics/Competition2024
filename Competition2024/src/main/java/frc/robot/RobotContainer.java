@@ -13,6 +13,7 @@ import frc.robot.commands.CoordinatePrint;
 import frc.robot.commands.Handoff;
 import frc.robot.commands.SmartShoot;
 import frc.robot.commands.SmartShoot;
+import frc.robot.commands.Auto.DanielTwoNoteTaxi;
 import frc.robot.commands.Auto.JustOneNote;
 import frc.robot.commands.Auto.OneNoteTaxi;
 import frc.robot.commands.Auto.ThreeNoteAutoBlue;
@@ -111,6 +112,7 @@ public class RobotContainer {
     m_chooser.addOption("One Note Taxi", new OneNoteTaxi(m_driveSubsystem, m_shooterSubsystem, m_aVisionSubsystem));
     m_chooser.addOption("Zero Note Taxi", new ZeroNoteTaxi(m_driveSubsystem));
     m_chooser.addOption("Just One Note", new JustOneNote(m_shooterSubsystem, m_aVisionSubsystem));
+    m_chooser.addOption("Daniel Auto", new DanielTwoNoteTaxi(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem, m_aVisionSubsystem));
     SmartDashboard.putData(m_chooser);
     configureBindings();
   }

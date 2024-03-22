@@ -28,9 +28,9 @@ import frc.robot.subsystems.ShooterSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ThreeNoteAutoBlue extends SequentialCommandGroup {
+public class DanielTwoNoteTaxi extends SequentialCommandGroup {
   /** Creates a new ZachTwoNote. */
-  public ThreeNoteAutoBlue(DriveSubsystem drive, ShooterSubsystem shoot, IntakeSubsystem intake, AprilVisionSubsystem aprilVision) {
+  public DanielTwoNoteTaxi(DriveSubsystem drive, ShooterSubsystem shoot, IntakeSubsystem intake, AprilVisionSubsystem aprilVision) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
@@ -77,36 +77,9 @@ public class ThreeNoteAutoBlue extends SequentialCommandGroup {
             new IntakeAnglePID(intake, () -> 195)
         ).withTimeout(1),
         new InstantCommand(() -> drive.resetGyro()),
-        new PIDTurn(drive, -65).withTimeout(1.5),     //turn 73 degrees
+        new PIDTurn(drive, -20).withTimeout(1.5),
         new InstantCommand(() -> drive.resetEncoders()),
-        new ParallelRaceGroup(
-            new DriveDistance(drive, 1.8),    //drive back 1m
-            new Intake(intake)
-        ),//.withTimeout(1.5),
-
-        new InstantCommand(() -> drive.resetGyro()),
-        new ParallelRaceGroup(
-            new ShootPID(shoot, 1500),
-            new PIDTurn(drive, 60).withTimeout(0.8) //55
-        ),
-        new InstantCommand(() -> drive.resetEncoders()),
-        new ParallelDeadlineGroup(
-            new DriveDistance(drive, -1.5).withTimeout(1.75),
-            new IntakeAnglePID(intake, () -> 0),
-            new AngleShooterPID(shoot, () -> 55),
-            new ShootPID(shoot, 1500)
-        ),
-        new ParallelRaceGroup(
-            new ShootPID(shoot, 1500),
-           // new SequentialCommandGroup(
-                //new AngleShooterPID(shoot, () -> 55).withTimeout(0.6),
-                //new ParallelCommandGroup(
-                    new Vomit(intake),
-                    new AngleShooterPID(shoot, () -> 55),
-                    new AdvanceNote(shoot)
-                //)
-          //  )
-        )
+        new DriveDistance(drive, 4)
     );
   }
 }
