@@ -27,23 +27,21 @@ import frc.robot.Constants.OdometryConsts;
 import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.ReplanningConfig;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
+
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
+import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+
 
 public class DriveSubsystem extends SubsystemBase {
-  private CANSparkMax frontLeftMotor;
-  private CANSparkMax frontRightMotor;
-  private CANSparkMax backLeftMotor;
-  private CANSparkMax backRightMotor;
-
-  private RelativeEncoder frontLeftEncoder;
-  private RelativeEncoder frontRightEncoder;
-  private RelativeEncoder backLeftEncoder;
-  private RelativeEncoder backRightEncoder;
-
-  private Encoder leftThroughBoreEncoder;
-  private Encoder rightThroughBoreEncoder;
+  private WPI_TalonSRX frontLeftMotor;
+  private WPI_TalonSRX frontRightMotor;
+  private WPI_VictorSPX backLeftMotor;
+  private WPI_VictorSPX backRightMotor;
 
   private AHRS navX;
 
@@ -59,26 +57,23 @@ public class DriveSubsystem extends SubsystemBase {
 
   public DriveSubsystem() {
 
-    frontLeftMotor = new CANSparkMax(CANID.frontLeft, MotorType.kBrushless);
-    frontRightMotor = new CANSparkMax(CANID.frontRight, MotorType.kBrushless);
-    backLeftMotor = new CANSparkMax(CANID.backLeft, MotorType.kBrushless);
-    backRightMotor = new CANSparkMax(CANID.backRight, MotorType.kBrushless);
     
+    frontLeftMotor = new WPI_TalonSRX(CANID.frontLeft);
+    frontRightMotor = new WPI_TalonSRX(CANID.frontRight);
+    backLeftMotor = new WPI_VictorSPX(CANID.backLeft);
+    backRightMotor = new WPI_VictorSPX(CANID.backRight);
+    
+    frontLeftMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 30);
+    frontRightMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 30);
+
+    //frontLeftMotor.follow(backLeftMotor);
+    //frontRightMotor.follow(backRightMotor);
+
+    frontLeftMotor.setSensorPhase(true);
+    frontRightMotor.setSensorPhase(true);
+
+    resetEncoders();
     diffDrive = new DifferentialDrive(backLeftMotor, backRightMotor);
-
-    frontLeftEncoder = frontLeftMotor.getEncoder();
-    frontRightEncoder = frontRightMotor.getEncoder();
-    backLeftEncoder = backLeftMotor.getEncoder();
-    backRightEncoder = backRightMotor.getEncoder();
-
-    leftThroughBoreEncoder = new Encoder(DigitalIOID.leftDriveEncoder1, DigitalIOID.leftDriveEncoder2);
-    rightThroughBoreEncoder = new Encoder(DigitalIOID.rightDriveEncoder1, DigitalIOID.rightDriveEncoder2); 
-
-    leftThroughBoreEncoder.setDistancePerPulse(OdometryConsts.wheelCircumfrenceMeters / 2048);
-    rightThroughBoreEncoder.setDistancePerPulse(OdometryConsts.wheelCircumfrenceMeters / 2048);
-
-    leftThroughBoreEncoder.setReverseDirection(true);
-    rightThroughBoreEncoder.setReverseDirection(false); 
 
     navX = new AHRS(SPI.Port.kMXP);
 
@@ -116,7 +111,8 @@ public class DriveSubsystem extends SubsystemBase {
 
   
   public ChassisSpeeds getCurrentSpeeds(){
-    return kinematics.toChassisSpeeds(new DifferentialDriveWheelSpeeds(leftThroughBoreEncoder.getRate(), rightThroughBoreEncoder.getRate()));
+    System.out.println("CURRENT SPEED: " + kinematics.toChassisSpeeds(new DifferentialDriveWheelSpeeds(encoderTicksToMeters(frontLeftMotor.getSelectedSensorVelocity(0) * 10), encoderTicksToMeters(frontRightMotor.getSelectedSensorVelocity(0) * 10))));
+    return kinematics.toChassisSpeeds(new DifferentialDriveWheelSpeeds(encoderTicksToMeters(frontLeftMotor.getSelectedSensorVelocity(0) * 10), -encoderTicksToMeters(frontRightMotor.getSelectedSensorVelocity(0) * 10)));
   }
 
   public Pose2d getPose(){
@@ -140,16 +136,17 @@ public class DriveSubsystem extends SubsystemBase {
     double leftRPM = (wheelSpeeds.leftMetersPerSecond / wheelCircumferenceMeters) * 60;
     double rightRPM = (wheelSpeeds.rightMetersPerSecond / wheelCircumferenceMeters) * 60;
 
+    System.out.println(rightRPM);
+
     // Assuming your motors are configured to accept speed values as a percentage of their maximum RPM,
     // convert RPM to a normalized [-1, 1] value based on the maximum RPM.
     double leftOutput = leftRPM / DriveConstants.dConstants.kMaxRPM;
-    double rightOutput = rightRPM / DriveConstants.dConstants.kMaxRPM;
+    System.out.println(leftOutput);
+    double rightOutput = -rightRPM / DriveConstants.dConstants.kMaxRPM;
 
     // Apply the normalized values to your motors. Adjust as necessary for your specific setup.
-    backLeftMotor.set(leftOutput);
-    backRightMotor.set(rightOutput);
-    //backLeftMotor.follow(frontLeftMotor);
-    //backRightMotor.follow(frontRightMotor);
+    frontLeftMotor.set(leftOutput);
+    frontRightMotor.set(rightOutput);
 }
 
   public void drive(double speed, double rotation){
@@ -161,45 +158,28 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public void stop(){
-    frontLeftMotor.set(0);
-    frontRightMotor.set(0);
-    backLeftMotor.set(0);
-    backRightMotor.set(0);
+    frontLeftMotor.set(TalonSRXControlMode.PercentOutput, 0);
+    frontRightMotor.set(TalonSRXControlMode.PercentOutput, 0);
+    backLeftMotor.set(VictorSPXControlMode.PercentOutput, 0);
+    backRightMotor.set(VictorSPXControlMode.PercentOutput, 0);
   }
 
   //Average of both left side motor encoders
-  public double getLeftSideBuiltInRotations() {
-    return (frontLeftEncoder.getPosition() + backLeftEncoder.getPosition()) / 2;
-  }
 
   //Average of both right side motor encoders
-  public double getRightSideBuiltInRotations() {
-    return (frontRightEncoder.getPosition() + backRightEncoder.getPosition()) / 2;
-  }
 
-  public double getLeftSideDistanceBuiltInMeters() {
-    return (getLeftSideBuiltInRotations() * Constants.OdometryConsts.rotationsToMeters);
-  }
-
-  public double getRightSideDistanceBuiltInMeters() {
-    return (getRightSideBuiltInRotations() * Constants.OdometryConsts.rotationsToMeters);
-  }
-
-  public double getBuiltInEncoderDistanceMeters() {
-    return (getLeftSideDistanceBuiltInMeters() + getRightSideDistanceBuiltInMeters()) / 2;
-  }
 
   public void resetEncoders() {
-    rightThroughBoreEncoder.reset();
-    leftThroughBoreEncoder.reset();
-  }
-
-  public double getRightSideMeters() {
-    return rightThroughBoreEncoder.getDistance();
+    frontLeftMotor.setSelectedSensorPosition(0);
+    frontRightMotor.setSelectedSensorPosition(0);
   }
 
   public double getLeftSideMeters() {
-    return leftThroughBoreEncoder.getDistance();
+    return encoderTicksToMeters(frontLeftMotor.getSelectedSensorPosition(0));
+  }
+
+  public double getRightSideMeters() {
+    return -encoderTicksToMeters(frontRightMotor.getSelectedSensorPosition(0));
   }
 
   public double getDistanceMeters() {
@@ -207,9 +187,14 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public double getRateMetersPerSecond() {
-    return (rightThroughBoreEncoder.getRate() + leftThroughBoreEncoder.getRate()) / 2;
+    
+    return encoderTicksToMeters((frontLeftMotor.getSelectedSensorVelocity() + frontRightMotor.getSelectedSensorVelocity()) / 2);
   }
 
+  private double encoderTicksToMeters(double ticks) {
+    double rotations = ticks / DriveConstants.dConstants.encoderTicksPerRevolution;
+    return rotations * DriveConstants.dConstants.kCircumfrance;
+  }
 
   public void resetGyro() {
     navX.reset();
