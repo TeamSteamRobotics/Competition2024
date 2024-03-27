@@ -1,0 +1,52 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 15.130882833194237,
+        "y": 5.614572372001888
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 13.708235502438642,
+        "y": 5.614572372001888
+      },
+      "isLocked": false,
+      "linkedName": "Start Point"
+    },
+    {
+      "anchor": {
+        "x": 13.638765356626758,
+        "y": 5.614572372001888
+      },
+      "prevControl": {
+        "x": 14.440740234358074,
+        "y": 5.614572372001888
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "LitPathEnd1"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "LITPATH",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}
