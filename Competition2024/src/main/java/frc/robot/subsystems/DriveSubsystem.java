@@ -146,8 +146,8 @@ public class DriveSubsystem extends SubsystemBase {
     double rightOutput = rightRPM / DriveConstants.dConstants.kMaxRPM;
 
     // Apply the normalized values to your motors. Adjust as necessary for your specific setup.
-    backLeftMotor.set(leftOutput);
-    backRightMotor.set(rightOutput);
+    backLeftMotor.set(-leftOutput);
+    backRightMotor.set(-rightOutput);
     //backLeftMotor.follow(frontLeftMotor);
     //backRightMotor.follow(frontRightMotor);
 }
