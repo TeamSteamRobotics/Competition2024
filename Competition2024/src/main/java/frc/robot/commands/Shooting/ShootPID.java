@@ -6,6 +6,7 @@ package frc.robot.commands.Shooting;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.VibeController;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShootPID extends Command {
@@ -28,6 +29,9 @@ public class ShootPID extends Command {
   public void execute() {
     shooterSubsystem.setShooterSpeedPID(speed);
     SmartDashboard.putBoolean("Ready to Shoot", (shooterSubsystem.getShooterRPM() >= (speed - 20)));
+    if(shooterSubsystem.getShooterRPM() >= (speed - 20)) {
+      new VibeController(0.3, 1).schedule();
+    }
   }
 
   // Called once the command ends or is interrupted.

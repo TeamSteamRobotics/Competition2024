@@ -30,6 +30,7 @@ public class Handoff extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new Intake(intake),
+      new InstantCommand(() -> shoot.setShooterSpeedPID(1500)),
       new ParallelCommandGroup(
         new IntakeAnglePID(intake, () -> 0),//.withTimeout(0.9),
         new AngleShooterPID(shoot, () -> 50).withTimeout(0.75)

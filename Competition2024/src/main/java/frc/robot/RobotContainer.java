@@ -7,7 +7,6 @@ package frc.robot;
 import frc.robot.commands.Shooting.ShootPID;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.AmpScore;
 import frc.robot.commands.BasicAuto;
 import frc.robot.commands.CoordinatePrint;
 import frc.robot.commands.Handoff;
@@ -28,10 +27,12 @@ import frc.robot.commands.Intaking.Intake;
 import frc.robot.commands.Intaking.IntakeAnglePID;
 import frc.robot.commands.Intaking.Vomit;
 import frc.robot.commands.Shooting.AdvanceNote;
+import frc.robot.commands.Shooting.AmpHandoff;
 import frc.robot.commands.Shooting.AngleShooterDown;
 import frc.robot.commands.Shooting.AngleShooterPID;
 import frc.robot.commands.Shooting.AngleShooterUp;
 import frc.robot.commands.Shooting.RetreatNote;
+import frc.robot.commands.Shooting.SetPointPodiumShoot;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -95,10 +96,11 @@ public class RobotContainer {
   private final Trigger runShooter = m_operatorController.rightTrigger();
   //private final Trigger runShootAnglePID = m_operatorController.y();
 
-  private final Trigger intake = m_operatorController.a();
+  //private final Trigger intake = m_operatorController.a();
+  private final Trigger podiumShoot = m_operatorController.a();
   private final Trigger vomit = m_operatorController.x();
   private final Trigger retreat = m_operatorController.b();
-  private final Trigger ampScore = m_operatorController.y();
+  private final Trigger ampHandoff = m_operatorController.y();
   //private final Trigger ampAngle = m_operatorController.rightStick();
   private final Trigger AmpVomit = m_operatorController.rightStick();
 
@@ -134,22 +136,18 @@ public class RobotContainer {
 
     autoAim.onTrue(new CenterOnTarget(m_ZachVisionSubsystem, m_driveSubsystem));
 
+    ampHandoff.whileTrue(new AmpHandoff(m_intakeSubsystem, m_shooterSubsystem));
 
-    operatorRetractClimb.whileTrue(new RetractClimb(m_climbSubsystem));
-    operatorRaiseClimb.whileTrue(new RetractClimb(m_climbSubsystem));
-
-    ampScore.whileTrue(new AmpScore(m_intakeSubsystem, m_shooterSubsystem));
+    podiumShoot.toggleOnTrue(new SetPointPodiumShoot(m_shooterSubsystem, m_intakeSubsystem)).onFalse(new AdvanceNote(m_shooterSubsystem).withTimeout(0.1).andThen(() -> m_shooterSubsystem.stopShooter()));
 
     //runShootAnglePID.onTrue(new IntakeAnglePID(m_intakeSubsystem, () -> SmartDashboard.getNumber("IntakeAnglePID", 0)));
-    advanceToShooter.whileTrue(new AdvanceNote(m_shooterSubsystem).withTimeout(0.1));
+    advanceToShooter.whileTrue(new AdvanceNote(m_shooterSubsystem).withTimeout(0.1).andThen(() -> m_shooterSubsystem.stopShooter()));
 
     handoff.toggleOnTrue(new Handoff(m_intakeSubsystem, m_shooterSubsystem));
     //smartShooter.whileTrue(new SmartShoot(m_shooterSubsystem, m_aVisionSubsystem));
     smartShooter.whileTrue(new SmartShoot(m_shooterSubsystem, m_aVisionSubsystem));
     shooterAngleUp.whileTrue(new AngleShooterUp(m_shooterSubsystem));
     shooterAngleDown.whileTrue(new AngleShooterDown(m_shooterSubsystem));
-
-    runShooter.whileTrue(new ShootPID(m_shooterSubsystem, 1500));
     //runShooter.whileTrue(new SmarterShoot(m_shooterSubsystem, m_aVisionSubsystem));
     //ampAngle.onTrue(new AngleShooterPID(m_shooterSubsystem, () -> 58.2));
     AmpVomit.onTrue(new AmpVomit(m_intakeSubsystem));
@@ -165,8 +163,7 @@ public class RobotContainer {
 
     //intake.toggleOnTrue(new Intake(m_intakeSubsystem).andThen(new Handoff(m_intakeSubsystem, m_shooterSubsystem)));
 
-    vomit.whileTrue(new Vomit(m_intakeSubsystem));
-    
+    vomit.whileTrue(new Vomit(m_intakeSubsystem));   
 
     retreat.whileTrue(new RetreatNote(m_shooterSubsystem));
   }

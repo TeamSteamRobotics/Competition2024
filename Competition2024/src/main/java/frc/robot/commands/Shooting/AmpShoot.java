@@ -7,6 +7,7 @@ package frc.robot.commands.Shooting;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Intaking.AmpVomit;
 import frc.robot.commands.Intaking.IntakeAnglePID;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.commands.Intaking.Vomit;
 import frc.robot.commands.Shooting.AdvanceNote;
@@ -20,14 +21,15 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AmpShoot extends SequentialCommandGroup {
+public class AmpShoot extends ParallelCommandGroup {
   /** Creates a new AmpShoot. */
   public AmpShoot(IntakeSubsystem intake, ShooterSubsystem shoot) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-
+      new IntakeAnglePID(intake, () -> SmartDashboard.getNumber("IntakeAngle2", 80)),
       new AmpVomit(intake)
+
 
     );
 

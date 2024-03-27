@@ -1,5 +1,14 @@
 <xml version="1.0">
 <dashboard>
+	<widget field="IntakeVomit" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="409"/>
+	</widget>
+	<widget field="IntakeAngle2" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="389"/>
+	</widget>
+	<widget field="IntakeAngle1" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="60"/>
+	</widget>
 	<widget field="Intake angle" type="PIDController" class="edu.wpi.first.smartdashboard.gui.elements.PIDEditor">
 		<location x="127" y="213"/>
 	</widget>

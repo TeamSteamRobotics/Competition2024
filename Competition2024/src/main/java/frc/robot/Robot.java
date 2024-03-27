@@ -44,6 +44,9 @@ public class Robot extends TimedRobot {
     SmartDashboard.putBoolean("Validate Auto Input", false);
     SmartDashboard.putNumber("IntakeAnglePID", 0);
     SmartDashboard.putNumber("DistanceToShoot", 0);
+    SmartDashboard.putNumber("IntakeAngle1", 0);
+    SmartDashboard.putNumber("IntakeAngle2", 0);
+    SmartDashboard.putNumber("IntakeVomit", -1);
     for (int port = 5800; port <= 5807; port++) {
             PortForwarder.add(port, "limelight.local", port);
         }
