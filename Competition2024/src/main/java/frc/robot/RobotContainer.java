@@ -110,6 +110,9 @@ public class RobotContainer {
   public RobotContainer() {
     
     NamedCommands.registerCommand("Example Command", new ExampleCommand());
+    NamedCommands.registerCommand("Deploy Intake", new IntakeAnglePID(m_intakeSubsystem, () -> 195));
+    NamedCommands.registerCommand("Handoff", new Handoff(m_intakeSubsystem, m_shooterSubsystem));
+    NamedCommands.registerCommand("Smart Shoot", new SmartShoot(m_shooterSubsystem, m_aVisionSubsystem));
 
         // Build an auto chooser. This will use Commands.none() as the default option.
     autoChooser = AutoBuilder.buildAutoChooser();
