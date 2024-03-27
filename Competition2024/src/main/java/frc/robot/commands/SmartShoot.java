@@ -45,7 +45,7 @@ public class SmartShoot extends Command {
             Math.pow(aprilVision.getCoordinates(blueAprilTagId, ReturnTarget.TARGET).z + zOffset, 2) +
             Math.pow(aprilVision.getCoordinates(blueAprilTagId, ReturnTarget.TARGET).x + xOffset, 2)
           )
-          ))
+          )).andThen(new VibeController(0.3, 1, 1))
       );
 
     redCommand = new ParallelCommandGroup(
@@ -57,7 +57,7 @@ public class SmartShoot extends Command {
             Math.pow(aprilVision.getCoordinates(redAprilTagId, ReturnTarget.TARGET).z + zOffset, 2) +
             Math.pow(aprilVision.getCoordinates(redAprilTagId, ReturnTarget.TARGET).x + xOffset, 2)
           )
-          ))
+          )).andThen(new VibeController(0.3, 1, 1))
       );
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -85,8 +85,10 @@ public class SmartShoot extends Command {
   @Override
   public void end(boolean interrupted) {
     //redCommand.end(true);
+
     redCommand.cancel();
     blueCommand.cancel();
+    shoot.stopShooter();
     //blueCommand.end(true);
   }
 

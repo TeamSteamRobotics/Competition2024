@@ -4,11 +4,15 @@
 
 package frc.robot.commands.Intaking;
 
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.RuntimeType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.commands.VibeController;
 import frc.robot.subsystems.IntakeSubsystem;
 
 public class Intake extends Command {
@@ -24,6 +28,9 @@ public class Intake extends Command {
   @Override
   public void execute() {
     intake.runIntake(0.8);
+    if(DriverStation.isTeleop() == true && intake.noteIn()) {
+      new VibeController(0.3, 1, 0).schedule();
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -31,6 +38,7 @@ public class Intake extends Command {
   public void end(boolean interrupted) {
   
     intake.stopIntake();
+    
   }
 
   // Returns true when the command should end.

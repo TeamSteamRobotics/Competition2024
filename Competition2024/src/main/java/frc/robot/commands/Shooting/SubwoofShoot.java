@@ -13,9 +13,9 @@ import frc.robot.commands.Intaking.IntakeAnglePID;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class SetPointPodiumShoot extends SequentialCommandGroup {
+public class SubwoofShoot extends SequentialCommandGroup {
   /** Creates a new SetPointPodiumShoot. */
-  public SetPointPodiumShoot(ShooterSubsystem shoot, IntakeSubsystem intake) {
+  public SubwoofShoot(ShooterSubsystem shoot, IntakeSubsystem intake) {
     addCommands(
       new Intake(intake),
       new InstantCommand(() -> shoot.setShooterSpeedPID(1500)),

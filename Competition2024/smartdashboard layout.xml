@@ -1,5 +1,8 @@
 <xml version="1.0">
 <dashboard>
+	<widget field="Auto Chooser" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
+		<location x="0" y="234"/>
+	</widget>
 	<widget field="IntakeVomit" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="409"/>
 	</widget>
@@ -147,4 +150,5 @@
 </dashboard>
 <live-window>
 </live-window>
+	<hidden field="Field"/>
 </xml>

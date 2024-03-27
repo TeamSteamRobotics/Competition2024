@@ -16,8 +16,8 @@ import frc.robot.Constants;
 public class VibeController extends SequentialCommandGroup {
   /** Creates a new VibeController. */
   private GenericHID controller;
-  public VibeController(double p_vibeTime, double p_vibeIntensity) {
-    controller = new GenericHID(Constants.OperatorConstants.kOperatorControllerPort);
+  public VibeController(double p_vibeTime, double p_vibeIntensity, int controllerNum) {
+    controller = new GenericHID(controllerNum);
     // Use addRequirements() here to declare subsystem dependencies.
     addCommands(
       new InstantCommand(() -> controller.setRumble(RumbleType.kBothRumble, p_vibeIntensity)),

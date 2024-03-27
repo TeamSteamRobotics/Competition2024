@@ -33,7 +33,7 @@ public class AngleShooterPID extends PIDCommand {
    getController().setIZone(5);
     SmartDashboard.putData("Angle Shooter", getController());
     SmartDashboard.putNumber("Desired Angle", angle.getAsDouble());
-    getController().setTolerance(0.3, 0.5);
+    getController().setTolerance(0.8, 0.5);
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
   }
@@ -41,6 +41,6 @@ public class AngleShooterPID extends PIDCommand {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;//getController().atSetpoint();
+    return getController().atSetpoint();
   }
 }

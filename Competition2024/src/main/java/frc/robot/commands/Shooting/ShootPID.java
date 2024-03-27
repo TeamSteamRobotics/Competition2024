@@ -29,9 +29,7 @@ public class ShootPID extends Command {
   public void execute() {
     shooterSubsystem.setShooterSpeedPID(speed);
     SmartDashboard.putBoolean("Ready to Shoot", (shooterSubsystem.getShooterRPM() >= (speed - 20)));
-    if(shooterSubsystem.getShooterRPM() >= (speed - 20)) {
-      new VibeController(0.3, 1).schedule();
-    }
+    
   }
 
   // Called once the command ends or is interrupted.

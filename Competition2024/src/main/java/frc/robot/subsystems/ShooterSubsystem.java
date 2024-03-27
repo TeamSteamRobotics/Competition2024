@@ -39,7 +39,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   private DigitalInput shooterBeamBreak;
 
-  private double dutyCycleOffset = 0.0702778;
+  private double dutyCycleOffset = 0.227777;//0.0702778;
 
   private SparkPIDController shootRightPIDController;
   private SparkPIDController shootLeftPIDController;

@@ -32,7 +32,7 @@ import frc.robot.commands.Shooting.AngleShooterDown;
 import frc.robot.commands.Shooting.AngleShooterPID;
 import frc.robot.commands.Shooting.AngleShooterUp;
 import frc.robot.commands.Shooting.RetreatNote;
-import frc.robot.commands.Shooting.SetPointPodiumShoot;
+import frc.robot.commands.Shooting.SubwoofShoot;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -138,11 +138,10 @@ public class RobotContainer {
 
     ampHandoff.whileTrue(new AmpHandoff(m_intakeSubsystem, m_shooterSubsystem));
 
-    podiumShoot.toggleOnTrue(new SetPointPodiumShoot(m_shooterSubsystem, m_intakeSubsystem)).onFalse(new AdvanceNote(m_shooterSubsystem).withTimeout(0.1).andThen(() -> m_shooterSubsystem.stopShooter()));
+    podiumShoot.toggleOnTrue(new SubwoofShoot(m_shooterSubsystem, m_intakeSubsystem)).onFalse(new AdvanceNote(m_shooterSubsystem).withTimeout(0.1));
 
     //runShootAnglePID.onTrue(new IntakeAnglePID(m_intakeSubsystem, () -> SmartDashboard.getNumber("IntakeAnglePID", 0)));
-    advanceToShooter.whileTrue(new AdvanceNote(m_shooterSubsystem).withTimeout(0.1).andThen(() -> m_shooterSubsystem.stopShooter()));
-
+    advanceToShooter.whileTrue(new AdvanceNote(m_shooterSubsystem).withTimeout(0.1));
     handoff.toggleOnTrue(new Handoff(m_intakeSubsystem, m_shooterSubsystem));
     //smartShooter.whileTrue(new SmartShoot(m_shooterSubsystem, m_aVisionSubsystem));
     smartShooter.whileTrue(new SmartShoot(m_shooterSubsystem, m_aVisionSubsystem));
