@@ -16,28 +16,12 @@
     },
     {
       "anchor": {
-        "x": 12.678952765312937,
-        "y": 5.83538306677753
+        "x": 13.664937044159803,
+        "y": 7.036539787365289
       },
       "prevControl": {
-        "x": 13.12479240343096,
-        "y": 5.396852275186032
-      },
-      "nextControl": {
-        "x": 12.233113127194914,
-        "y": 6.273913858369029
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 10.702640664540588,
-        "y": 6.993104356579084
-      },
-      "prevControl": {
-        "x": 12.141021660960703,
-        "y": 7.64797700535572
+        "x": 12.052396676221923,
+        "y": 5.746507493014986
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,7 +30,42 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "Deploy Intake",
+      "waypointRelativePos": 0.85,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Deploy Intake"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Handoff",
+      "waypointRelativePos": 1.0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Handoff"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
