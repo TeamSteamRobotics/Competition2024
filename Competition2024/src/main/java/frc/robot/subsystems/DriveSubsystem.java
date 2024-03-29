@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
@@ -74,15 +75,31 @@ public class DriveSubsystem extends SubsystemBase {
     SmartDashboard.putData("Reset Encoders", new InstantCommand(() -> resetEncoders(), this));
     SmartDashboard.putData("Reset Gyro", new InstantCommand(() -> resetGyro(), this));
   }
+  //trying to use a SlewRateLimiter so motor doesn't suddenly go full speed and make chain skip.
+  SlewRateLimiter filter = new SlewRateLimiter(0.9);
+  //Sejun notes, set up an timer variable and change for loops with while loops creating two seperate scenarios for auto (half speed) and teleop (full speed)
+  long timeSinceStart = System.currentTimeMillis();
 
+  while(timeSinceStart<100000){
+  
   public void drive(double speed, double rotation){
-    diffDrive.arcadeDrive(speed, rotation);
+    for(int i = 0; i < 15; i++){
+    speed = speed/2;
+    
+    diffDrive.arcadeDrive(filter.calculate(speed), rotation);
+
+    }
   }
 
   public void curveDrive(double speed, double rotation) {
-    diffDrive.curvatureDrive(speed, rotation, true);
-  }
+    for(int i = 0; i < 15; i++){
+    speed = speed/2;
+    
+    diffDrive.curvatureDrive(filter.calculate(speed), rotation, true);
 
+    }
+  }
+  }
   public void stop(){
     frontLeftMotor.set(0);
     frontRightMotor.set(0);

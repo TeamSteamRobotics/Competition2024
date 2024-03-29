@@ -6,6 +6,7 @@ package frc.robot.commands.Driving;
 
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.DriveSubsystem;
 
@@ -14,17 +15,17 @@ public class Drive extends Command {
   private DriveSubsystem driveSubsystem;
   private DoubleSupplier speed;
   private DoubleSupplier rotation;
-
+  
   /** Creates a new Drive. */
   public Drive(DriveSubsystem p_driveSubsystem, DoubleSupplier p_speed, DoubleSupplier p_rotation) {
     driveSubsystem = p_driveSubsystem;
     speed = p_speed;
     rotation = p_rotation;
-
+    
     addRequirements(driveSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }
-
+  
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {}

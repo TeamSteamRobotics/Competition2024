@@ -28,6 +28,8 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class ZachTwoNote extends SequentialCommandGroup {
   /** Creates a new ZachTwoNote. */
   public ZachTwoNote(DriveSubsystem drive, ShooterSubsystem shoot, IntakeSubsystem intake, AprilVisionSubsystem aprilVision) {
+
+    
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
