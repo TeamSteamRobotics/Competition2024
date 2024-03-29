@@ -51,7 +51,7 @@ public class DriveSubsystem extends SubsystemBase {
   
   private DifferentialDriveOdometry odometry;
 
-  private Pose2d currentRobotPose;
+
 
   private DifferentialDriveKinematics kinematics;
   
@@ -228,13 +228,13 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public Pose2d getRobotPose() {
-    return currentRobotPose;
+    return odometry.getPoseMeters();
   }
  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    currentRobotPose = odometry.update(getRotation2d(), getLeftSideMeters(), getRightSideMeters());
+    odometry.update(getRotation2d(), getLeftSideMeters(), getRightSideMeters());
 
     SmartDashboard.putNumber("Through Bore Encoder Distance", getDistanceMeters());
 
