@@ -28,6 +28,10 @@ public class Intake extends Command {
     intake.stopIntake();
   }
 
+    @Override
+  public boolean isFinished() {
+    return intake.noteIn();
+  }
   // Returns true when the command should end.
 
 }

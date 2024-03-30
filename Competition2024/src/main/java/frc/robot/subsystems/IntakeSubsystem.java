@@ -89,7 +89,7 @@ public class IntakeSubsystem extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putBoolean("Intake up", isUp());
     SmartDashboard.putBoolean("NoteIn", noteIn());
-    SmartDashboard.putNumber("Intake Angle", getIntakeAngleDegrees());
+    SmartDashboard.putNumber("Intake Angle", getIntakeAngleDegrees()); 
 
     if(isUp()) {
       absoluteIntakeEncoder.reset();
