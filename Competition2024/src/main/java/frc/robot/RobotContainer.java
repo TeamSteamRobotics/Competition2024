@@ -15,6 +15,7 @@ import frc.robot.commands.SmartShoot;
 import frc.robot.commands.Auto.DanielTwoNoteTaxi;
 import frc.robot.commands.Auto.JustOneNote;
 import frc.robot.commands.Auto.OneNoteTaxi;
+import frc.robot.commands.Auto.OneNoteWaitTaxi;
 import frc.robot.commands.Auto.ThreeNoteAutoBlue;
 import frc.robot.commands.Auto.ThreeNoteAutoRed;
 import frc.robot.commands.Auto.ZachTwoNote;
@@ -49,6 +50,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.Intaking.AmpVomit;
+import frc.robot.commands.Shooting.AmpShoot;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -102,7 +104,7 @@ public class RobotContainer {
   private final Trigger retreat = m_operatorController.b();
   private final Trigger ampHandoff = m_operatorController.y();
   //private final Trigger ampAngle = m_operatorController.rightStick();
-  private final Trigger AmpVomit = m_operatorController.rightStick();
+  private final Trigger ampShoot = m_operatorController.rightStick();
 
 
   
@@ -113,7 +115,7 @@ public class RobotContainer {
     m_chooser.setDefaultOption("Two Note Center", new ZachTwoNote(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem, m_aVisionSubsystem));
     m_chooser.addOption("Three Note Blue", new ThreeNoteAutoBlue(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem, m_aVisionSubsystem));
     m_chooser.addOption("Three Note Red", new ThreeNoteAutoRed(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem, m_aVisionSubsystem));
-    m_chooser.addOption("One Note Taxi", new OneNoteTaxi(m_driveSubsystem, m_shooterSubsystem, m_aVisionSubsystem));
+    m_chooser.addOption("One Note Wait Taxi", new OneNoteWaitTaxi(m_driveSubsystem, m_shooterSubsystem, m_aVisionSubsystem));
     m_chooser.addOption("Zero Note Taxi", new ZeroNoteTaxi(m_driveSubsystem));
     m_chooser.addOption("Just One Note", new JustOneNote(m_shooterSubsystem, m_aVisionSubsystem));
     m_chooser.addOption("Daniel Auto", new DanielTwoNoteTaxi(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem, m_aVisionSubsystem));
@@ -136,7 +138,7 @@ public class RobotContainer {
 
     autoAim.onTrue(new CenterOnTarget(m_ZachVisionSubsystem, m_driveSubsystem));
 
-    ampHandoff.whileTrue(new AmpHandoff(m_intakeSubsystem, m_shooterSubsystem));
+    ampHandoff.whileTrue(new AmpHandoff(m_intakeSubsystem, m_shooterSubsystem, m_climbSubsystem));
 
     podiumShoot.toggleOnTrue(new SubwoofShoot(m_shooterSubsystem, m_intakeSubsystem)).onFalse(new AdvanceNote(m_shooterSubsystem).withTimeout(0.1));
 
@@ -149,7 +151,7 @@ public class RobotContainer {
     shooterAngleDown.whileTrue(new AngleShooterDown(m_shooterSubsystem));
     //runShooter.whileTrue(new SmarterShoot(m_shooterSubsystem, m_aVisionSubsystem));
     //ampAngle.onTrue(new AngleShooterPID(m_shooterSubsystem, () -> 58.2));
-    AmpVomit.onTrue(new AmpVomit(m_intakeSubsystem));
+    ampShoot.onTrue(new AmpShoot(m_intakeSubsystem, m_shooterSubsystem, m_climbSubsystem));
 
     
 

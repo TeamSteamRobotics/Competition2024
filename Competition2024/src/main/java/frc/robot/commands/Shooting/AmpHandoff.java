@@ -5,6 +5,8 @@
 package frc.robot.commands.Shooting;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.Climbing.RaiseClimb;
+import frc.robot.commands.Climbing.RetractClimb;
 import frc.robot.commands.Intaking.Intake;
 import frc.robot.commands.Intaking.IntakeAnglePID;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -12,19 +14,25 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.commands.Intaking.Vomit;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.ClimbSubsystem; 
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class AmpHandoff extends SequentialCommandGroup {
   /** Creates a new AmpScore. */
-  public AmpHandoff(IntakeSubsystem intake, ShooterSubsystem shoot) {
+  public AmpHandoff(IntakeSubsystem intake, ShooterSubsystem shoot, ClimbSubsystem climb) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
 
       new Intake(intake),
-      new IntakeAnglePID(intake, () -> SmartDashboard.getNumber("IntakeAngle1", 80))
+      new ParallelCommandGroup(
+         new IntakeAnglePID(intake, () -> SmartDashboard.getNumber("IntakeAngle1", 0)),
+         new RetractClimb(climb).withTimeout(SmartDashboard.getNumber("AmpScoreClimbTime", 1))
+      )
+  
+
 
       /*new IntakeAnglePID(intake, () -> 0).withTimeout(1),
       new AngleShooterPID(shoot, () -> 55).withTimeout(1),
