@@ -1,5 +1,20 @@
 <xml version="1.0">
 <dashboard>
+	<widget field="AmpScoreClimbTime" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="662"/>
+	</widget>
+	<widget field="AutoWaitTime" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="602"/>
+	</widget>
+	<widget field="IntakeVomit" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="409"/>
+	</widget>
+	<widget field="IntakeAngle2" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="389"/>
+	</widget>
+	<widget field="IntakeAngle1" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="60"/>
+	</widget>
 	<widget field="Auto Chooser" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
 		<location x="776" y="160"/>
 	</widget>
@@ -141,5 +156,4 @@
 </dashboard>
 <live-window>
 </live-window>
-	<hidden field="Field"/>
 </xml>
