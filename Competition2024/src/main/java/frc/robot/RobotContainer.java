@@ -32,6 +32,7 @@ import frc.robot.commands.Shooting.AmpHandoff;
 import frc.robot.commands.Shooting.AngleShooterDown;
 import frc.robot.commands.Shooting.AngleShooterPID;
 import frc.robot.commands.Shooting.AngleShooterUp;
+import frc.robot.commands.Shooting.BaseShooter;
 import frc.robot.commands.Shooting.RetreatNote;
 import frc.robot.commands.Shooting.SubwoofShoot;
 import frc.robot.subsystems.DriveSubsystem;
@@ -105,6 +106,7 @@ public class RobotContainer {
   private final Trigger ampHandoff = m_operatorController.y();
   //private final Trigger ampAngle = m_operatorController.rightStick();
   private final Trigger ampShoot = m_operatorController.rightStick();
+  private final Trigger baseShooter = m_driverController.b(); 
 
 
   
@@ -152,6 +154,7 @@ public class RobotContainer {
     //runShooter.whileTrue(new SmarterShoot(m_shooterSubsystem, m_aVisionSubsystem));
     //ampAngle.onTrue(new AngleShooterPID(m_shooterSubsystem, () -> 58.2));
     ampShoot.onTrue(new AmpShoot(m_intakeSubsystem, m_shooterSubsystem, m_climbSubsystem));
+    baseShooter.whileTrue(new BaseShooter(m_shooterSubsystem, m_intakeSubsystem));
 
     
 
