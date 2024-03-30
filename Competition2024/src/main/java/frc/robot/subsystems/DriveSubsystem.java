@@ -127,7 +127,7 @@ public class DriveSubsystem extends SubsystemBase {
     odometry.resetPosition(navX.getRotation2d(), getLeftSideMeters(), getRightSideMeters(), pose);
   }
   public void autoDrive(ChassisSpeeds speeds) { 
-    double wheelCircumferenceMeters = DriveConstants.dConstants.kCircumfrance;
+    double wheelCircumferenceMeters = 2 * Math.PI * DriveConstants.dConstants.kWheelRadiusMeters;
     
     // Convert ChassisSpeeds to wheel speeds in meters per second.
     DifferentialDriveWheelSpeeds wheelSpeeds = kinematics.toWheelSpeeds(speeds);

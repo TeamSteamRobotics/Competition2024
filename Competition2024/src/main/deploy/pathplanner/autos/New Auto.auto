@@ -14,19 +14,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "amp auto pt 1"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "pt2 amp auto"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "pt3 amp auto"
+            "pathName": "New Path"
           }
         }
       ]
