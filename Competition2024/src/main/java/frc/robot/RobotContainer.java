@@ -122,8 +122,10 @@ public class RobotContainer {
 
     SmartDashboard.putData("Auto Chooser", autoChooser);
 
+    
     m_driveSubsystem.setDefaultCommand(new Drive(m_driveSubsystem, m_driverController::getLeftY, m_driverController::getRightX));
     m_aVisionSubsystem.setDefaultCommand(new CoordinatePrint(m_aVisionSubsystem, 4, ReturnTarget.TARGET));
+    /*
     m_chooser.setDefaultOption("Two Note Center", new ZachTwoNote(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem, m_aVisionSubsystem));
     m_chooser.addOption("Three Note Blue", new ThreeNoteAutoBlue(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem, m_aVisionSubsystem));
     m_chooser.addOption("Three Note Red", new ThreeNoteAutoRed(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem, m_aVisionSubsystem));
@@ -131,6 +133,7 @@ public class RobotContainer {
     m_chooser.addOption("Zero Note Taxi", new ZeroNoteTaxi(m_driveSubsystem));
     m_chooser.addOption("Just One Note", new JustOneNote(m_shooterSubsystem, m_aVisionSubsystem));
     SmartDashboard.putData(m_chooser);
+    */
     configureBindings();
   }
 
