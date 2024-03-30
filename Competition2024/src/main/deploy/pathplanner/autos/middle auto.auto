@@ -14,7 +14,37 @@
         {
           "type": "path",
           "data": {
-            "pathName": "middle auto"
+            "pathName": "middle auto pt 1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "middle auto pt 2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "middle auto pt3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "middle auto pt 4"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "middle auto pt 5"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "middle auto pt 6"
           }
         }
       ]
