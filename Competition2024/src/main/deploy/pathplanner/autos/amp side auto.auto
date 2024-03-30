@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7987428243044774,
-      "y": 4.379852868122284
+      "x": 0.7518994781213513,
+      "y": 6.745441850370149
     },
     "rotation": 0
   },
@@ -14,25 +14,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "source auto pt 1"
+            "pathName": "amp auto pt 1"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "source auto pt2"
+            "pathName": "pt2 amp auto"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "source auto pt 3"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "source auto pt 4"
+            "pathName": "pt3 amp auto"
           }
         }
       ]

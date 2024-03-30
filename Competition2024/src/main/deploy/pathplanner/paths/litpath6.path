@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 13.69674061382021,
-        "y": 4.069863054980347
+        "x": 14.02378052619353,
+        "y": 4.315142989260338
       },
       "prevControl": null,
       "nextControl": {
-        "x": 14.69674061382021,
-        "y": 4.069863054980347
+        "x": 15.02378052619353,
+        "y": 4.315142989260338
       },
       "isLocked": false,
       "linkedName": "LitPathEnd3"
@@ -42,7 +42,7 @@
     "rotation": 0,
     "rotateFast": false
   },
-  "reversed": true,
+  "reversed": false,
   "folder": "LITPATH",
   "previewStartingState": {
     "rotation": 0,

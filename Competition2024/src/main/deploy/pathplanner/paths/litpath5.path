@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 13.69674061382021,
-        "y": 4.069863054980347
+        "x": 14.02378052619353,
+        "y": 4.315142989260338
       },
       "prevControl": {
-        "x": 14.624344728915448,
-        "y": 4.858326552811298
+        "x": 14.951384641288767,
+        "y": 5.103606487091289
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
     "rotation": 0,
     "rotateFast": false
   },
-  "reversed": false,
+  "reversed": true,
   "folder": "LITPATH",
   "previewStartingState": {
     "rotation": 0,

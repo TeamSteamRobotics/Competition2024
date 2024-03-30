@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 15.130882833194237,
-        "y": 5.614572372001888
+        "x": 1.3959954881393342,
+        "y": 5.539225686154654
       },
       "prevControl": null,
       "nextControl": {
-        "x": 14.269729655002077,
-        "y": 6.217558318925288
+        "x": 2.6162688461334,
+        "y": 5.551187918118234
       },
       "isLocked": false,
-      "linkedName": "Start Point"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 13.67355051094283,
-        "y": 7.003411068969031
+        "x": 2.572211799164207,
+        "y": 4.273533556011657
       },
       "prevControl": {
-        "x": 14.043976804438762,
-        "y": 6.7440357859120965
+        "x": 1.4707856249343993,
+        "y": 4.86096084893422
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "LitPathEnd2"
+      "linkedName": "middle auto (pt2)"
     }
   ],
   "rotationTargets": [],
@@ -43,9 +43,9 @@
     "rotateFast": false
   },
   "reversed": true,
-  "folder": "LITPATH",
+  "folder": null,
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": 0.0,
     "velocity": 0
   },
   "useDefaultConstraints": true

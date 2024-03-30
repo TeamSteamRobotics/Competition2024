@@ -111,6 +111,7 @@ public class RobotContainer {
     
     NamedCommands.registerCommand("Example Command", new ExampleCommand());
     NamedCommands.registerCommand("Deploy Intake", new IntakeAnglePID(m_intakeSubsystem, () -> 195));
+    NamedCommands.registerCommand("Run Intake", new Intake(m_intakeSubsystem).withTimeout(3));
     NamedCommands.registerCommand("Handoff", new Handoff(m_intakeSubsystem, m_shooterSubsystem));
     NamedCommands.registerCommand("Smart Shoot", new SmartShoot(m_shooterSubsystem, m_aVisionSubsystem));
 
