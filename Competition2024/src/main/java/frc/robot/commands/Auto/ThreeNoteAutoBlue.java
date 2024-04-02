@@ -37,7 +37,11 @@ public class ThreeNoteAutoBlue extends SequentialCommandGroup {
       
         new ParallelCommandGroup(
             new SmartShoot(shoot, aprilVision),
-            new WaitCommand(1.75).andThen(new AdvanceNote(shoot).withTimeout(0.1))   
+            new WaitCommand(1.75).andThen(
+                new ParallelCommandGroup(
+                    new AdvanceNote(shoot),
+                    new Vomit(intake)
+                ).withTimeout(0.1))   
         ).withTimeout(1.85),     //Shoot fitst note
         new IntakeAnglePID(intake, () -> 195).withTimeout(.8),//.withTimeout(1.4),
         new InstantCommand(() -> drive.resetEncoders()),

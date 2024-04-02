@@ -24,7 +24,7 @@ public class SmartShoot extends Command {
   private int shooterSpeedRPM = 1500;
   private double zOffset = 0;
   private double xOffset = 0;
-  private int blueAprilTagId = 8;
+  private int blueAprilTagId = 7;
   private int redAprilTagId = 4;
   private Optional<Alliance> ally;
 

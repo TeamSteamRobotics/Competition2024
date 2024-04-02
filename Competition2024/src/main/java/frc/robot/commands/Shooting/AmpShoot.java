@@ -32,7 +32,7 @@ public class AmpShoot extends SequentialCommandGroup {
     addCommands(
       new IntakeAnglePID(intake, () -> SmartDashboard.getNumber("IntakeAngle2", 80)),
       new AmpVomit(intake).withTimeout(1.5),
-      new RaiseClimb(climb).withTimeout(1.4)
+      new RaiseClimb(climb).withTimeout(1.2)
       
 
     );

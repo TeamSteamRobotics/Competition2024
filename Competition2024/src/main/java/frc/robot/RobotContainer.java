@@ -48,6 +48,8 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.Intaking.AmpVomit;
@@ -100,7 +102,7 @@ public class RobotContainer {
   //private final Trigger runShootAnglePID = m_operatorController.y();
 
   //private final Trigger intake = m_operatorController.a();
-  private final Trigger podiumShoot = m_operatorController.a();
+  private final Trigger subwoofShoot = m_operatorController.a();
   private final Trigger vomit = m_operatorController.x();
   private final Trigger retreat = m_operatorController.b();
   private final Trigger ampHandoff = m_operatorController.y();
@@ -142,7 +144,8 @@ public class RobotContainer {
 
     ampHandoff.whileTrue(new AmpHandoff(m_intakeSubsystem, m_shooterSubsystem, m_climbSubsystem));
 
-    podiumShoot.toggleOnTrue(new SubwoofShoot(m_shooterSubsystem, m_intakeSubsystem)).onFalse(new AdvanceNote(m_shooterSubsystem).withTimeout(0.1));
+    subwoofShoot.onTrue(new SubwoofShoot(m_shooterSubsystem, m_intakeSubsystem));
+    subwoofShoot.onFalse(new ParallelCommandGroup(new AdvanceNote(m_shooterSubsystem), new Vomit(m_intakeSubsystem)).withTimeout(2.5).andThen(new InstantCommand(() -> m_shooterSubsystem.stopShooter())));
 
     //runShootAnglePID.onTrue(new IntakeAnglePID(m_intakeSubsystem, () -> SmartDashboard.getNumber("IntakeAnglePID", 0)));
     advanceToShooter.whileTrue(new AdvanceNote(m_shooterSubsystem).withTimeout(0.1));
