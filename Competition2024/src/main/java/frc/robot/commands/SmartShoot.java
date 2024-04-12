@@ -21,7 +21,7 @@ public class SmartShoot extends Command {
   /** Creates a new SmarterShoot. */
   ShooterSubsystem shoot;
   AprilVisionSubsystem aprilVision;
-  private int shooterSpeedRPM = 1500;
+  private int shooterSpeedRPM = 500;
   private double zOffset = 0;
   private double xOffset = 0;
   private int blueAprilTagId = 7;

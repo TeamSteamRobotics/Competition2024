@@ -29,13 +29,13 @@ public class Handoff extends ParallelCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new AngleShooterPID(shoot, () -> 55),
+      new AngleShooterPID(shoot, () -> 58.8),
       new SequentialCommandGroup(
         new Intake(intake),
-        new InstantCommand(() -> shoot.setShooterSpeedPID(1500)),
+        new InstantCommand(() -> shoot.setShooterSpeedPID(500)),
         new ParallelCommandGroup(
           new IntakeAnglePID(intake, () -> 0),//.withTimeout(0.9),
-          new AngleShooterPID(shoot, () -> 55
+          new AngleShooterPID(shoot, () -> 58.8
           ).withTimeout(0.75)
         ),
         new ParallelCommandGroup(
