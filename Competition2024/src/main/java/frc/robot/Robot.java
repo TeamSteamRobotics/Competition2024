@@ -48,7 +48,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("IntakeAngle2", 80);
     SmartDashboard.putNumber("IntakeVomit", -1);
     SmartDashboard.putNumber("AutoWaitTime", 0);
-    SmartDashboard.putNumber("AmpScoreClimbTime", 1);
+    //SmartDashboard.putNumber("AmpScoreClimbTime", 1);
     for (int port = 5800; port <= 5807; port++) {
             PortForwarder.add(port, "limelight.local", port);
         }
@@ -130,3 +130,4 @@ public class Robot extends TimedRobot {
   @Override
   public void simulationPeriodic() {}
 }
+

@@ -100,7 +100,7 @@ public class ThreeNoteAutoRed extends SequentialCommandGroup {
         ),
         new InstantCommand(() -> drive.resetEncoders()),
         new ParallelDeadlineGroup(
-            new DriveDistance(drive, -1).withTimeout(1.5),
+            new DriveDistance(drive, -1.2).withTimeout(1.5),
             new IntakeAnglePID(intake, () -> 0),
             new AngleShooterPID(shoot, () -> 55),
             new ShootPID(shoot, 1500)

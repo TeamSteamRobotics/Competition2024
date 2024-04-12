@@ -53,6 +53,8 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.Intaking.AmpVomit;
+import frc.robot.commands.Intaking.AngleIntakeDown;
+import frc.robot.commands.Intaking.AngleIntakeUp;
 import frc.robot.commands.Shooting.AmpShoot;
 
 /**
@@ -81,8 +83,11 @@ public class RobotContainer {
   private final Trigger driverRetractClimb = m_driverController.leftBumper();
   private final Trigger driverRaiseClimb = m_driverController.rightBumper();
 
-  private final Trigger autoAim = m_driverController.a();
+  //private final Trigger autoAim = m_driverController.a();
 
+  private final Trigger raiseIntake = m_driverController.povUp();
+  private final Trigger lowerIntake = m_driverController.povDown();
+  private final Trigger resetIntake = m_driverController.a();
 
   private final Trigger operatorRetractClimb = m_operatorController.axisLessThan(1, -0.5);
   private final Trigger operatorRaiseClimb = m_operatorController.axisGreaterThan(1, 0.5);
@@ -121,7 +126,8 @@ public class RobotContainer {
     m_chooser.addOption("Three Note Red", new ThreeNoteAutoRed(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem, m_aVisionSubsystem));
     m_chooser.addOption("One Note Wait Taxi", new OneNoteWaitTaxi(m_driveSubsystem, m_shooterSubsystem, m_aVisionSubsystem));
     m_chooser.addOption("Zero Note Taxi", new ZeroNoteTaxi(m_driveSubsystem));
-    m_chooser.addOption("Just One Note", new JustOneNote(m_shooterSubsystem, m_aVisionSubsystem));
+    m_chooser.addOption("One Note Taxi", new OneNoteTaxi(m_driveSubsystem, m_shooterSubsystem, m_aVisionSubsystem, m_intakeSubsystem));
+    m_chooser.addOption("Just One Note", new JustOneNote(m_shooterSubsystem, m_aVisionSubsystem, m_intakeSubsystem));
     m_chooser.addOption("Daniel Auto", new DanielTwoNoteTaxi(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem, m_aVisionSubsystem));
     SmartDashboard.putData(m_chooser);
     configureBindings();
@@ -137,10 +143,14 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
+    raiseIntake.whileTrue(new AngleIntakeUp(m_intakeSubsystem));
+    lowerIntake.whileTrue(new AngleIntakeDown(m_intakeSubsystem));
+    resetIntake.onTrue(new InstantCommand(() -> m_intakeSubsystem.resetIntakeEncoder()));
+
     driverRetractClimb.whileTrue(new RetractClimb(m_climbSubsystem));
     driverRaiseClimb.whileTrue(new RaiseClimb(m_climbSubsystem));
 
-    autoAim.onTrue(new CenterOnTarget(m_ZachVisionSubsystem, m_driveSubsystem));
+    //autoAim.onTrue(new CenterOnTarget(m_ZachVisionSubsystem, m_driveSubsystem));
 
     ampHandoff.whileTrue(new AmpHandoff(m_intakeSubsystem, m_shooterSubsystem, m_climbSubsystem));
 

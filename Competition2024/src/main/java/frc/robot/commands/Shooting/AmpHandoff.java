@@ -29,7 +29,7 @@ public class AmpHandoff extends SequentialCommandGroup {
       new Intake(intake),
       new ParallelCommandGroup(
          new IntakeAnglePID(intake, () -> SmartDashboard.getNumber("IntakeAngle1", 0)),
-         new RetractClimb(climb).withTimeout(0.8)
+         new RetractClimb(climb).withTimeout(1.15)
       )
   
 
