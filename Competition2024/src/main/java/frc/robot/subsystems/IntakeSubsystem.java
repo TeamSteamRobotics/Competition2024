@@ -26,7 +26,6 @@ public class IntakeSubsystem extends SubsystemBase {
   private CANSparkFlex intakePivot;
 
   private DutyCycleEncoder absoluteIntakeEncoder;
-  private RelativeEncoder backup;
 
 
   private DigitalInput limitSwitchUp;
@@ -39,16 +38,14 @@ public class IntakeSubsystem extends SubsystemBase {
     intakePivot = new CANSparkFlex(CANID.intakePivot, MotorType.kBrushless);
 
     absoluteIntakeEncoder = new DutyCycleEncoder(DigitalIOID.intakeEncoder);
-    backup = intakePivot.getEncoder();
 
     limitSwitchUp = new DigitalInput(DigitalIOID.intakeLimitSwitchUp);
 
     beamBreak = new DigitalInput(DigitalIOID.intakeBeamBreak);
 
-    backup.setPositionConversionFactor(32/360);
     absoluteIntakeEncoder.setDistancePerRotation(180);
-    //absoluteIntakeEncoder.reset();
-    absoluteIntakeEncoder.setPositionOffset(64.0 / 180.0);
+    absoluteIntakeEncoder.reset();
+    absoluteIntakeEncoder.setPositionOffset(0.672222);//(64.0 / 180.0);
   }
 
   public void resetIntakeEncoder() {
@@ -59,8 +56,8 @@ public class IntakeSubsystem extends SubsystemBase {
 
 
   public double getIntakeAngleDegrees() {
-    return backup.getPosition();
-    //return -absoluteIntakeEncoder.getDistance();
+    //return backup.getPosition();
+    return -absoluteIntakeEncoder.getDistance();
   }
 
   public boolean noteIn() {
@@ -72,13 +69,13 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void setIntakePositionManual(double value) {
-   // i//f(getIntakeAngleDegrees()  > 204 && value < 0)
-      //intakePivot.set(0);
-    //else if(isUp() && value > 0)
-     // intakePivot.set(0);
-    //else {
+   if (getIntakeAngleDegrees()  > 204 && value < 0)
+      intakePivot.set(0);
+    else if(isUp() && value > 0)
+      intakePivot.set(0);
+    else {
       intakePivot.set(value);
-    //}
+    }
     
   }
 
