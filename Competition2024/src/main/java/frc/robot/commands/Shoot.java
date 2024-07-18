@@ -19,7 +19,7 @@ public class Shoot extends Command {
     shooterSubsystem = p_shooterSubsystem;
     distance = p_distance;
     addRequirements(shooterSubsystem);
-
+  }
     
   // Called when the command is initially scheduled.
   @Override
