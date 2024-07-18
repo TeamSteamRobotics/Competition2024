@@ -20,8 +20,7 @@ public class Shoot extends Command {
     distance = p_distance;
     addRequirements(shooterSubsystem);
 
-  }
-
+    
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
