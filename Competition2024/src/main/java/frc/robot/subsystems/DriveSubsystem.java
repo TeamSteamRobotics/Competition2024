@@ -77,18 +77,18 @@ public class DriveSubsystem extends SubsystemBase {
 
   public void drive(double speed, double rotation){
     diffDrive.arcadeDrive(speed, rotation);
-    frontLeftMotor.set(.1);
-    frontRightMotor.set(.1);
-    backLeftMotor.set(-.1);
-    backRightMotor.set(-.1);
+    frontLeftMotor.set(.2);
+    frontRightMotor.set(.2);
+    backLeftMotor.set(-.2);
+    backRightMotor.set(-.2);
   }
 
   public void curveDrive(double speed, double rotation) {
     diffDrive.curvatureDrive(speed, rotation, true);
-    frontLeftMotor.set(.1);
-    frontRightMotor.set(.1);
-    backLeftMotor.set(-.1);
-    backRightMotor.set(-.1);
+    frontLeftMotor.set(.2);
+    frontRightMotor.set(.2);
+    backLeftMotor.set(-.2);
+    backRightMotor.set(-.2);
   }
 
   public void stop(){
