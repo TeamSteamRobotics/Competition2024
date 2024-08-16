@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
@@ -30,7 +31,7 @@ public class IntakeSubsystem extends SubsystemBase {
   private DigitalInput limitSwitchUp;
   private DigitalInput beamBreak;
 
-  private double dutyCycleOffset = 0.9456111;//0.00797222;
+  //private double dutyCycleOffset = 0.9456111;//0.00797222;
 
   public IntakeSubsystem() {
     intakeRoller = new CANSparkMax(CANID.intakeRoller, MotorType.kBrushless);
@@ -38,19 +39,24 @@ public class IntakeSubsystem extends SubsystemBase {
 
     absoluteIntakeEncoder = new DutyCycleEncoder(DigitalIOID.intakeEncoder);
 
-
     limitSwitchUp = new DigitalInput(DigitalIOID.intakeLimitSwitchUp);
 
     beamBreak = new DigitalInput(DigitalIOID.intakeBeamBreak);
 
-
     absoluteIntakeEncoder.setDistancePerRotation(180);
-    //absoluteIntakeEncoder.reset();
-    absoluteIntakeEncoder.setPositionOffset(64.0 / 180.0);
+    absoluteIntakeEncoder.reset();
+    absoluteIntakeEncoder.setPositionOffset(0.672222);//(64.0 / 180.0);
+  }
+
+  public void resetIntakeEncoder() {
+    absoluteIntakeEncoder.reset();
+    //absoluteIntakeEncoder.setDistancePerRotation(180);
+    //absoluteIntakeEncoder.setDistancePerRotation(64.0 / 180.0);
   }
 
 
   public double getIntakeAngleDegrees() {
+    //return backup.getPosition();
     return -absoluteIntakeEncoder.getDistance();
   }
 
@@ -63,7 +69,7 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void setIntakePositionManual(double value) {
-    if(getIntakeAngleDegrees()  > 204 && value < 0)
+   if (getIntakeAngleDegrees()  > 204 && value < 0)
       intakePivot.set(0);
     else if(isUp() && value > 0)
       intakePivot.set(0);

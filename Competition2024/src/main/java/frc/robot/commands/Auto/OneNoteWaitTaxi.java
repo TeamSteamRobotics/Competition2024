@@ -4,38 +4,38 @@
 
 package frc.robot.commands.Auto;
 
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.SmartShoot;
 import frc.robot.commands.Driving.DriveDistance;
-import frc.robot.commands.Intaking.Vomit;
 import frc.robot.commands.Shooting.AdvanceNote;
 import frc.robot.subsystems.AprilVisionSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class OneNoteTaxi extends SequentialCommandGroup {
-  /** Creates a new OneNoteTaxi. */
-  public OneNoteTaxi(DriveSubsystem drive, ShooterSubsystem shoot, AprilVisionSubsystem aprilVision, IntakeSubsystem intake) {
+public class OneNoteWaitTaxi extends SequentialCommandGroup {
+  /** Creates a new OneNoteWaitTaxi. */
+  public OneNoteWaitTaxi(DriveSubsystem drive, ShooterSubsystem shoot, AprilVisionSubsystem aprilVision) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ParallelCommandGroup(
             new SmartShoot(shoot, aprilVision),
-            new WaitCommand(2.0).andThen(
-                new ParallelCommandGroup(
-                    new AdvanceNote(shoot),
-                    new Vomit(intake)
-                ).withTimeout(0.1))  
-        ).withTimeout(2.1),
+            new WaitCommand(2.0).andThen(new AdvanceNote(shoot).withTimeout(0.1))   
+        ).withTimeout(SmartDashboard.getNumber("AutoWaitTime", 3)),
         new InstantCommand(() -> drive.resetEncoders()),
         new DriveDistance(drive, 4)
     );
+
+
+    addCommands();
   }
 }

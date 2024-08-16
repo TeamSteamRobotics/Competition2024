@@ -19,7 +19,7 @@ public class AngleShooterPID extends PIDCommand {
   public AngleShooterPID(ShooterSubsystem shoot, DoubleSupplier angle) {
     super(
         // The controller that the command will use
-        new PIDController(0.004, 0.01, 0),
+        new PIDController(0.01, 0.03, 0),
         // This should return the measurement
         () -> shoot.getAngle(),
         // This should return the setpoint (can also be a constant)

@@ -8,8 +8,10 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.SmartShoot;
+import frc.robot.commands.Intaking.Vomit;
 import frc.robot.commands.Shooting.AdvanceNote;
 import frc.robot.subsystems.AprilVisionSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -17,13 +19,17 @@ import frc.robot.subsystems.ShooterSubsystem;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class JustOneNote extends SequentialCommandGroup {
   /** Creates a new JustOneNote. */
-  public JustOneNote(ShooterSubsystem shoot, AprilVisionSubsystem aprilVision) {
+  public JustOneNote(ShooterSubsystem shoot, AprilVisionSubsystem aprilVision, IntakeSubsystem intake) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new ParallelCommandGroup(
             new SmartShoot(shoot, aprilVision),
-            new WaitCommand(2.0).andThen(new AdvanceNote(shoot).withTimeout(0.1))   
+            new WaitCommand(2.0).andThen(
+                new ParallelCommandGroup(
+                    new AdvanceNote(shoot),
+                    new Vomit(intake)
+                ).withTimeout(0.1)) 
         ).withTimeout(2.1)
     );
   }
