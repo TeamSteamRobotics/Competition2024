@@ -15,6 +15,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 
 import frc.robot.Files_1710.Conversions;
 import frc.robot.Files_1710.SwerveModuleConstants;
+import frc.robot.Constants;
 import frc.robot.Files_1710.COTSTalonFXSwerveConstants;
 
 public class SwerveModule {
