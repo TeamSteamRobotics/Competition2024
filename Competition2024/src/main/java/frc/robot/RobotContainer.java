@@ -10,6 +10,8 @@ import frc.robot.commands.Drive;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -21,6 +23,21 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
+
+  /* controllers */
+  private final Joystick driver = new Joystick(0);
+
+  /* Analog */
+  private final int leftVerticalAxis = XboxController.Axis.kLeftY.value;
+  private final int rightHorizontalAxis = XboxController.Axis.kRightX.value;
+  private final int leftHorizontalAxis = XboxController.Axis.kLeftX.value;
+  private final int rightVerticalAxis = XboxController.Axis.kRightY.value;
+
+
+
+
+
+
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();

@@ -45,15 +45,15 @@ public final class Constants {
   }
 
   public static final class Swerve {
-    //public static final String canivore = "uno";
-    //public static final int pigeonID = 13;
+    public static final String canivore = "uno";
+    public static final int pigeonID = 13;
 
     public static final COTSTalonFXSwerveConstants chosenModule = 
       COTSTalonFXSwerveConstants.SDS.MK4i.KrakenX60(
         COTSTalonFXSwerveConstants.SDS.MK4i.driveRatios.L2);
 
     /* Drivetrain Constants */
-      /*static final double trackWidth = Units.inchesToMeters(20.75);
+      static final double trackWidth = Units.inchesToMeters(20.75);
     public static final double wheelBase = Units.inchesToMeters(20.75);
     public static final double wheelCircumference = chosenModule.wheelCircumference;
 
@@ -76,15 +76,15 @@ public final class Constants {
     /* Angle Encoder Invert */
     public static final SensorDirectionValue cancoderInvert = chosenModule.cancoderInvert;
 
-    /* Drive motor characterization vlaues from SYSID */
+    /* Drive motor characterization values from SYSID */
     /* zeros are placeholders */
-    /*public static final double driveKS = 0;
+    public static final double driveKS = 0;
     public static final double driveKV = 0;
     public static final double driveKA = 0;
 
     /* swerve profiling values */
     /* Meters per sec */
-    //public static final double maxSpeed = 0;
+    public static final double maxSpeed = 0;
     /* Radians per sec */
     /* make sure to tune this value */
     public static final double maxAngularVelocity = 0;
