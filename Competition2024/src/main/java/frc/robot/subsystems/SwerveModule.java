@@ -20,7 +20,7 @@ import frc.robot.Files_1710.COTSTalonFXSwerveConstants;
 
 public class SwerveModule {
     public int moduleNumber;
-    private Rotation2d angleoffset;
+    private Rotation2d angleOffset;
 
     private TalonFX mAngleMotor;
     private TalonFX mDriveMotor;
@@ -40,9 +40,9 @@ public class SwerveModule {
     private final PositionVoltage anglePosition = new PositionVoltage(0);
 
 
-    public SwerveModule(int moduleNumber, SwerveModuleConstants moduleConstans) {
+    public SwerveModule(int moduleNumber, SwerveModuleConstants moduleConstants) {
         this.moduleNumber = moduleNumber;
-        this.angleOffset = moduleNumber;
+        this.angleOffset = moduleConstants.angleOffset;
         
 
         /* Angle Encoder Config */
@@ -52,12 +52,12 @@ public class SwerveModule {
 
         /* Angle Motor Config */
         mAngleMotor = new TalonFX(moduleConstants.angleMotorID, Constants.Swerve.canivore);
-        mAngleMotor.getConfigurator().apply(Robot.ctreConfigs.swerveDriveFXConfig);
+        mAngleMotor.getConfigurator().apply(Robot.ctreConfigs.swerveAngleFXConfig);
         resetToAbsolute();
 
 
         /* Drive Motor Config */
-        mDriveMotor = new TaloxFX(moduleConstants.driveMotorID, Constants.Swerve.canivore);
+        mDriveMotor = new TalonFX(moduleConstants.driveMotorID, Constants.Swerve.canivore);
         mDriveMotor.getConfigurator().apply(Robot.ctreConfigs.swerveDriveFXConfig);
         mDriveMotor.getConfigurator().setPosition(0.0);    
     }
@@ -69,7 +69,7 @@ public class SwerveModule {
 
 
     public TalonFX getDriveMotor() {
-        return mDriveMotor
+        return mDriveMotor;
     }
 
 
@@ -80,7 +80,7 @@ public class SwerveModule {
     }
 
 
-    private void setSpeed(SwerveModuleState, desiredState, boolean isOpenLoop) {
+    private void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop) {
         if (isOpenLoop) {
             driveDutyCycle.Output = desiredState.speedMetersPerSecond / Constants.Swerve.maxSpeed;
             mDriveMotor.setControl(driveDutyCycle);
@@ -92,12 +92,12 @@ public class SwerveModule {
 
 
     public Rotation2d getCANcoder() {
-        return Rotation2d.fromRotations(angleEncoder.getAbsolutePosition().getValue);
+        return Rotation2d.fromRotations(angleEncoder.getAbsolutePosition().getValue());
     }
 
 
     /* Set Module Angles To Absolute Position */
-    public voidresetToAbsolute() {
+    public void resetToAbsolute() {
         double absolutePosition = getCANcoder().getRotations() - angleOffset.getRotations();
         mAngleMotor.setPosition(absolutePosition);
     }
@@ -106,7 +106,7 @@ public class SwerveModule {
     public SwerveModuleState getState() {
         return new SwerveModuleState(
             Conversions.RPSToMPS(
-                mDriveMotor.getVelocity().getValue(), Constants.Swerve.wheelCircumferece),
+                mDriveMotor.getVelocity().getValue(), Constants.Swerve.wheelCircumference),
             Rotation2d.fromRotations(mAngleMotor.getPosition().getValue()));
     }
 
