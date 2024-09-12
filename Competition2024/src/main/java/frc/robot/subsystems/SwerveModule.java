@@ -1,0 +1,144 @@
+package frc.robot.subsystems;
+
+import com.ctre.phoenix6.controls.DutyCycleOut;
+import com.ctre.phoenix6.controls.PositionVoltage;
+import com.ctre.phoenix6.controls.VelocityVoltage;
+import com.ctre.phoenix6.controls.VoltageOut;
+import com.ctre.phoenix6.hardware.CANcoder;
+import com.ctre.phoenix6.hardware.TalonFX;
+import edu.wpi.first.math.MathUtil;
+
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
+
+import frc.robot.Files_1710.Conversions;
+import frc.robot.Files_1710.SwerveModuleConstants;
+import frc.robot.Files_1710.COTSTalonFXSwerveConstants;
+
+public class SwerveModule {
+    public int moduleNumber;
+    private Rotation2d angleoffset;
+
+    private TalonFX mAngleMotor;
+    private TalonFX mDriveMotor;
+    private CANcoder angleEncoder;
+
+    private final SimpleMotorFeedforward driveFeedforward = new SimpleMotorFeedforward(
+        Constants.Swerve.driveKS, Constants.Swerve.driveKV, Constants.Swerve.driveKA);
+     
+        
+    /* drive motor control requests */
+    private final DutyCycleOut driveDutyCycle = new DutyCycleOut(0);
+    private final VelocityVoltage driveVelocity = new VelocityVoltage(0);
+    private VoltageOut driveCharacteriztionControl = new VoltageOut(0);
+
+
+    /* angle motor control requests */
+    private final PositionVoltage anglePosition = new PositionVoltage(0);
+
+
+    public SwerveModule(int moduleNumber, SwerveModuleConstants moduleConstans) {
+        this.moduleNumber = moduleNumber;
+        this.angleOffset = moduleNumber;
+        
+
+        /* Angle Encoder Config */
+        angleEncoder = new CANcoder(moduleConstants.cancoderID, Constants.Swerve.canivore);
+        angleEncoder.getConfigurator().apply(Robot.ctreConfigs.swerveCANcoderConfig);
+    
+
+        /* Angle Motor Config */
+        mAngleMotor = new TalonFX(moduleConstants.angleMotorID, Constants.Swerve.canivore);
+        mAngleMotor.getConfigurator().apply(Robot.ctreConfigs.swerveDriveFXConfig);
+        resetToAbsolute();
+
+
+        /* Drive Motor Config */
+        mDriveMotor = new TaloxFX(moduleConstants.driveMotorID, Constants.Swerve.canivore);
+        mDriveMotor.getConfigurator().apply(Robot.ctreConfigs.swerveDriveFXConfig);
+        mDriveMotor.getConfigurator().setPosition(0.0);    
+    }
+
+    
+    public TalonFX getAngleMotor() {
+        return mAngleMotor;
+    }
+
+
+    public TalonFX getDriveMotor() {
+        return mDriveMotor
+    }
+
+
+    public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop) {
+        desiredState = SwerveModuleState.optimize(desiredState, getState().angle);
+        mAngleMotor.setControl(anglePosition.withPosition(desiredState.angle.getRotations()));
+        setSpeed(desiredState, isOpenLoop);
+    }
+
+
+    private void setSpeed(SwerveModuleState, desiredState, boolean isOpenLoop) {
+        if (isOpenLoop) {
+            driveDutyCycle.Output = desiredState.speedMetersPerSecond / Constants.Swerve.maxSpeed;
+            mDriveMotor.setControl(driveDutyCycle);
+        } else {
+            driveVelocity.Velocity = Conversions.MPSToRPS(
+                desiredState.speedMetersPerSecond, Constants.Swerve.wheelCircumference);
+        }
+    }
+
+
+    public Rotation2d getCANcoder() {
+        return Rotation2d.fromRotations(angleEncoder.getAbsolutePosition().getValue);
+    }
+
+
+    /* Set Module Angles To Absolute Position */
+    public voidresetToAbsolute() {
+        double absolutePosition = getCANcoder().getRotations() - angleOffset.getRotations();
+        mAngleMotor.setPosition(absolutePosition);
+    }
+
+
+    public SwerveModuleState getState() {
+        return new SwerveModuleState(
+            Conversions.RPSToMPS(
+                mDriveMotor.getVelocity().getValue(), Constants.Swerve.wheelCircumferece),
+            Rotation2d.fromRotations(mAngleMotor.getPosition().getValue()));
+    }
+
+
+    public SwerveModulePosition getPosition() {
+        return new SwerveModulePosition(
+            Conversions.rotationsToMeters(
+                mDriveMotor.getPosition().getValue(), Constants.Swerve.wheelCircumference),
+            Rotation2d.fromRotations(mAngleMotor.getPosition().getValue()));
+    }
+
+
+    /* 
+     * Drive robot based on provided voltage value
+     * <p>
+     * Does NOT have optimization, meaning wheels have to be facing same direction
+    */
+    public void voltageDrive(double Volts) {
+        mDriveMotor.setControl(driveCharacteriztionControl.withOutput(Volts));
+    }
+
+
+    /* Get Drive Motor Voltage */
+    public double getMotorVoltage() {
+        return mDriveMotor.getMotorVoltage().getValue();
+    }
+
+
+    /* In meters per second */
+    public double getMotorVelocity() {
+        return Conversions.RPSToMPS(
+            mDriveMotor.getVelocity().getValue(), Constants.Swerve.wheelCircumference);
+    }
+
+}  
+
