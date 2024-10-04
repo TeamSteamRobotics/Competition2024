@@ -76,6 +76,21 @@ public final class Constants {
     /* Angle Encoder Invert */
     public static final SensorDirectionValue cancoderInvert = chosenModule.cancoderInvert;
 
+    /* Swerve current limiting */
+    public static final int angleCurrentLimit = 0;
+    public static final int angleCurrentThreshold = 0;
+    public static final double angleCurrentThresholdTime = 0;
+    public static final boolean angleEnableCurrentLimit = true;
+
+    /* Closed and open loop ramp */
+    public static final double openLoopRamp = 0;
+    public static final double closedLoopRamp = 0;
+
+    /* Angle Motor PID values */
+    public static final double angleKP = chosenModule.angleKP;
+    public static final double angleKI = chosenModule.angleKI;
+    public static final double angleKD = chosenModule.angleKD;
+
     /* Drive motor characterization values from SYSID */
     /* zeros are placeholders */
     public static final double driveKS = 0;
@@ -88,6 +103,10 @@ public final class Constants {
     /* Radians per sec */
     /* make sure to tune this value */
     public static final double maxAngularVelocity = 0;
+
+    /* Neutral modes */
+    public static final NeutralModeValue angleNeutralMode = NeutralModeValue.Brake;
+    public static final NeutralModeValue driveNeutralMode = NeutralModeValue.Brake;
 
     /* Front right module - Module 1 */
     public static final class Mod1 {

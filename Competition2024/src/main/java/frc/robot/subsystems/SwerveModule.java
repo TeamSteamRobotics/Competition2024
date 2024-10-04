@@ -44,7 +44,6 @@ public class SwerveModule {
     public SwerveModule(int moduleNumber, SwerveModuleConstants moduleConstants) {
         this.moduleNumber = moduleNumber;
         this.angleOffset = moduleConstants.angleOffset;
-        
 
         /* Angle Encoder Config */
         angleEncoder = new CANcoder(moduleConstants.cancoderID, Constants.Swerve.canivore);
