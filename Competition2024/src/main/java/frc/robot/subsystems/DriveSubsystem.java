@@ -70,59 +70,50 @@ public class DriveSubsystem extends SubsystemBase {
 
     navX = new AHRS(SPI.Port.kMXP);
 
-    odometry = new DifferentialDriveOdometry(navX.getRotation2d(), getLeftSideMeters(), getRightSideMeters(), new Pose2d(1 ,1 , new Rotation2d(0)));
+    odometry = new DifferentialDriveOdometry(navX.getRotation2d(), getLeftSideMeters(), getRightSideMeters(), new Pose2d(1, 1, new Rotation2d(0)));
 
-    SmartDashboard.putData("Reset Encoders", new InstantCommand(() -> resetEncoders(), this));
-    SmartDashboard.putData("Reset Gyro", new InstantCommand(() -> resetGyro(), this));
+    SmartDashboard.putData("Reset Encoders", new InstantCommand(this::resetEncoders, this));
+    SmartDashboard.putData("Reset Gyro", new InstantCommand(this::resetGyro, this));
   }
-  //trying to use a SlewRateLimiter so motor doesn't suddenly go full speed and make chain skip.
+
+  // SlewRateLimiter to prevent sudden motor speed changes
   SlewRateLimiter filter = new SlewRateLimiter(0.9);
-  //Sejun notes, set up an timer variable and change for loops with while loops creating two seperate scenarios for auto (half speed) and teleop (full speed)
-  long timeSinceStart = System.currentTimeMillis();
 
-  while(timeSinceStart<100000){
-  
-  public void drive(double speed, double rotation){
-    for(int i = 0; i < 15; i++){
-    speed = speed/2;
-    
-    diffDrive.arcadeDrive(filter.calculate(speed), rotation);
-
+  public void drive(double speed, double rotation) {
+    for (int i = 0; i < 15; i++) {
+      diffDrive.arcadeDrive(filter.calculate(speed / 1), rotation);
     }
   }
 
   public void curveDrive(double speed, double rotation) {
-    for(int i = 0; i < 15; i++){
-    speed = speed/2;
-    
-    diffDrive.curvatureDrive(filter.calculate(speed), rotation, true);
-
+    for (int i = 0; i < 15; i++) {
+      diffDrive.curvatureDrive(filter.calculate(speed / 1), rotation, true);
     }
   }
-  }
-  public void stop(){
+
+  public void stop() {
     frontLeftMotor.set(0);
     frontRightMotor.set(0);
     backLeftMotor.set(0);
     backRightMotor.set(0);
   }
 
-  //Average of both left side motor encoders
+  // Average of both left side motor encoders
   public double getLeftSideBuiltInRotations() {
     return (frontLeftEncoder.getPosition() + backLeftEncoder.getPosition()) / 2;
   }
 
-  //Average of both right side motor encoders
+  // Average of both right side motor encoders
   public double getRightSideBuiltInRotations() {
     return (frontRightEncoder.getPosition() + backRightEncoder.getPosition()) / 2;
   }
 
   public double getLeftSideDistanceBuiltInMeters() {
-    return (getLeftSideBuiltInRotations() * Constants.OdometryConsts.rotationsToMeters);
+    return getLeftSideBuiltInRotations() * Constants.OdometryConsts.rotationsToMeters;
   }
 
   public double getRightSideDistanceBuiltInMeters() {
-    return (getRightSideBuiltInRotations() * Constants.OdometryConsts.rotationsToMeters);
+    return getRightSideBuiltInRotations() * Constants.OdometryConsts.rotationsToMeters;
   }
 
   public double getBuiltInEncoderDistanceMeters() {
@@ -143,7 +134,7 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public double getDistanceMeters() {
-    return -(getLeftSideMeters());// +// getRightSideMeters());// / 2;
+    return -(getLeftSideMeters()); // + getRightSideMeters()) / 2;
   }
 
   public double getRateMetersPerSecond() {
@@ -176,8 +167,6 @@ public class DriveSubsystem extends SubsystemBase {
     currentRobotPose = odometry.update(getRotation2d(), getLeftSideMeters(), getRightSideMeters());
 
     SmartDashboard.putNumber("Through Bore Encoder Distance", getDistanceMeters());
-
     SmartDashboard.putNumber("Gyro reading", getAngleDegrees());    
   }
 }
-

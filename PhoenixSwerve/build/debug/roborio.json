@@ -1,0 +1,9 @@
+[
+  {
+    "type": "java",
+    "name": "frcJava",
+    "port": 8349,
+    "target": "10.51.19.2",
+    "project": "PhoenixSwerve"
+  }
+]
