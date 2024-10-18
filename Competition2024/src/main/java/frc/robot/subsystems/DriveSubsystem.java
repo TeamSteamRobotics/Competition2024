@@ -80,7 +80,7 @@ public class DriveSubsystem extends SubsystemBase {
   //Sejun notes, set up an timer variable and change for loops with while loops creating two seperate scenarios for auto (half speed) and teleop (full speed)
   long timeSinceStart = System.currentTimeMillis();
 
-  while(timeSinceStart<100000){
+  //while(timeSinceStart<100000){
   
   public void drive(double speed, double rotation){
     for(int i = 0; i < 15; i++){
@@ -99,7 +99,7 @@ public class DriveSubsystem extends SubsystemBase {
 
     }
   }
-  }
+  //} COMMENTED OUT TO ALLOW FOR IT TO BUILD
   public void stop(){
     frontLeftMotor.set(0);
     frontRightMotor.set(0);
