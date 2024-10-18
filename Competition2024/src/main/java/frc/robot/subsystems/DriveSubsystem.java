@@ -77,7 +77,7 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   // SlewRateLimiter to prevent sudden motor speed changes
-  SlewRateLimiter filter = new SlewRateLimiter(0.9);
+  SlewRateLimiter filter = new SlewRateLimiter(0.5);
 
   public void drive(double speed, double rotation) {
     for (int i = 0; i < 15; i++) {
