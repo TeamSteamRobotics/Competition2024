@@ -31,8 +31,9 @@ public class AmpShoot extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new IntakeAnglePID(intake, () -> SmartDashboard.getNumber("IntakeAngle2", 80)),
-      new AmpVomit(intake).withTimeout(1.5),
-      new RaiseClimb(climb).withTimeout(1.2)
+      new RaiseClimb(climb).withTimeout(1.2),
+      new AmpVomit(intake).withTimeout(1.5)
+      
       
 
     );

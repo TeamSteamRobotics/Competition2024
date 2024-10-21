@@ -44,6 +44,9 @@ import frc.robot.commands.Driving.DriveDistance;
 import frc.robot.commands.Driving.PIDTurn;
 import frc.robot.subsystems.AprilVisionSubsystem;
 import frc.robot.subsystems.ClimbSubsystem;
+
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -119,7 +122,10 @@ public class RobotContainer {
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    m_driveSubsystem.setDefaultCommand(new Drive(m_driveSubsystem, m_driverController::getLeftY, m_driverController::getRightX));
+    DoubleSupplier contr = () -> m_driverController.getLeftY() + m_operatorController.getLeftY();
+    DoubleSupplier contr2 = () -> m_driverController.getRightX() + m_operatorController.getLeftX();
+    //m_driveSubsystem.setDefaultCommand(new Drive(m_driveSubsystem, m_driverController::getLeftY, m_driverController::getRightX));
+    m_driveSubsystem.setDefaultCommand(new Drive(m_driveSubsystem, contr, contr2));
     m_aVisionSubsystem.setDefaultCommand(new CoordinatePrint(m_aVisionSubsystem, 4, ReturnTarget.TARGET));
     m_chooser.setDefaultOption("Two Note Center", new ZachTwoNote(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem, m_aVisionSubsystem));
     m_chooser.addOption("Three Note Blue", new ThreeNoteAutoBlue(m_driveSubsystem, m_shooterSubsystem, m_intakeSubsystem, m_aVisionSubsystem));
