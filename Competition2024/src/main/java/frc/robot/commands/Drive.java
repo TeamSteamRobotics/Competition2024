@@ -12,13 +12,15 @@ import frc.robot.subsystems.DriveSubsystem;
 public class Drive extends Command {
 
   private DriveSubsystem driveSubsystem;
-  private DoubleSupplier speed;
+  private DoubleSupplier mX;
+  private DoubleSupplier mY;
   private DoubleSupplier rotation;
 
   /** Creates a new Drive. */
-  public Drive(DriveSubsystem p_driveSubsystem, DoubleSupplier p_speed, DoubleSupplier p_rotation) {
+  public Drive(DriveSubsystem p_driveSubsystem, DoubleSupplier p_X,DoubleSupplier p_Y, DoubleSupplier p_rotation) {
     driveSubsystem = p_driveSubsystem;
-    speed = p_speed;
+    mX = p_X;
+    mY = p_Y;
     rotation = p_rotation;
 
     addRequirements(driveSubsystem);
@@ -33,7 +35,7 @@ public class Drive extends Command {
   @Override
   public void execute() {
    // System.out.println(speed.getAsDouble());
-    driveSubsystem.drive(speed.getAsDouble(), -rotation.getAsDouble());
+    driveSubsystem.drive(mX.getAsDouble(), mY.getAsDouble(), -rotation.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.
